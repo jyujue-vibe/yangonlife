@@ -20,6 +20,12 @@
       body{font-family:"Noto Sans Myanmar","Myanmar Text","Pyidaungsu",sans-serif;color:var(--ink);}
       #game{position:fixed;inset:0;display:block;touch-action:none;}
 
+      /* ---------- key-cap chips ---------- */
+      .kbd{display:inline-block;background:#2b2118;color:#ffeecb;border-radius:6px;padding:1px 8px 2px;
+        font-size:.86em;font-weight:800;box-shadow:0 2px 0 rgba(0,0,0,.45);vertical-align:baseline;white-space:nowrap;}
+      .key-hints{margin-top:14px;padding-top:10px;border-top:1.5px dashed var(--line);
+        font-size:13.5px;color:#8a6d43;line-height:2;text-align:center;}
+
       /* ---------- HUD ---------- */
       #hud{position:fixed;top:0;left:0;right:0;display:none;pointer-events:none;z-index:20;
         padding:calc(8px + env(safe-area-inset-top)) 10px 0;}
@@ -36,6 +42,8 @@
       #xpFill{height:100%;background:var(--gold);width:0%;transition:width .4s;}
       #menuBtn{pointer-events:auto;cursor:pointer;border:none;font-family:inherit;}
       #menuBtn:active{transform:scale(.96);}
+      #mapBtn{pointer-events:auto;cursor:pointer;border:none;font-family:inherit;}
+      #mapBtn:active{transform:scale(.96);}
 
       /* ---------- Toast ---------- */
       #toast{position:fixed;top:22%;left:50%;transform:translate(-50%,-16px);z-index:60;
@@ -47,8 +55,8 @@
 
       /* ---------- Dialogue ---------- */
       #dlg{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));
-        width:min(680px,94vw);background:var(--panel);border:2px solid var(--line);border-radius:16px;
-        box-shadow:0 14px 40px rgba(0,0,0,.45);z-index:40;display:none;padding:16px 18px 12px;}
+        width:min(680px,94vw);background:var(--panel);border:2px solid var(--gold);border-radius:16px;
+        box-shadow:0 14px 40px rgba(0,0,0,.45), inset 0 0 0 2px rgba(43,33,24,.65);z-index:40;display:none;padding:16px 18px 12px;}
       #dlg.show{display:block;}
       #dlgName{display:inline-block;background:var(--accent);color:#fff;font-weight:700;font-size:14px;
         border-radius:8px;padding:2px 12px;margin-bottom:8px;}
@@ -59,28 +67,37 @@
       #dlgChoices{display:none;gap:8px;flex-wrap:wrap;margin-top:10px;}
       #dlgChoices.show{display:flex;}
       .choice-btn{font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;border-radius:10px;
-        border:2px solid var(--accent);background:#fff;color:var(--accent);padding:9px 16px;}
-      .choice-btn:hover{background:var(--accent);color:#fff;}
+        border:2px solid var(--accent);background:#fff;color:var(--accent);padding:9px 16px 9px 10px;
+        display:inline-flex;align-items:center;gap:9px;}
+      .choice-btn .num{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;
+        background:#2b2118;color:#ffeecb;border-radius:6px;font-size:14px;font-weight:800;
+        box-shadow:0 2px 0 rgba(0,0,0,.4);padding:0 4px;}
+      .choice-btn:hover{background:#f6e3cf;}
+      .choice-btn.sel{background:var(--accent);color:#fff;box-shadow:0 0 0 3px var(--gold);}
       .choice-btn:disabled{border-color:#c9b894;color:#a08b62;cursor:not-allowed;background:#f3ead6;}
       .choice-btn:disabled:hover{background:#f3ead6;color:#a08b62;}
+      .choice-btn:disabled .num{background:#a08b62;box-shadow:none;}
 
       /* ---------- Interact hint ---------- */
       #hint{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(118px + env(safe-area-inset-bottom));
-        background:var(--hud-bg);color:#ffe9bd;border-radius:999px;padding:7px 18px;font-size:15px;font-weight:600;
-        z-index:25;display:none;pointer-events:none;box-shadow:0 4px 14px rgba(0,0,0,.4);}
-      #hint.show{display:block;}
-      #hint b{background:var(--gold);color:#3a2703;border-radius:6px;padding:1px 8px;margin-right:6px;}
+        background:var(--hud-bg);color:#ffe9bd;border-radius:999px;padding:7px 18px 7px 10px;font-size:15px;font-weight:600;
+        z-index:25;display:none;pointer-events:none;box-shadow:0 4px 14px rgba(0,0,0,.4);align-items:center;}
+      #hint.show{display:flex;}
+      #hint b{background:#2b2118;color:var(--gold);border:1.5px solid var(--gold);border-radius:6px;
+        padding:1px 9px;margin-right:8px;box-shadow:0 2px 0 rgba(0,0,0,.5);font-weight:800;}
 
       /* ---------- Panels (shop / overlays) ---------- */
       .scrim{position:fixed;inset:0;background:rgba(24,16,8,.62);z-index:50;display:none;
         align-items:center;justify-content:center;padding:16px;}
       .scrim.show{display:flex;}
-      .panel{background:var(--panel);border-radius:18px;border:2px solid var(--line);max-width:560px;width:100%;
-        max-height:86vh;overflow:auto;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+      .panel{background:var(--panel);border-radius:18px;border:2px solid var(--gold);max-width:560px;width:100%;
+        max-height:86vh;overflow:auto;padding:22px;
+        box-shadow:0 20px 60px rgba(0,0,0,.5), inset 0 0 0 2px rgba(43,33,24,.7);}
       .panel h2{margin:0 0 4px;font-size:22px;}
       .panel .sub{color:#8a6d43;font-size:14px;margin-bottom:14px;line-height:1.6;}
       .shop-item{display:flex;gap:12px;align-items:center;border:1.5px solid var(--line);border-radius:12px;
         padding:10px 12px;margin-bottom:10px;background:#fff;}
+      .shop-item.sel{border-color:var(--accent);box-shadow:0 0 0 3px var(--gold);background:#fff6e0;}
       .shop-item .swatch{width:40px;height:40px;border-radius:9px;flex:none;border:1.5px solid rgba(0,0,0,.15);}
       .shop-item .nm{font-weight:700;font-size:16px;}
       .shop-item .ds{font-size:13px;color:#8a6d43;line-height:1.5;}
@@ -90,23 +107,25 @@
       .shop-item .buy.wear{background:var(--accent);}
       .panel .close-btn{width:100%;margin-top:6px;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;
         border:2px solid var(--ink);background:var(--ink);color:#ffeecb;border-radius:11px;padding:11px;}
+      .panel .close-btn.sel{box-shadow:0 0 0 3px var(--gold);outline:2px solid var(--accent);outline-offset:1px;}
       .panel .wallet{font-weight:800;color:var(--accent);margin-bottom:12px;font-size:16px;}
 
       /* ---------- Title screen ---------- */
       #title{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;
         background:linear-gradient(180deg,#f7c873 0%,#f2a65a 46%,#7fb069 46.2%,#5d9153 100%);padding:16px;overflow:auto;}
       #title.hide{display:none;}
-      .title-card{background:rgba(255,253,247,.96);border-radius:22px;border:3px solid #fff;
-        box-shadow:0 24px 70px rgba(60,30,0,.45);max-width:520px;width:100%;padding:28px 26px;text-align:center;}
+      .title-card{background:rgba(255,253,247,.96);border-radius:22px;border:3px solid var(--gold);
+        box-shadow:0 24px 70px rgba(60,30,0,.45), inset 0 0 0 2px rgba(43,33,24,.55);max-width:520px;width:100%;padding:28px 26px;text-align:center;}
       .title-card h1{margin:0;font-size:40px;line-height:1.25;color:var(--ink);}
       .title-card h1 .en{display:block;font-size:17px;letter-spacing:3px;color:var(--accent);font-weight:800;margin-top:2px;}
       .title-card p.lead{color:#7a5c33;line-height:1.7;font-size:15px;margin:12px 0 18px;}
       .gender-row{display:flex;gap:12px;justify-content:center;margin-bottom:8px;}
       .gender-card{flex:1;max-width:170px;cursor:pointer;border:3px solid var(--line);border-radius:16px;
         background:#fff;padding:12px 8px 10px;font-family:inherit;transition:border-color .15s,transform .15s;}
-      .gender-card canvas{display:block;margin:0 auto 6px;}
+      .gender-card canvas{display:block;margin:0 auto 6px;image-rendering:pixelated;}
       .gender-card .gname{font-weight:800;font-size:17px;}
       .gender-card.sel{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 20px rgba(200,84,30,.25);}
+      .gender-card.kfocus,.big-btn.kfocus{outline:3px solid var(--accent2);outline-offset:3px;}
       .big-btn{display:block;width:100%;font-family:inherit;font-size:19px;font-weight:800;cursor:pointer;
         border:none;border-radius:13px;padding:14px;margin-top:12px;background:var(--accent);color:#fff;
         box-shadow:0 6px 0 #93390f;}
@@ -114,7 +133,7 @@
       .big-btn.green{background:var(--accent2);box-shadow:0 6px 0 #125134;}
       .big-btn.green:active{box-shadow:0 3px 0 #125134;}
       .big-btn.ghost{background:#fff;color:var(--ink);border:2px solid var(--line);box-shadow:none;font-size:15px;padding:11px;}
-      .title-note{font-size:13px;color:#9a7c52;margin-top:14px;line-height:1.6;}
+      .title-note{font-size:13px;color:#9a7c52;margin-top:14px;line-height:1.9;}
 
       /* ---------- Transition overlay ---------- */
       #trans{position:fixed;inset:0;background:#191008;z-index:65;display:none;flex-direction:column;
@@ -124,6 +143,11 @@
       #trans .t-sub{margin-top:10px;font-size:16px;color:#d9b98a;line-height:1.7;max-width:480px;}
       #transBarWrap{width:min(340px,80vw);height:10px;background:rgba(255,255,255,.15);border-radius:6px;margin-top:26px;overflow:hidden;}
       #transBar{height:100%;width:0%;background:var(--gold);}
+
+      /* ---------- Scene fade ---------- */
+      #fade{position:fixed;inset:0;background:#14100b;z-index:55;opacity:0;pointer-events:none;
+        transition:opacity .17s ease;}
+      #fade.on{opacity:1;}
 
       /* ---------- Touch controls ---------- */
       #touchUI{position:fixed;inset:auto 0 0 0;z-index:30;display:none;pointer-events:none;
@@ -157,7 +181,8 @@
         <div class="hud-chip">Level <span id="lvlVal">1</span>
           <span id="xpWrap"><span id="xpFill" style="display:block"></span></span>
           <span id="xpVal">0 expi</span></div>
-        <button class="hud-chip" id="menuBtn">☰ မီနူး</button>
+        <button class="hud-chip" id="mapBtn">မြေပုံ <span class="kbd">M</span></button>
+        <button class="hud-chip" id="menuBtn">☰ မီနူး <span class="kbd">Esc</span></button>
       </div>
       <div id="missionBar"></div>
     </div>
@@ -170,7 +195,7 @@
       <span id="dlgName">Pch</span>
       <div id="dlgText"></div>
       <div id="dlgChoices"></div>
-      <div id="dlgNext">Enter / E ▸</div>
+      <div id="dlgNext"><span class="kbd">Enter</span> ဆက်သွား ▸</div>
     </div>
 
     <!-- Shop panel -->
@@ -181,6 +206,7 @@
         <div class="wallet">လက်ထဲ: <span id="shopCup">0</span> cup</div>
         <div id="shopItems"></div>
         <button class="close-btn" id="shopClose">ပိတ်မယ်</button>
+        <div class="key-hints"><span class="kbd">↑</span><span class="kbd">↓</span> ရွေးချယ် · <span class="kbd">Enter</span> ဝယ်/ဝတ် · <span class="kbd">Esc</span> ပိတ်</div>
       </div>
     </div>
 
@@ -191,6 +217,7 @@
         <div class="sub" style="text-align:left">Pch ရန်ကုန်မှာ နေရာကျသွားပါပြီ — အိမ်ရောက်၊ အလုပ်ရ၊ ပထမ furniture ဝယ်၊ ဘုရားလည်း ဖူးခဲ့ပြီ။<br><br>
         ဆက်လက် တည်ဆောက်ဆဲ ဖြစ်ပါတယ်။ အခု Free Roam mode မှာ မြို့ကို လွတ်လွတ်လပ်လပ် လျှောက်ပြီး ဆိုင်တွေမှာ furniture နဲ့ outfit တွေ ထပ်ဝယ်လို့ ရပါတယ်။</div>
         <button class="close-btn" id="phaseClose">Free Roam ဆက်ကစားမယ်</button>
+        <div class="key-hints"><span class="kbd">Enter</span> ဆက်ကစားမယ်</div>
       </div>
     </div>
 
@@ -200,17 +227,32 @@
         <h2>မီနူး</h2>
         <div class="sub">Game ကို အလိုအလျောက် သိမ်းထားပါတယ် (ဒီ browser ထဲမှာပဲ)။</div>
         <button class="close-btn" id="menuResume" style="margin-bottom:10px">ဆက်ကစားမယ်</button>
+        <button class="close-btn" id="menuMap" style="background:#fff;color:var(--ink);margin-bottom:10px">မြေပုံ (စမ်းချောင်း)</button>
         <button class="close-btn" id="menuTitle" style="background:#fff;color:var(--ink);margin-bottom:10px">ခေါင်းစဉ်မျက်နှာပြင် ပြန်သွားမယ်</button>
         <button class="close-btn" id="menuReset" style="background:var(--danger);border-color:var(--danger)">Save ဖျက်ပြီး အသစ်စမယ်</button>
+        <div class="key-hints"><span class="kbd">↑</span><span class="kbd">↓</span> ရွေးချယ် · <span class="kbd">Enter</span> အတည်ပြု · <span class="kbd">Esc</span> ဆက်ကစား</div>
+      </div>
+    </div>
+
+    <!-- Map overlay -->
+    <div class="scrim" id="mapScrim" style="z-index:58">
+      <div class="panel" style="max-width:880px;text-align:center">
+        <h2>စမ်းချောင်း မြေပုံ</h2>
+        <div class="sub">လမ်းများ · ဆိုင်များ · မှတ်တိုင်များ — <span style="color:#b3352b;font-weight:800">အနီ marker</span> က လက်ရှိ mission ပစ်မှတ်၊ <span style="color:#c8871a;font-weight:800">ရွှေ marker</span> က မင်း ရှိတဲ့နေရာ။</div>
+        <canvas id="mapCv" width="820" height="600" style="width:100%;height:auto;border-radius:12px;border:1.5px solid var(--line);background:#f3e9d2"></canvas>
+        <div class="key-hints"><span class="kbd">M</span> / <span class="kbd">Esc</span> / <span class="kbd">Enter</span> ပိတ်မယ်</div>
       </div>
     </div>
 
     <!-- Transition -->
     <div id="trans">
+      <img id="transImg" alt="" style="display:none;max-width:min(430px,82vw);margin-bottom:16px" />
       <div class="t-big" id="transTitle"></div>
       <div class="t-sub" id="transSub"></div>
       <div id="transBarWrap"><div id="transBar"></div></div>
     </div>
+
+    <div id="fade"></div>
 
     <!-- Title -->
     <div id="title">
@@ -224,7 +266,7 @@
         </div>
         <button class="big-btn green" id="btnContinue" style="display:none">ဆက်ကစားမယ်</button>
         <button class="big-btn" id="btnStart">စတင်</button>
-        <div class="title-note">ကစားနည်း — WASD / မြှားခလုတ်: လှုပ်ရှား · E: စကားပြော/သုံး · Enter: dialogue ဆက်<br>ဖုန်းမှာ joystick + E ခလုတ် သုံးပါ။ တိုးတက်မှုကို ဒီ browser ထဲမှာ သိမ်းထားပါတယ်။</div>
+        <div class="title-note">ကစားနည်း — မြှားခလုတ် <span class="kbd">↑</span><span class="kbd">↓</span><span class="kbd">←</span><span class="kbd">→</span> လှုပ်ရှား · <span class="kbd">E</span> စကားပြော/သုံး · <span class="kbd">Enter</span> အတည်ပြု/ဆက် · <span class="kbd">1</span><span class="kbd">2</span><span class="kbd">3</span> ရွေးချယ်မှု · <span class="kbd">Esc</span> မီနူး<br>ဖုန်းမှာ joystick + E ခလုတ် သုံးပါ။ တိုးတက်မှုကို ဒီ browser ထဲမှာ သိမ်းထားပါတယ်။</div>
       </div>
     </div>
 
@@ -239,6 +281,9 @@
 /* ============================================================
    ရန်ကုန်ဘဝ — Yangon Life (Phase 1)
    2D top-down life game · Canvas · localStorage save
+   Rendering: pre-rendered scene layers + pre-rendered pixel-style
+   character sprites (each painter is a separate function so a
+   sprite image can replace it later without touching game logic).
    ============================================================ */
 const cv = document.getElementById('game');
 const ctx = cv.getContext('2d');
@@ -256,18 +301,32 @@ const $ = id => document.getElementById(id);
 const clamp = (v,a,b)=> v<a?a : v>b?b : v;
 const fmt = n => n.toLocaleString('en-US');
 const dist = (a,b)=> Math.hypot(a.x-b.x, a.y-b.y);
+function mkCanvas(w, h){ const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
+function shade(hex, f){
+  const n = parseInt(hex.slice(1), 16);
+  const r = clamp(Math.round(((n>>16)&255) * f), 0, 255),
+        g = clamp(Math.round(((n>>8)&255) * f), 0, 255),
+        b = clamp(Math.round((n&255) * f), 0, 255);
+  return 'rgb(' + r + ',' + g + ',' + b + ')';
+}
+function RNG(seed){ let s = seed % 2147483647; if(s <= 0) s += 2147483646; return ()=> (s = s * 16807 % 2147483647) / 2147483647; }
+function rr(g, x, y, w, h, r){
+  g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r);
+  g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
+}
+function roundRect(x, y, w, h, r){ rr(ctx, x, y, w, h, r); }
 
 /* ---------------- Outfits ---------------- */
 const OUTFITS = {
   male: [
-    {id:'m0', name:'ရိုးရိုး တီရှပ် + ပုဆိုး', desc:'ရွာက ဝတ်လာတဲ့ အဝတ်', price:0, top:'#e8e2d4', bottom:'#2e6b46', type:'longyi'},
-    {id:'m1', name:'တီရှပ် + ပုဆိုး Set', desc:'နေ့စဉ်ဝတ် သန့်ပြန်တဲ့ set', price:800, top:'#1f7a8c', bottom:'#274156', type:'longyi'},
-    {id:'m2', name:'ရှပ် + ဘောင်းဘီ', desc:'အလုပ်သွား စမတ်ကျကျ', price:1500, top:'#bcd6ea', bottom:'#5a5f66', type:'pants'},
-    {id:'m3', name:'ပွဲတက် ရှပ် + ပုဆိုး + တိုက်ပုံ', desc:'ပွဲသွားဖို့ အကောင်းဆုံး ဝတ်စုံ', price:3500, top:'#f4efe2', bottom:'#7a2230', type:'longyi', jacket:'#5d1a24'}
+    {id:'m0', name:'အဝါ Polo + အပြာ ပုဆိုး', desc:'ရွာက ဝတ်လာတဲ့ အဝတ်', price:0, top:'#e9b13b', bottom:'#2b4d8f', type:'longyi'},
+    {id:'m1', name:'အနီ တီရှပ် + အကွက် ပုဆိုး', desc:'နေ့စဉ်ဝတ် သန့်ပြန်တဲ့ set', price:800, top:'#c0392b', bottom:'#6fa8c9', type:'longyi'},
+    {id:'m2', name:'အပြာ ရှပ် + အညို ပုဆိုး', desc:'အလုပ်သွား စမတ်ကျကျ', price:1500, top:'#7fa8c9', bottom:'#6b4a2f', type:'longyi'},
+    {id:'m3', name:'ပွဲတက် တိုက်ပုံ + အကွက် ပုဆိုး', desc:'ပွဲသွားဖို့ အကောင်းဆုံး ဝတ်စုံ', price:3500, top:'#3a3a42', bottom:'#6fa8c9', type:'longyi', jacket:'#26262e'}
   ],
   female: [
     {id:'f0', name:'ရိုးရိုး အင်္ကျီ + ထဘီ', desc:'ရွာက ဝတ်လာတဲ့ အဝတ်', price:0, top:'#e59bb0', bottom:'#a02c3f', type:'skirt'},
-    {id:'f1', name:'ချည်ထည် Set', desc:'ချည်သား အေးအေးလေး နေ့စဉ်ဝတ်', price:800, top:'#f0e6cc', bottom:'#3f7a52', type:'skirt'},
+    {id:'f1', name:'အဖြူ တီရှပ် + အစိမ်း ထဘီ', desc:'အေးအေးလေး နေ့စဉ်ဝတ် set', price:800, top:'#f5f2ea', bottom:'#3f7a52', type:'skirt'},
     {id:'f2', name:'ခေတ်ဝတ်စုံ', desc:'မြို့သူ စတိုင် ခေတ်ဝတ်စုံ', price:1800, top:'#e2724f', bottom:'#33526e', type:'skirt'},
     {id:'f3', name:'ပွဲတက် မြန်မာဝတ်စုံ', desc:'ရွှေချည်ထိုး ပွဲတက် ဝတ်စုံ', price:4000, top:'#e9a13b', bottom:'#7a1f2b', type:'skirt'}
   ]
@@ -278,7 +337,8 @@ const FURNITURE = [
   {id:'chair', name:'ကုလားထိုင်', desc:'ဧည့်သည် လာရင် ထိုင်ဖို့', price:400, color:'#6d4c2f'},
   {id:'wardrobe', name:'ဗီရို', desc:'အဝတ်တွေ စနစ်တကျ ထည့်ဖို့', price:2200, color:'#7c4a26'},
   {id:'tv', name:'တီဗီ', desc:'ညနေ အနားယူ ကြည့်ဖို့', price:4500, color:'#2c313a'},
-  {id:'plant', name:'ပန်းအိုး', desc:'အခန်းလေး စိမ်းစိုသွားအောင်', price:300, color:'#3e7d44'}
+  {id:'plant', name:'ပန်းအိုး', desc:'အခန်းလေး စိမ်းစိုသွားအောင်', price:300, color:'#3e7d44'},
+  {id:'shrine', name:'ဘုရားစင်', desc:'အိမ်မှာ ရှိခိုးဖို့ ဘုရားစင်', price:2500, color:'#8a5a33'}
 ];
 
 /* ---------------- State ---------------- */
@@ -297,6 +357,9 @@ function newState(gender){
     furniture: [],
     m4: {accepted:false, tables:[false,false,false], paid:false},
     m6: {hasPackage:false, delivered:false},
+    jobs: {rest:0, dept:0},   // completed shifts at the big restaurant / department store
+    job: null,                // active shift session {type, step, target, carrying}
+    pstep: 0,              // mission 7 sub-step (persisted — reload-safe)
     phaseDoneShown: false
   };
 }
@@ -308,6 +371,17 @@ function loadSave(){
   try { const raw = localStorage.getItem(SAVE_KEY); return raw ? JSON.parse(raw) : null; } catch(e){ return null; }
 }
 function wipeSave(){ try { localStorage.removeItem(SAVE_KEY); } catch(e){} }
+/* Fill in fields older saves may lack + rescue a save left mid-mission-7 at the pagoda */
+function normalizeSave(sv){
+  const base = newState(sv.gender === 'female' ? 'female' : 'male');
+  for(const k in base){ if(sv[k] === undefined) sv[k] = base[k]; }
+  if(!sv.m4) sv.m4 = base.m4;
+  if(!sv.m6) sv.m6 = base.m6;
+  if(!sv.jobs) sv.jobs = base.jobs;
+  if(sv.job === undefined) sv.job = null;
+  if(sv.scene === 'pagoda' && sv.mission === 7 && !sv.pstep) sv.pstep = 1;
+  return sv;
+}
 
 /* ---------------- World data ---------------- */
 /* Sanchaung main map: 2800 x 2000 */
@@ -326,34 +400,115 @@ const BUILDINGS = [
   {x:500,y:1330,w:330,h:180,name:'လက်ဖက်ရည်ဆိုင်',color:'#7fae5c',roof:'#4c7031',door:{x:665,y:1510},act:'teashop'},
   {x:490,y:160,w:320,h:240,name:'Furniture ဆိုင်',color:'#7d90b8',roof:'#46597e',door:{x:650,y:400},act:'furniture'},
   {x:1520,y:160,w:320,h:240,name:'အဝတ်ဆိုင်',color:'#c77fa5',roof:'#8a4a6d',door:{x:1680,y:400},act:'outfit'},
-  {x:2050,y:1150,w:300,h:260,name:'ပစ္စည်းဆိုင်',color:'#b08954',roof:'#77572c',door:{x:2200,y:1410},act:'store'}
+  {x:2050,y:1150,w:300,h:260,name:'ပစ္စည်းဆိုင်',color:'#b08954',roof:'#77572c',door:{x:2200,y:1410},act:'store'},
+  {x:2020,y:140,w:340,h:250,name:'စားသောက်ဆိုင်ကြီး',color:'#a85f32',roof:'#7a3f1e',door:{x:2190,y:402},act:'restaurant'},
+  {x:2050,y:600,w:300,h:290,name:'ကုန်တိုက်',color:'#3f7a86',roof:'#2a545e',door:{x:2200,y:902},act:'deptstore'}
 ];
 const FILLERS = [
-  [880,150,240,220],[2050,620,300,300],[1520,600,260,300],[60,600,100,300],[450,1160,240,130],
-  [1520,1160,300,240],[880,1160,260,240],[60,1160,100,140],[2500,620,260,300],[60,150,100,220],
-  [1980,150,220,220],[1150,600,150,300],[450,560,240,110],[1980,560,180,60],[880,560,260,110],
-  [60,830,100,100],[2500,1160,260,240],[1150,150,150,220],[2050,150,180,220]
+  [880,150,240,220],[1520,600,260,300],[60,600,100,300],[450,1160,240,130],
+  [1520,1160,300,240],[60,1160,100,140],[2500,620,260,300],[60,150,100,220],
+  [450,560,240,110],[880,560,260,110],
+  [60,830,100,100],[2500,1160,260,240],[1150,150,150,220],
+  /* block interiors — no big empty grass plots left */
+  [1700,680,280,250],[1150,1120,200,140],[1700,1330,280,200],[950,180,240,200],
+  [700,1800,260,160],[1750,1800,280,160],[1850,170,150,190],[420,1800,240,160]
 ];
+/* Fillers that sit on a road are dropped (drawing + collision stay consistent) */
+const FILLERS_ACTIVE = FILLERS.filter(f=> !ROADS.some(r=> f[0] < r.x + r.w && f[0] + f[2] > r.x && f[1] < r.y + r.h && f[1] + f[3] > r.y));
 const TREES = [];
 (function(){ let seed = 7; const rnd = ()=>{ seed = (seed*16807)%2147483647; return seed/2147483647; };
-  for(let i=0;i<70;i++){ const x = 40+rnd()*2720, y = 40+rnd()*1920;
+  for(let i=0;i<130;i++){ const x = 40+rnd()*2720, y = 40+rnd()*1920;
     const onRoad = ROADS.some(r=> x>r.x-24 && x<r.x+r.w+24 && y>r.y-24 && y<r.y+r.h+24);
     const onB = BUILDINGS.some(b=> x>b.x-30 && x<b.x+b.w+30 && y>b.y-30 && y<b.y+b.h+30);
-    if(!onRoad && !onB) TREES.push({x,y,r:15+rnd()*8});
+    if(!onRoad && !onB) TREES.push({x,y,r:15+rnd()*8,kind:i%3});
   } })();
 const TABLES = [ {x:565,y:1572}, {x:665,y:1572}, {x:765,y:1572} ];
-const BUSSTOP = {x:2348, y:1180};
+const BUSSTOP = {x:2362, y:1180};
+/* Where vehicles drop the player in Sanchaung — on Pyay Road, clear of every collider */
+const ARRIVE = {x:2440, y:1250};
+/* YBS stops (Pyay Road only) + trishaw stand + YCDC bin points */
+const STOPS = [
+  {id:'sc', name:'စမ်းချောင်း မှတ်တိုင်', x:2362, y:1180, wx:2330, wy:1214},
+  {id:'ss', name:'ရှင်စောပု မှတ်တိုင်', x:2362, y:478, wx:2330, wy:512}
+];
+const TRISHAW_STAND = {x:472, y:1006};
+const BINS = [ {x:2296,y:1252}, {x:700,y:1652}, {x:1520,y:566}, {x:352,y:1104} ];
+/* Small neighbourhood stalls — sprite shopfront + Canvas-text sign + vendor NPC + simple buy menu */
+const SMALL_SHOPS = [
+  {id:'fruit', name:'အသီးဆိုင်', spr:'shop_fruit', x:1150, y:560, w:176, h:118, door:{x:1238, y:690},
+   vset:'shopkeep', vname:'အသီးသည်', vx:1168, vy:696, items:[
+     {name:'ငှက်ပျောသီး တစ်ဖီး', price:200, color:'#e9c33c'}, {name:'ဖရဲသီး တစ်ခြမ်း', price:350, color:'#3e7d44'}, {name:'သရက်သီး', price:300, color:'#e2724f'}]},
+  {id:'juice', name:'ဖျော်ရည်ဆိုင်', spr:'shop_juice', x:900, y:1180, w:176, h:118, door:{x:988, y:1310},
+   vset:'grandma', vname:'ဖျော်ရည်သည် အဖွား', vx:918, vy:1316, items:[
+     {name:'သံပုရာဖျော်ရည်', price:250, color:'#b7d94e'}, {name:'လိမ္မော်ဖျော်ရည်', price:300, color:'#e9a13b'}, {name:'ထောပတ်ဖျော်ရည်', price:400, color:'#7fae5c'}]},
+  {id:'monti', name:'မုန့်တီဆိုင်', spr:'shop_monti', x:1840, y:1156, w:180, h:118, door:{x:1930, y:1292},
+   vset:'auntie', vname:'မုန့်တီသည်', vx:1862, vy:1298, items:[
+     {name:'မုန့်တီ တစ်ပွဲ', price:400, color:'#c8541e'}, {name:'ရခိုင်မုန့်တီ', price:450, color:'#b3352b'}, {name:'အသုပ်စုံ', price:300, color:'#7fae5c'}]},
+  {id:'grocery', name:'ကုန်စုံဆိုင်', spr:'shop_grocery', x:1000, y:1440, w:176, h:118, door:{x:1088, y:1570},
+   vset:'tea', vname:'ကုန်စုံဆိုင် ဦးလေး', vx:1018, vy:1576, items:[
+     {name:'ကြက်ဥ ၁၀ လုံး', price:500, color:'#f0e6cc'}, {name:'ဆန် ၁ ပြည်', price:800, color:'#d9c8a4'}, {name:'ဆီ ၁ ပုလင်း', price:600, color:'#e9c33c'}]}
+];
+/* Ride destinations: wx/wy = where the player steps off, rx/ry = road point the vehicle drives to */
+const PLACES = [
+  {name:'အိမ်ရှေ့', wx:640, wy:988, rx:640, ry:1020},
+  {name:'မုန့်ဟင်းခါးဆိုင်', wx:1055, wy:988, rx:1055, ry:1020},
+  {name:'လက်ဖက်ရည်ဆိုင်', wx:665, wy:1562, rx:665, ry:1710},
+  {name:'Furniture ဆိုင်', wx:650, wy:448, rx:650, ry:480},
+  {name:'အဝတ်ဆိုင်', wx:1680, wy:448, rx:1680, ry:480},
+  {name:'ပစ္စည်းဆိုင်', wx:2200, wy:1458, rx:2200, ry:1710},
+  {name:'အသီးဆိုင်', wx:1238, wy:698, rx:1238, ry:1020},
+  {name:'ဖျော်ရည်ဆိုင်', wx:988, wy:1318, rx:988, ry:1710},
+  {name:'မုန့်တီဆိုင်', wx:1930, wy:1300, rx:1930, ry:1020},
+  {name:'ကုန်စုံဆိုင်', wx:1088, wy:1578, rx:1088, ry:1710},
+  {name:'Bus မှတ်တိုင်', wx:2330, wy:1214, rx:2500, ry:1180},
+  {name:'ဆိုက်ကားဂိတ်', wx:472, wy:1050, rx:472, ry:1020},
+  {name:'စားသောက်ဆိုင်ကြီး', wx:2190, wy:436, rx:2190, ry:480},
+  {name:'ကုန်တိုက်', wx:2200, wy:936, rx:2200, ry:1020}
+];
 
-/* NPC pedestrians */
+/* Pedestrian crowd — mixed ages, some solo, some in pairs/groups walking the
+   same lane together. Lanes run along road EDGES (sidewalks), so walkers stay
+   out of the vehicle lanes. Speeds: elder slow, kids fast. */
 const GREETINGS = ['မင်္ဂလာပါ!','ဘယ်သွားမလို့လဲ?','ဒီနေ့ ရာသီဥတု ကောင်းတယ်နော်။','စမ်းချောင်းမှာ နေရတာ ပျော်ပါတယ်။','မုန့်ဟင်းခါးဆိုင် အရမ်း ကောင်းတယ် သွားစားကြည့်။','အလုပ်အကိုင် အဆင်ပြေပါစေ။'];
-const peds = [];
-(function(){ let seed = 31; const rnd = ()=>{ seed = (seed*48271)%2147483647; return seed/2147483647; };
-  const lanes = [ {x1:300,y1:1010,x2:2500,y2:1010}, {x1:1010,y1:100,x2:1010,y2:1900}, {x1:300,y1:470,x2:2500,y2:470},
-                  {x1:300,y1:1700,x2:2500,y2:1700}, {x1:2500,y1:100,x2:2500,y2:1900} ];
-  for(let i=0;i<9;i++){ const L = lanes[i%lanes.length]; const t = rnd();
-    peds.push({ x:L.x1+(L.x2-L.x1)*t, y:L.y1+(L.y2-L.y1)*t, L, t, dir: rnd()>.5?1:-1, sp:.00016+rnd()*.0002,
-      gender: rnd()>.5?'male':'female', outfitIdx: Math.floor(rnd()*2), walkT: rnd()*6, name:'ရပ်ကွက်သား' });
-  } })();
+const PED_LANES = [
+  {x1:260,y1:972,x2:2540,y2:972},   // Sanchaung Rd, north edge
+  {x1:2540,y1:1068,x2:260,y2:1068}, // Sanchaung Rd, south edge
+  {x1:260,y1:446,x2:2540,y2:446},   // Shin Saw Pu Rd, north edge
+  {x1:260,y1:1644,x2:2540,y2:1644}, // Kyuntaw Rd, north edge
+  {x1:206,y1:130,x2:206,y2:1900},   // Bagaya Rd, west edge
+  {x1:2404,y1:1900,x2:2404,y2:130}, // Pyay Rd, west edge
+  {x1:1416,y1:130,x2:1416,y2:1900}  // middle lane, east edge
+];
+const crowd = [];
+function addPed(set, lane, t, dir, sp, follow, off){
+  const p = { set, L: PED_LANES[lane], t, dir, sp, follow: follow || null, off: off || 0,
+    x: 0, y: 0, walkT: Math.random() * 6, moving: true, paused: false, name: 'ရပ်ကွက်သား',
+    bubbleAt: 3000 + Math.random() * 9000, bubbleUntil: 0, bubbleText: '' };
+  crowd.push(p); return p;
+}
+/* ~10 walkers: solos + a family pair + a friends pair + a school pair */
+addPed('ped_elder', 4, .30, 1, .0105);                       // elder with cane — slow
+addPed('ped_midm', 0, .15, 1, .020);
+const famLead = addPed('ped_midw', 2, .50, 1, .0175);
+addPed('kid_girl', 2, .50, 1, .0175, famLead, 40);           // mother + little girl
+addPed('ped_youngm', 1, .60, 1, .026);
+const frLead = addPed('ped_youngw', 3, .35, 1, .0225);
+addPed('ped_office', 3, .35, 1, .0225, frLead, 42);          // two friends
+const scLead = addPed('kid_schoolb', 5, .55, 1, .0265);
+addPed('kid_schoolg', 5, .55, 1, .0265, scLead, 38);         // school pair
+addPed('kid_teenb', 6, .20, 1, .0275);
+addPed('kid_teeng', 0, .82, -1, .0265);                      // teen girl — profile sprites only, always walking
+function lanePos(p){
+  let t = p.t;
+  if(p.follow) t = p.follow.t - p.follow.dir * p.off / Math.hypot(p.L.x2 - p.L.x1, p.L.y2 - p.L.y1);
+  t = clamp(t, 0, 1);
+  return { x: p.L.x1 + (p.L.x2 - p.L.x1) * t, y: p.L.y1 + (p.L.y2 - p.L.y1) * t };
+}
+function pedDir(p){
+  const dx = (p.L.x2 - p.L.x1) * p.dir, dy = (p.L.y2 - p.L.y1) * p.dir;
+  if(Math.abs(dx) > Math.abs(dy)) return dx > 0 ? 'right' : 'left';
+  return dy > 0 ? 'down' : 'up';
+}
 
 /* Scene sizes */
 const SCENES = {
@@ -361,7 +516,9 @@ const SCENES = {
   terminal: {w:1280,h:800},
   pagoda: {w:1280,h:820},
   home: {w:980,h:660},
-  village: {w:1280,h:800}
+  village: {w:1280,h:800},
+  restaurant: {w:1280,h:800},
+  deptstore: {w:1280,h:800}
 };
 
 /* ---------------- Audio (tiny beeps, optional) ---------------- */
@@ -411,17 +568,20 @@ function missionText(){
       if(!S.m6.hasPackage) return 'ပစ္စည်းဆိုင်က ပစ္စည်းထုပ် သွားယူပါ';
       if(!S.m6.delivered) return 'ပစ္စည်းထုပ်ကို ရှင်စောပုလမ်းနားက ကိုအောင်မြင့် ဆီ ပို့ပေးပါ';
       return 'ပစ္စည်းဆိုင်ကို ပြန်သွားပြီး ပို့ခ ယူပါ';
-    case 7: return pagodaStep === 0 ? 'ပြည်လမ်း bus မှတ်တိုင်ကနေ YBS စီးပြီး ရွှေတိဂုံ သွားပါ (300 cup)'
-                 : pagodaStep === 1 ? 'ရွှေတိဂုံစေတီနား သွားပြီး ရှိခိုးပါ'
+    case 7: return S.pstep === 0 ? 'ပြည်လမ်း bus မှတ်တိုင်ကနေ YBS စီးပြီး ရွှေတိဂုံ သွားပါ (300 cup)'
+                 : S.pstep === 1 ? 'ရွှေတိဂုံစေတီနား သွားပြီး ရှိခိုးပါ'
                  : 'Bus နဲ့ စမ်းချောင်း ပြန်ပါ';
     default: return 'Free Roam — မြို့ကို လွတ်လွတ်လပ်လပ် လျှောက်ပါ။ ဆိုင်တွေမှာ furniture နဲ့ outfit တွေ ထပ်ဝယ်လို့ရပါတယ်';
   }
 }
-let pagodaStep = 0; // runtime only for mission 7
 
 function getObjective(){
   // returns {scene, x, y} for the direction arrow
-  const H = BUILDINGS[0].door, MO = BUILDINGS[1].door, TEA = BUILDINGS[2].door,
+  if(S.job){
+    const jt = jobTargetPos();
+    if(jt && jt.scene === S.scene) return jt;
+  }
+  const H = BUILDINGS[0].door, MO = BUILDINGS[1].door,
         FUR = BUILDINGS[3].door, STO = BUILDINGS[5].door;
   switch(S.mission){
     case 1: return {scene:'terminal', x:640, y:470};
@@ -438,8 +598,8 @@ function getObjective(){
       if(!S.m6.delivered) return {scene:'sanchaung', x:1960, y:600};
       return {scene:'sanchaung', x:STO.x, y:STO.y};
     case 7:
-      if(pagodaStep === 0) return {scene:'sanchaung', x:BUSSTOP.x, y:BUSSTOP.y};
-      if(pagodaStep === 1) return {scene:'pagoda', x:640, y:430};
+      if(S.pstep === 0) return {scene:'sanchaung', x:BUSSTOP.x, y:BUSSTOP.y};
+      if(S.pstep === 1) return {scene:'pagoda', x:640, y:430};
       return {scene:'pagoda', x:1150, y:700};
     default: return null;
   }
@@ -457,53 +617,1513 @@ function completeMission(rewardCup, rewardExpi, msg){
   }
 }
 
+/* ============================================================
+   CHARACTER SPRITES — AI pixel-art images (assets/spr/), sliced
+   from magenta-keyed sheets. paintChar() below stays as a fallback
+   for the two outfits with no sprite sheet (m2 / f2) and for the
+   first frames before images arrive.
+   ============================================================ */
+const SPR_FILES = ['m0_down','m0_up','m0_left','m0_right','m0_up1','m0_left1','m0_right1','f0_down','f0_up','f0_left','f0_right',
+  'm1_down0','m1_down1','m1_up0','m1_up1','m1_left0','m1_left1','m1_right0','m1_right1',
+  'm3_down','m3_up','m3_left','m3_right','f1_down','f1_up','f1_left','f1_right',
+  'f3_down','f3_up','f3_left','f3_right',
+  'npc_taxi_f','npc_taxi_s','npc_auntie_f','npc_auntie_s','npc_tea_f','npc_tea_s',
+  'npc_grandma_f','npc_grandma_s','npc_delivery_f','npc_delivery_s','npc_shopkeep_f','npc_shopkeep_s',
+  'ped_elder_f','ped_elder_s','ped_midm_f','ped_midm_s','ped_midw_f','ped_midw_s',
+  'ped_youngm_f','ped_youngm_s','ped_youngw_f','ped_youngw_s','ped_office_f','ped_office_s',
+  'kid_boy_f','kid_boy_s','kid_girl_f','kid_girl_s','kid_schoolb_f','kid_schoolb_s',
+  'kid_schoolg_f','kid_schoolg_s','kid_teenb_f','kid_teenb_s','kid_teeng_l','kid_teeng_r',
+  'dad_f','dad_b','dad_s','mom_f','mom_b','mom_s',
+  'bld_home','bld_mohinga','bld_teashop','bld_furniture','bld_outfit','bld_store','bld_house','bld_shophouse','bld_shelter','bld_eatery',
+  'shop_fruit','shop_juice','shop_monti','shop_grocery',
+  'tree_big','tree_palm','tree_banana','pagoda','vil_house','vil_fence','vil_hay','vil_sign','vil_chickens',
+  'furn_bed','furn_table','furn_chair','furn_wardrobe','furn_tv','furn_plant','furn_shrine','furn_shelf','furn_pot',
+  'prop_bike','prop_cart','prop_bin','prop_cone',
+  'veh_scania','veh_probox','veh_ybs','veh_trishaw','veh_trishaw_a','veh_trishaw_b','veh_trishaw_c','veh_sedan','veh_suv','veh_police','veh_fire','veh_ycdc',
+  'venue_rest','venue_dept','venue_table','venue_counter','venue_pass','venue_shelf','venue_rack','venue_checkout','venue_escalator'];
+const IMG = {}; let sprReady = false;
+function loadSprites(){
+  let n = 0;
+  SPR_FILES.forEach(nm=>{
+    const im = new Image();
+    im.onload = im.onerror = ()=>{ if(++n === SPR_FILES.length){ sprReady = true; for(const k in LAYERS) delete LAYERS[k]; homeLayerKey = '__x'; initPreviews(); } };
+    im.src = 'assets/spr/' + nm + '.png'; IMG[nm] = im;
+  });
+}
+function imgOk(nm){ const im = nm && IMG[nm]; return (im && im.complete && im.naturalWidth > 0) ? im : null; }
+/* Sprite sets: front/down/up/left/right/side image names (side = right-facing profile) */
+function npcSet(f, s){ return {down:f, front:f, up:f, side:s}; }
+const SETS = {
+  taxi: npcSet('npc_taxi_f','npc_taxi_s'), auntie: npcSet('npc_auntie_f','npc_auntie_s'),
+  tea: npcSet('npc_tea_f','npc_tea_s'), grandma: npcSet('npc_grandma_f','npc_grandma_s'),
+  delivery: npcSet('npc_delivery_f','npc_delivery_s'), shopkeep: npcSet('npc_shopkeep_f','npc_shopkeep_s'),
+  dad: {down:'dad_f', up:'dad_b', side:'dad_s'}, mom: {down:'mom_f', up:'mom_b', side:'mom_s'},
+  ped_elder: npcSet('ped_elder_f','ped_elder_s'), ped_midm: npcSet('ped_midm_f','ped_midm_s'),
+  ped_midw: npcSet('ped_midw_f','ped_midw_s'), ped_youngm: npcSet('ped_youngm_f','ped_youngm_s'),
+  ped_youngw: npcSet('ped_youngw_f','ped_youngw_s'), ped_office: npcSet('ped_office_f','ped_office_s'),
+  kid_boy: npcSet('kid_boy_f','kid_boy_s'), kid_girl: npcSet('kid_girl_f','kid_girl_s'),
+  kid_schoolb: npcSet('kid_schoolb_f','kid_schoolb_s'), kid_schoolg: npcSet('kid_schoolg_f','kid_schoolg_s'),
+  kid_teenb: npcSet('kid_teenb_f','kid_teenb_s'),
+  kid_teeng: {left:'kid_teeng_l', right:'kid_teeng_r', down:'kid_teeng_r', front:'kid_teeng_r', up:'kid_teeng_l'}
+};
+const OUTFIT_SPR = {
+  m0:{down:'m0_down',up:['m0_up','m0_up1'],left:['m0_left','m0_left1'],right:['m0_right','m0_right1']},
+  m1:{down:['m1_down0','m1_down1'],up:['m1_up0','m1_up1'],left:['m1_left0','m1_left1'],right:['m1_right0','m1_right1']},
+  m3:{down:'m3_down',up:'m3_up',left:'m3_left',right:'m3_right'},
+  f0:{down:'f0_down',up:'f0_up',left:'f0_left',right:'f0_right'},
+  f1:{down:'f1_down',up:'f1_up',left:'f1_left',right:'f1_right'},
+  f3:{down:'f3_down',up:'f3_up',left:'f3_left',right:'f3_right'}
+};
+/* Resolve a direction to {im, flip} from a set; side sprites face right */
+function dirImg(set, d, ph){
+  if(!set) return null;
+  const pick = v => Array.isArray(v) ? v[Math.min(ph, v.length - 1)] : v;
+  let n = null, f = false;
+  if(d === 'down') n = pick(set.down || set.front || set.right || set.left);
+  else if(d === 'up') n = pick(set.up || set.back || set.down || set.front || set.right);
+  else if(d === 'right'){ if(set.right || set.side) n = pick(set.right || set.side); else { n = pick(set.left); f = true; } }
+  else { if(set.left) n = pick(set.left); else if(set.side){ n = pick(set.side); f = true; } else { n = pick(set.right); f = true; } }
+  const im = imgOk(n);
+  return im ? {im, flip: f} : null;
+}
+const SPR = {};
+function charSprite(gender, o, dir, frame){
+  const key = [gender, o.top, o.bottom, o.type, o.jacket || '', dir, frame].join('|');
+  if(SPR[key]) return SPR[key];
+  const c = paintChar(gender, o, dir, frame);
+  SPR[key] = c; return c;
+}
+/* Draws one 24x32 pixel-style character frame.
+   dir: 'down' | 'up' | 'side' (side faces right; left is flipped at draw time)
+   frame: 0 idle, 1 walk A, 2 walk B */
+function paintChar(gender, o, dir, frame){
+  const c = mkCanvas(24, 32), g = c.getContext('2d');
+  const R = (x,y,w,h,col)=>{ g.fillStyle = col; g.fillRect(x,y,w,h); };
+  const top = o.top, topD = shade(top, .78), bot = o.bottom, botD = shade(bot, .76);
+  const skin = '#eab98d', skinD = '#d69f68';
+  const hair = gender === 'female' ? '#241a12' : '#2b2015';
+  const armCol = shade(o.jacket || top, .88);
+  const f = frame, side = dir === 'side', up = dir === 'up';
+  const shoe = '#3a2c1c';
+  /* ---- lower body ---- */
+  if(o.type === 'pants'){
+    if(side){
+      const bL = f === 1 ? -2 : 0, fL = f === 2 ? -2 : 0;
+      R(9, 21, 4, 8 + bL, shade(bot, .72)); R(8, 29 + bL, 5, 2, shoe);
+      R(12, 21, 4, 8 + fL, bot);           R(12, 29 + fL, 5, 2, shoe);
+    } else {
+      const lL = f === 1 ? -2 : 0, rL = f === 2 ? -2 : 0;
+      R(7, 21, 4, 8 + lL, bot);  R(6, 29 + lL, 5, 2, shoe);
+      R(13, 21, 4, 8 + rL, bot); R(13, 29 + rL, 5, 2, shoe);
+    }
+  } else { /* longyi / skirt */
+    if(side){
+      R(8, 21, 9, 3, bot); R(7, 24, 11, 3, bot); R(7, 27, 11, 2, botD);
+      const a = f === 1 ? 1 : 0, b = f === 2 ? 1 : 0;
+      R(8 - a, 29, 3, 2, skin); R(7 - a, 31, 4, 1, shoe);
+      R(13 + b, 29, 3, 2, skin); R(13 + b, 31, 4, 1, shoe);
+    } else {
+      R(7, 21, 10, 3, bot); R(6, 24, 12, 3, bot); R(5, 27, 14, 2, botD);
+      const a = f === 1 ? -1 : 0, b = f === 2 ? 1 : 0;
+      R(7 + a, 29, 3, 2, skin); R(6 + a, 31, 4, 1, shoe);
+      R(14 + b, 29, 3, 2, skin); R(14 + b, 31, 4, 1, shoe);
+    }
+  }
+  /* ---- torso ---- */
+  if(side){
+    R(8, 12, 10, 10, top); R(8, 12, 3, 10, topD);
+    if(o.jacket) R(15, 12, 3, 10, o.jacket);
+  } else {
+    R(6, 12, 12, 10, top); R(16, 12, 2, 10, topD); R(6, 21, 12, 1, topD);
+    if(o.jacket){ R(6, 12, 3, 10, o.jacket); R(15, 12, 3, 10, o.jacket);
+      R(11, 14, 1, 1, '#c9a227'); R(11, 17, 1, 1, '#c9a227'); R(11, 20, 1, 1, '#c9a227'); }
+  }
+  /* ---- arms (swing opposite to legs) ---- */
+  const aOff = f === 1 ? 1 : f === 2 ? -1 : 0;
+  if(side){
+    R(9, 12, 3, 8 + aOff, shade(armCol, .75)); R(9, 20 + aOff, 3, 2, skinD);
+    R(14, 12, 3, 8 - aOff, armCol);            R(14, 20 - aOff, 3, 2, skin);
+  } else {
+    R(3, 12, 3, 8 + aOff, armCol);  R(3, 20 + aOff, 3, 2, skin);
+    R(18, 12, 3, 8 - aOff, armCol); R(18, 20 - aOff, 3, 2, skin);
+  }
+  /* ---- head ---- */
+  if(side){
+    if(up){ /* not used */ }
+    R(9, 3, 7, 1, skin); R(8, 4, 9, 6, skin); R(9, 10, 7, 2, skin);
+    R(9, 2, 7, 1, hair); R(8, 3, 9, 3, hair); R(8, 3, 3, 9, hair);
+    if(gender === 'female'){ R(6, 5, 2, 12, hair); R(10, 1, 4, 2, hair); }
+    R(14, 7, 1, 2, '#33241a'); R(15, 10, 1, 1, '#b06a3f');
+  } else if(up){
+    R(8, 3, 8, 1, hair); R(7, 4, 10, 6, hair); R(8, 10, 8, 2, hair);
+    R(10, 12, 4, 1, skinD); /* neck */
+    if(gender === 'female'){ R(4, 5, 2, 13, hair); R(18, 5, 2, 13, hair); R(10, 1, 4, 2, hair); }
+  } else {
+    R(8, 3, 8, 1, skin); R(7, 4, 10, 6, skin); R(8, 10, 8, 2, skin);
+    R(8, 2, 8, 1, hair); R(7, 3, 10, 3, hair);
+    if(gender === 'female'){
+      R(7, 3, 10, 4, hair); R(10, 0, 4, 2, hair); /* bun */
+      R(5, 5, 2, 12, hair); R(17, 5, 2, 12, hair); /* front locks */
+    } else { R(7, 6, 2, 2, hair); R(15, 6, 2, 2, hair); }
+    R(9, 7, 1, 2, '#33241a'); R(14, 7, 1, 2, '#33241a');
+    R(11, 10, 2, 1, '#b06a3f');
+  }
+  return c;
+}
+let nowMs = 0;
+function drawActor(x, y, o){
+  const s = o.scale || 1;
+  const bob = o.moving ? Math.round(Math.sin((o.walkT || 0) * 14) * 1.2)
+                       : Math.round(Math.sin(nowMs / 650 + x * .05 + y * .03) * .7);
+  ctx.fillStyle = 'rgba(20,15,5,.25)';
+  ctx.beginPath(); ctx.ellipse(x, y + 16 * s, 13 * s, 5 * s, 0, 0, 7); ctx.fill();
+  const set = o.set || (o.outfitId ? OUTFIT_SPR[o.outfitId] : null);
+  const ph = o.moving ? (Math.floor((o.walkT || 0) * 7) % 2) : 0;
+  const res = set ? dirImg(set, o.dir || 'down', ph) : null;
+  if(res){
+    /* AI sprite: source heights are normalised (adult 100px, kids 82px) */
+    const h = 62 * s * (res.im.height / 100), w = h * res.im.width / res.im.height;
+    const ax = Math.round(x - w / 2), ay = Math.round(y - h + 16 * s) + bob;
+    ctx.save();
+    if(res.flip){ ctx.translate(ax + w, ay); ctx.scale(-1, 1); ctx.drawImage(res.im, 0, 0, w, h); }
+    else ctx.drawImage(res.im, ax, ay, w, h);
+    ctx.restore();
+  } else {
+    const dirKey = (o.dir === 'left' || o.dir === 'right') ? 'side' : (o.dir || 'down');
+    const frame = o.moving ? (Math.floor((o.walkT || 0) * 7) % 2 === 0 ? 1 : 2) : 0;
+    const spr = charSprite(o.gender, o.outfit, dirKey, frame);
+    const w = 44 * s, h = 58 * s;
+    ctx.save(); ctx.imageSmoothingEnabled = false;
+    const ax = Math.round(x - w / 2), ay = Math.round(y - h + 16 * s) + bob;
+    if(o.dir === 'left'){ ctx.translate(ax + w, ay); ctx.scale(-1, 1); ctx.drawImage(spr, 0, 0, w, h); }
+    else ctx.drawImage(spr, ax, ay, w, h);
+    ctx.restore(); ctx.imageSmoothingEnabled = true;
+  }
+  if(o.name){
+    ctx.font = '600 12px "Noto Sans Myanmar", sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const wdt = ctx.measureText(o.name).width + 12;
+    ctx.fillStyle = 'rgba(30,20,10,.72)'; roundRect(x - wdt/2, y - 56 * s, wdt, 19, 9); ctx.fill();
+    ctx.fillStyle = '#ffeecb'; ctx.fillText(o.name, x, y - 56 * s + 10.5);
+    ctx.textBaseline = 'alphabetic';
+  }
+}
+function drawBubble(x, y, text){
+  ctx.font = '600 12.5px "Noto Sans Myanmar", sans-serif';
+  const w = ctx.measureText(text).width + 18, h = 26;
+  const bx = clamp(x - w / 2, 4, WORLD.w - w - 4), by = y - 100;
+  ctx.fillStyle = 'rgba(255,253,247,.96)'; roundRect(bx, by, w, h, 9); ctx.fill();
+  ctx.strokeStyle = 'rgba(120,85,40,.45)'; ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x - 6, by + h - 1); ctx.lineTo(x + 6, by + h - 1); ctx.lineTo(x, by + h + 8); ctx.closePath();
+  ctx.fillStyle = 'rgba(255,253,247,.96)'; ctx.fill();
+  ctx.fillStyle = '#4a341f'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, bx + w / 2, by + h / 2 + 1); ctx.textBaseline = 'alphabetic';
+}
+function labelOn(g, text, x, y, size, color, bg){
+  const sz = size || 15;
+  g.save();
+  g.font = '800 ' + sz + 'px "Noto Sans Myanmar", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  const wdt = g.measureText(text).width + 18;
+  if(bg !== false){ g.fillStyle = bg || 'rgba(255,250,235,.92)'; rr(g, x - wdt/2, y - (sz + 13) / 2, wdt, sz + 13, 8); g.fill();
+    g.strokeStyle = 'rgba(120,85,40,.35)'; g.lineWidth = 1.5; g.stroke(); }
+  g.fillStyle = color || '#4a341f';
+  g.fillText(text, x, y + 1);
+  g.restore();
+}
+function label(text, x, y, size, color, bg){ labelOn(ctx, text, x, y, size, color, bg); }
+function roadNameOn(g, text, x, y, vert){
+  g.save(); g.translate(x, y); if(vert) g.rotate(-Math.PI/2);
+  g.font = '800 26px "Noto Sans Myanmar", sans-serif'; g.textAlign = 'center';
+  g.fillStyle = 'rgba(255,255,255,.5)'; g.textBaseline = 'middle'; g.fillText(text, 0, 1); g.restore();
+}
+/* Road names render LAST (above every vehicle and pedestrian), each on a
+   soft dark pill, so they stay readable in live traffic */
+function drawRoadNames(){
+  const names = [
+    ['ပြည်လမ်း', 2500, 300, true], ['ပြည်လမ်း', 2500, 1750, true],
+    ['ဗားကရာလမ်း', 300, 1250, true],
+    ['ကျွန်းတောလမ်း', 1400, 1712, false],
+    ['စမ်းချောင်းလမ်း', 800, 1022, false], ['စမ်းချောင်းလမ်း', 1900, 1022, false],
+    ['ရှင်စောပုလမ်း', 900, 482, false]
+  ];
+  ctx.save();
+  ctx.font = '800 25px "Noto Sans Myanmar", sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  names.forEach(([t, x, y, vert])=>{
+    ctx.save(); ctx.translate(x, y); if(vert) ctx.rotate(-Math.PI / 2);
+    const w = ctx.measureText(t).width + 32;
+    ctx.fillStyle = 'rgba(26,20,10,.55)'; rr(ctx, -w / 2, -19, w, 38, 11); ctx.fill();
+    ctx.fillStyle = '#ffe9ad'; ctx.fillText(t, 0, 2);
+    ctx.restore();
+  });
+  ctx.restore();
+}
+
+/* ============================================================
+   PROP / BUILDING PAINTERS (pre-rendered into scene layers)
+   ============================================================ */
+function paintTree(g, x, y, r, kind){
+  const tim = imgOk(kind === 1 ? 'tree_palm' : kind === 2 ? 'tree_banana' : 'tree_big');
+  if(tim){
+    const w = r * (kind === 0 ? 5.6 : 5.0), h = w * tim.height / tim.width;
+    g.fillStyle = 'rgba(0,0,0,.16)'; g.beginPath(); g.ellipse(x, y + 12, r, 6, 0, 0, 7); g.fill();
+    g.drawImage(tim, x - w / 2, y + 14 - h, w, h);
+    return;
+  }
+  g.fillStyle = 'rgba(0,0,0,.16)'; g.beginPath(); g.ellipse(x, y + 12, r, 6, 0, 0, 7); g.fill();
+  if(kind === 1){ /* palm */
+    g.strokeStyle = '#7a5a33'; g.lineWidth = 5; g.beginPath(); g.moveTo(x, y + 12);
+    g.quadraticCurveTo(x + 4, y - 12, x + 9, y - 30); g.stroke();
+    const cxp = x + 9, cyp = y - 30;
+    for(let i = 0; i < 7; i++){
+      const a = -Math.PI * .95 + i * (Math.PI * .9 / 6);
+      g.save(); g.translate(cxp, cyp); g.rotate(a);
+      g.fillStyle = i % 2 ? '#4e8f3f' : '#5da34c';
+      g.beginPath(); g.ellipse(17, 0, 18, 4.2, 0, 0, 7); g.fill(); g.restore();
+    }
+    g.fillStyle = '#7a5a2a';
+    [[-3,2],[3,3],[0,6]].forEach(d=>{ g.beginPath(); g.arc(cxp + d[0], cyp + d[1], 3, 0, 7); g.fill(); });
+  } else if(kind === 2){ /* banana */
+    for(let i = 0; i < 5; i++){
+      const a = -2.6 + i * .55;
+      g.save(); g.translate(x, y + 10); g.rotate(a);
+      g.fillStyle = i % 2 ? '#57a047' : '#478c3a';
+      g.beginPath(); g.ellipse(0, -20, 6.5, 22, 0, 0, 7); g.fill(); g.restore();
+    }
+    g.fillStyle = '#6d4c2f'; g.fillRect(x - 3, y + 2, 6, 10);
+  } else { /* canopy */
+    g.fillStyle = '#6d4c2f'; g.fillRect(x - 3, y, 6, 14);
+    g.fillStyle = '#3f7031'; g.beginPath(); g.arc(x, y - 8, r + 3, 0, 7); g.fill();
+    g.fillStyle = '#4e7d3a'; g.beginPath(); g.arc(x - r * .35, y - 13, r * .68, 0, 7); g.fill();
+    g.fillStyle = '#5d9147'; g.beginPath(); g.arc(x + r * .3, y - 16, r * .55, 0, 7); g.fill();
+    g.fillStyle = '#8fc46e';
+    const rnd = RNG(Math.floor(x * 3 + y));
+    for(let i = 0; i < 7; i++) g.fillRect(x - r + rnd() * r * 1.7, y - 22 + rnd() * r, 3, 3);
+  }
+}
+function paintShingleRoof(g, x, y, w, h, color){
+  g.fillStyle = color; g.fillRect(x, y, w, h);
+  g.strokeStyle = 'rgba(0,0,0,.16)'; g.lineWidth = 1.5;
+  for(let yy = y + 6; yy < y + h; yy += 6){ g.beginPath(); g.moveTo(x, yy); g.lineTo(x + w, yy); g.stroke(); }
+  g.fillStyle = 'rgba(255,255,255,.10)'; g.fillRect(x, y, w, 3);
+}
+const BLD_SPR = {home:'bld_home', mohinga:'bld_mohinga', teashop:'bld_teashop', furniture:'bld_furniture', outfit:'bld_outfit', store:'bld_store', restaurant:'venue_rest', deptstore:'venue_dept'};
+function paintBuildingSpr(g, b, im){
+  const maxW = b.w + 60, maxH = b.h + 150;
+  const sc = Math.min(maxW / im.width, maxH / im.height);
+  const w = im.width * sc, h = im.height * sc;
+  const x = b.x + b.w / 2 - w / 2, y = b.y + b.h + 6 - h;
+  g.fillStyle = 'rgba(25,18,5,.18)'; g.beginPath(); g.ellipse(b.x + b.w / 2, b.y + b.h + 4, b.w * .52, 10, 0, 0, 7); g.fill();
+  g.drawImage(im, x, y, w, h);
+  g.font = '800 16px "Noto Sans Myanmar", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  if(b.act === 'restaurant' || b.act === 'deptstore'){
+    /* venue facades carry their own blank sign board — write the name on it */
+    g.font = '800 19px "Noto Sans Myanmar", sans-serif';
+    g.fillStyle = b.act === 'restaurant' ? '#ffeecb' : '#17323a';
+    g.fillText(b.name, b.x + b.w / 2, y + h * .085 + 1);
+  } else {
+    const sw = g.measureText(b.name).width + 30;
+    g.fillStyle = '#3a2a16'; rr(g, b.x + b.w / 2 - sw / 2, y - 34, sw, 30, 7); g.fill();
+    g.strokeStyle = '#d9a94f'; g.lineWidth = 2; g.stroke();
+    g.fillStyle = '#ffeecb'; g.fillText(b.name, b.x + b.w / 2, y - 18);
+  }
+  g.textBaseline = 'alphabetic';
+}
+function paintBuilding(g, b, opts){
+  opts = opts || {};
+  const bim = imgOk(BLD_SPR[b.act]);
+  if(bim){ paintBuildingSpr(g, b, bim); return; }
+  g.fillStyle = 'rgba(25,18,5,.22)'; g.fillRect(b.x + 8, b.y + 10, b.w, b.h);
+  g.fillStyle = 'rgba(25,18,5,.10)'; g.fillRect(b.x + 14, b.y + 17, b.w, b.h);
+  const grad = g.createLinearGradient(0, b.y, 0, b.y + b.h);
+  grad.addColorStop(0, b.color); grad.addColorStop(1, shade(b.color, .84));
+  g.fillStyle = grad; g.fillRect(b.x, b.y, b.w, b.h);
+  g.strokeStyle = 'rgba(58,38,18,.5)'; g.lineWidth = 2; g.strokeRect(b.x, b.y, b.w, b.h);
+  g.fillStyle = 'rgba(0,0,0,.13)'; g.fillRect(b.x, b.y + b.h - 12, b.w, 12);
+  /* roof */
+  g.beginPath(); g.moveTo(b.x - 10, b.y + 8); g.lineTo(b.x + b.w / 2, b.y - 34); g.lineTo(b.x + b.w + 10, b.y + 8); g.closePath();
+  g.fillStyle = b.roof; g.fill();
+  g.save(); g.clip();
+  g.strokeStyle = 'rgba(0,0,0,.18)'; g.lineWidth = 1.5;
+  for(let yy = b.y - 28; yy < b.y + 8; yy += 7){ g.beginPath(); g.moveTo(b.x - 12, yy); g.lineTo(b.x + b.w + 12, yy); g.stroke(); }
+  g.restore();
+  g.strokeStyle = 'rgba(58,38,18,.45)'; g.lineWidth = 2;
+  g.beginPath(); g.moveTo(b.x - 10, b.y + 8); g.lineTo(b.x + b.w / 2, b.y - 34); g.lineTo(b.x + b.w + 10, b.y + 8); g.stroke();
+  /* windows */
+  for(let wx = b.x + 26; wx < b.x + b.w - 34; wx += 52){
+    if(Math.abs(wx - b.door.x) > 42){
+      g.fillStyle = '#f3e9d2'; g.fillRect(wx - 2, b.y + 52, 30, 38);
+      const wg = g.createLinearGradient(0, b.y + 54, 0, b.y + 88);
+      wg.addColorStop(0, '#a8cbe4'); wg.addColorStop(1, '#6f97b5');
+      g.fillStyle = wg; g.fillRect(wx, b.y + 54, 26, 34);
+      g.strokeStyle = 'rgba(70,50,25,.6)'; g.lineWidth = 1.5; g.strokeRect(wx, b.y + 54, 26, 34);
+      g.beginPath(); g.moveTo(wx + 13, b.y + 54); g.lineTo(wx + 13, b.y + 88); g.stroke();
+    }
+  }
+  /* striped shop awning */
+  if(opts.awning){
+    const ay = b.y + b.h - 66, ax0 = b.door.x - 62, ax1 = b.door.x + 62;
+    g.beginPath(); g.moveTo(ax0, ay); g.lineTo(ax1, ay); g.lineTo(ax1 - 10, ay + 20); g.lineTo(ax0 + 10, ay + 20); g.closePath();
+    g.save(); g.clip();
+    for(let sx = ax0, i = 0; sx < ax1; sx += 13, i++) { g.fillStyle = i % 2 ? opts.awning[0] : opts.awning[1]; g.fillRect(sx, ay - 2, 13, 24); }
+    g.restore();
+    g.strokeStyle = 'rgba(58,38,18,.5)'; g.lineWidth = 1.5;
+    g.beginPath(); g.moveTo(ax0, ay); g.lineTo(ax1, ay); g.lineTo(ax1 - 10, ay + 20); g.lineTo(ax0 + 10, ay + 20); g.closePath(); g.stroke();
+    g.fillStyle = 'rgba(58,38,18,.65)'; g.fillRect(ax0 + 12, ay + 20, 3, 42); g.fillRect(ax1 - 15, ay + 20, 3, 42);
+  }
+  /* door + warm light pool */
+  const dg = g.createRadialGradient(b.door.x, b.door.y - 4, 4, b.door.x, b.door.y - 4, 52);
+  dg.addColorStop(0, 'rgba(255,205,110,.20)'); dg.addColorStop(1, 'rgba(255,205,110,0)');
+  g.fillStyle = dg; g.fillRect(b.door.x - 54, b.door.y - 56, 108, 62);
+  g.fillStyle = '#5d3d20'; g.fillRect(b.door.x - 19, b.door.y - 48, 38, 48);
+  g.fillStyle = '#7a4a26'; g.fillRect(b.door.x - 15, b.door.y - 44, 30, 44);
+  g.strokeStyle = 'rgba(0,0,0,.3)'; g.strokeRect(b.door.x - 11, b.door.y - 38, 22, 30);
+  g.fillStyle = '#e9c33c'; g.beginPath(); g.arc(b.door.x + 9, b.door.y - 20, 2.5, 0, 7); g.fill();
+  g.fillStyle = '#cbb489'; g.fillRect(b.door.x - 24, b.door.y, 48, 6);
+  /* signboard */
+  g.font = '800 16px "Noto Sans Myanmar", sans-serif'; g.textAlign = 'center';
+  const sw = g.measureText(b.name).width + 30;
+  g.fillStyle = opts.signBg || '#3a2a16'; rr(g, b.x + b.w / 2 - sw / 2, b.y - 66, sw, 30, 7); g.fill();
+  g.strokeStyle = '#d9a94f'; g.lineWidth = 2; g.stroke();
+  g.fillStyle = '#ffeecb'; g.textBaseline = 'middle'; g.fillText(b.name, b.x + b.w / 2, b.y - 50); g.textBaseline = 'alphabetic';
+}
+function paintFillerHouse(g, f, i){
+  const x = f[0], y = f[1], w = f[2], h = f[3];
+  const walls = ['#d9c8a9','#cbb694','#e2d3b3','#c4b28c','#d3bd9f'];
+  const roofs = ['#a4553a','#8a6a45','#96603a','#7c5a3a'];
+  g.fillStyle = 'rgba(25,18,5,.18)'; g.fillRect(x + 6, y + 8, w, h);
+  g.fillStyle = walls[i % walls.length]; g.fillRect(x, y, w, h);
+  g.strokeStyle = 'rgba(58,38,18,.4)'; g.lineWidth = 1.5; g.strokeRect(x, y, w, h);
+  g.fillStyle = 'rgba(0,0,0,.10)'; g.fillRect(x, y + h - 9, w, 9);
+  if(i % 3 === 2){ /* flat zinc roof */
+    paintShingleRoof(g, x - 4, y - 12, w + 8, 16, '#9fb3bd');
+  } else {
+    g.beginPath(); g.moveTo(x - 8, y + 6); g.lineTo(x + w / 2, y - 26); g.lineTo(x + w + 8, y + 6); g.closePath();
+    g.fillStyle = roofs[i % roofs.length]; g.fill();
+    g.save(); g.clip(); g.strokeStyle = 'rgba(0,0,0,.16)';
+    for(let yy = y - 20; yy < y + 6; yy += 6){ g.beginPath(); g.moveTo(x - 10, yy); g.lineTo(x + w + 10, yy); g.stroke(); }
+    g.restore();
+  }
+  g.fillStyle = '#5d3d20'; g.fillRect(x + w / 2 - 11, y + h - 44, 22, 44);
+  g.fillStyle = 'rgba(70,50,25,.55)';
+  for(let wx = x + 20; wx < x + w - 26; wx += 46){ if(Math.abs(wx - (x + w / 2)) > 30) g.fillRect(wx, y + 34, 20, 26); }
+  g.fillStyle = '#4e7d3a';
+  [[x + 8, y + h - 6],[x + w - 14, y + h - 8]].forEach(p=>{ g.beginPath(); g.arc(p[0], p[1], 7, 0, 7); g.fill(); });
+}
+function paintLamp(g, x, y){
+  const lg = g.createRadialGradient(x, y - 34, 2, x, y - 34, 44);
+  lg.addColorStop(0, 'rgba(255,220,140,.16)'); lg.addColorStop(1, 'rgba(255,220,140,0)');
+  g.fillStyle = lg; g.fillRect(x - 46, y - 80, 92, 92);
+  g.fillStyle = '#3c3a38'; g.fillRect(x - 2, y - 36, 4, 36);
+  g.fillRect(x - 2, y - 38, 14, 4);
+  g.fillStyle = '#ffd76e'; g.beginPath(); g.arc(x + 14, y - 32, 4.5, 0, 7); g.fill();
+  g.strokeStyle = 'rgba(58,38,18,.6)'; g.lineWidth = 1; g.stroke();
+}
+function paintCar(g, x, y, color, signText){
+  g.fillStyle = 'rgba(0,0,0,.2)'; rr(g, x - 66, y - 118, 132, 56, 10); g.fill();
+  g.fillStyle = color; rr(g, x - 70, y - 124, 132, 56, 10); g.fill();
+  g.strokeStyle = 'rgba(40,25,10,.45)'; g.lineWidth = 1.5; g.stroke();
+  g.fillStyle = '#bfe0f2'; rr(g, x - 52, y - 116, 104, 18, 5); g.fill();
+  g.fillStyle = 'rgba(255,255,255,.5)'; g.fillRect(x - 52, y - 116, 104, 5);
+  g.fillStyle = '#fff'; rr(g, x - 22, y - 138, 44, 15, 3); g.fill();
+  g.strokeStyle = 'rgba(40,25,10,.4)'; g.stroke();
+  g.fillStyle = '#222'; g.font = '700 10.5px "Noto Sans Myanmar", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillText(signText, x, y - 130); g.textBaseline = 'alphabetic';
+  g.fillStyle = '#2c313a';
+  [x - 40, x + 40].forEach(wx=>{ g.beginPath(); g.arc(wx, y - 66, 11, 0, 7); g.fill();
+    g.fillStyle = '#8b939e'; g.beginPath(); g.arc(wx, y - 66, 5, 0, 7); g.fill(); g.fillStyle = '#2c313a'; });
+  g.fillStyle = '#ffe9a8'; g.fillRect(x - 66, y - 84, 9, 6); g.fillRect(x + 57, y - 84, 9, 6);
+}
+
+/* ============================================================
+   BIG VENUES — restaurant & department store interiors + jobs
+   Job ladder: teashop (Mission 4) -> restaurant (Level 2) -> dept store (Level 3)
+   ============================================================ */
+const REST_TABLES = [{n:1,x:250,y:350},{n:2,x:640,y:350},{n:3,x:1030,y:350},{n:4,x:445,y:590},{n:5,x:835,y:590}];
+const REST_PASS = {x:640, y:196};
+const REST_MGR = {x:640, y:268};
+const DEPT_MGR = {x:700, y:430};
+const DEPT_STORAGE = {x:180, y:690};
+const DEPT_SPOTS = [{name:'ကုန်စင် ၁',x:180,y:302},{name:'ကုန်စင် ၂',x:430,y:302},{name:'ကုန်စင် ၃',x:680,y:302},{name:'အဝတ် rack',x:205,y:618},{name:'ငွေရှင်းကောင်တာ',x:940,y:588}];
+function jobTargetPos(){
+  if(!S.job) return null;
+  const j = S.job;
+  if(j.step >= 5) return j.type === 'rest' ? {scene:'restaurant', x:REST_MGR.x, y:REST_MGR.y} : {scene:'deptstore', x:DEPT_MGR.x, y:DEPT_MGR.y};
+  if(j.type === 'rest'){
+    if(!j.carrying) return {scene:'restaurant', x:REST_PASS.x, y:REST_PASS.y};
+    const t = REST_TABLES[j.target]; return {scene:'restaurant', x:t.x, y:t.y};
+  }
+  if(!j.carrying) return {scene:'deptstore', x:DEPT_STORAGE.x, y:DEPT_STORAGE.y};
+  const t = DEPT_SPOTS[j.target]; return {scene:'deptstore', x:t.x, y:t.y};
+}
+function startShift(type){
+  S.job = {type, step:0, target: Math.floor(Math.random() * 5), carrying:false};
+  save();
+  toast(type === 'rest' ? 'Waiter shift စပါပြီ' : 'ဝန်ထမ်း shift စပါပြီ',
+    type === 'rest' ? 'မီးဖိုချောင် pass ကနေ ဟင်းပွဲ ယူပါ' : 'သိုလှောင်ခန်းက သေတ္တာ ယူပါ');
+}
+function jobPickup(){
+  S.job.carrying = true; beep(700, .08);
+  const t = S.job.type === 'rest' ? REST_TABLES[S.job.target] : DEPT_SPOTS[S.job.target];
+  toast(S.job.type === 'rest' ? 'ဟင်းပွဲ ယူပြီးပါပြီ' : 'သေတ္တာ ယူပြီးပါပြီ',
+    (S.job.type === 'rest' ? 'စားပွဲ ' + t.n : t.name) + ' သို့ ပို့ပါ');
+  save();
+}
+function jobDeliver(){
+  const j = S.job; j.carrying = false; j.step++;
+  beep(880, .09);
+  if(j.step >= 5){ toast('အလုပ် ၅ ခု ပြီးပါပြီ', 'Manager ဆီ လခ သွားယူပါ'); }
+  else { j.target = Math.floor(Math.random() * 5); toast('ပို့ပြီးပါပြီ (' + j.step + '/5)', j.type === 'rest' ? 'နောက်ဟင်းပွဲ ထပ်ယူပါ' : 'နောက်သေတ္တာ ထပ်ယူပါ'); }
+  save();
+}
+function jobPay(){
+  const rest = S.job.type === 'rest';
+  const wage = rest ? 2500 : 4000, ex = rest ? 35 : 50;
+  S.cup += wage; addExpi(ex);
+  S.jobs[rest ? 'rest' : 'dept']++;
+  S.job = null;
+  refreshHUD(); save();
+  toast('လခ ရပါပြီ', '+' + fmt(wage) + ' cup · +' + ex + ' expi');
+  jingle();
+}
+function restManagerTalk(){
+  if(S.job && S.job.type === 'rest'){
+    if(S.job.step >= 5){
+      showDialogue([N('Manager','ဟင်းပွဲ ၅ ပွဲ စလုံး ပို့ပြီးပြီ — အလုပ် ကောင်းတယ်!'),
+        {name:'Pch', text:'လခ ယူချင်ပါတယ်။', choices:[
+          {label:'လခ ယူမယ် — 2,500 cup', action: jobPay},
+          {label:'နောက်မှ', action:()=>{}}]}]);
+    } else {
+      showDialogue([N('Manager', S.job.carrying
+        ? 'ဟင်းပွဲကို စားပွဲ ' + REST_TABLES[S.job.target].n + ' သို့ ပို့ပေးပါ။'
+        : 'မီးဖိုချောင် pass (အပေါ်ဘက်) ကနေ ဟင်းပွဲ ယူပြီး စားပွဲတွေကို လိုက်ပို့ပါ။ (' + S.job.step + '/5 ပြီးပြီ)')]);
+    }
+    return;
+  }
+  if(S.job){ showDialogue([N('Manager','တခြား shift ထဲမှာ ဖြစ်နေတယ် — အဲဒါ ပြီးမှ လာခဲ့ပါ။')]); return; }
+  if(level() < 2){
+    showDialogue([N('Manager','Waiter အလုပ်က အတွေ့အကြုံ နည်းနည်း လိုတယ် ညီလေး။'),
+      N('Manager','Level 2 ရောက်မှ ရမယ် — အခု မင်းက Level ' + level() + ' ပဲ ရှိသေးတယ်။ လက်ဖက်ရည်ဆိုင်မှာ အရင် အလုပ် လုပ်ပြီး အတွေ့အကြုံ စုခဲ့ပါ၊ ပြီးရင် ပြန်လာခဲ့။')]);
+    return;
+  }
+  showDialogue([N('Manager','စားသောက်ဆိုင်ကြီးက ကြိုဆိုပါတယ်။ Waiter လိုနေတယ် — ဟင်းပွဲ ၅ ပွဲ လိုက်ပို့ပေးရင် လခ 2,500 cup ပေးမယ်။'),
+    {name:'Pch', text:'အလုပ် လုပ်ချင်ပါတယ်။', choices:[
+      {label:'Shift စမယ် — ဟင်းပွဲ ၅ ပွဲ ပို့ရန်', action:()=> startShift('rest')},
+      {label:'နောက်မှ', action:()=>{}}]}]);
+}
+function deptManagerTalk(){
+  if(S.job && S.job.type === 'dept'){
+    if(S.job.step >= 5){
+      showDialogue([N('Manager','သေတ္တာ ၅ လုံး စလုံး နေရာတကျ ရောက်ပြီ — ကျေးဇူးပဲ!'),
+        {name:'Pch', text:'လခ ယူချင်ပါတယ်။', choices:[
+          {label:'လခ ယူမယ် — 4,000 cup', action: jobPay},
+          {label:'နောက်မှ', action:()=>{}}]}]);
+    } else {
+      showDialogue([N('Manager', S.job.carrying
+        ? 'သေတ္တာကို ' + DEPT_SPOTS[S.job.target].name + ' ဆီ သယ်သွားပေးပါ။'
+        : 'သိုလှောင်ခန်း (အောက်-ဘယ်) က သေတ္တာ ယူပြီး စင်တွေဆီ လိုက်ဖြည့်ပါ။ (' + S.job.step + '/5 ပြီးပြီ)')]);
+    }
+    return;
+  }
+  if(S.job){ showDialogue([N('Manager','တခြား shift ထဲမှာ ဖြစ်နေတယ် — အဲဒါ ပြီးမှ လာခဲ့ပါ။')]); return; }
+  if(level() < 3){
+    showDialogue([N('Manager','ကုန်တိုက် ဝန်ထမ်း အလုပ်က တာဝန် ပိုကြီးတယ်။'),
+      N('Manager','Level 3 ရောက်မှ ရမယ် — အခု မင်းက Level ' + level() + ' ပဲ ရှိသေးတယ်။ လက်ဖက်ရည်ဆိုင် / စားသောက်ဆိုင်ကြီးမှာ အရင် အလုပ် လုပ်ပြီး အတွေ့အကြုံ စုခဲ့ပါ။')]);
+    return;
+  }
+  showDialogue([N('Manager','ကုန်တိုက်က ကြိုဆိုပါတယ်။ စင်ဖြည့် ဝန်ထမ်း လိုနေတယ် — သေတ္တာ ၅ လုံး နေရာလိုက် သယ်ပေးရင် လခ 4,000 cup ပေးမယ်။'),
+    {name:'Pch', text:'အလုပ် လုပ်ချင်ပါတယ်။', choices:[
+      {label:'Shift စမယ် — သေတ္တာ ၅ လုံး သယ်ရန်', action:()=> startShift('dept')},
+      {label:'နောက်မှ', action:()=>{}}]}]);
+}
+function buildRestaurantLayer(){
+  const c = mkCanvas(1280, 800), g = c.getContext('2d');
+  g.fillStyle = '#8a6844'; g.fillRect(0, 0, 1280, 800);
+  for(let y = 0; y < 20; y++) for(let x = 0; x < 32; x++){ g.fillStyle = (x + y) % 2 ? '#96754e' : '#82603c'; g.fillRect(x * 40, y * 40, 40, 40); }
+  g.fillStyle = '#5d4028'; g.fillRect(0, 0, 1280, 46); g.fillRect(0, 754, 1280, 46); g.fillRect(0, 0, 40, 800); g.fillRect(1240, 0, 40, 800);
+  g.fillStyle = '#c9a86a'; g.fillRect(566, 754, 148, 46);
+  labelOn(g, 'ထွက်ပေါက်', 640, 778, 14, '#4a341f', false);
+  const pass = imgOk('venue_pass'); if(pass) g.drawImage(pass, 400, 10, 480, 480 * pass.height / pass.width);
+  labelOn(g, 'မီးဖိုချောင်', 640, 178, 14, '#4a341f');
+  const counter = imgOk('venue_counter'); if(counter) g.drawImage(counter, 26, 320, 330, 330 * counter.height / counter.width);
+  labelOn(g, 'ကောင်တာ', 191, 492, 13, '#4a341f');
+  const tbl = imgOk('venue_table');
+  REST_TABLES.forEach(t=>{
+    if(tbl) g.drawImage(tbl, t.x - 115, t.y - 62, 230, 230 * tbl.height / tbl.width);
+    labelOn(g, 'စားပွဲ ' + t.n, t.x, t.y + 118, 13, '#4a341f');
+  });
+  labelOn(g, 'စားသောက်ဆိုင်ကြီး', 640, 24, 17, '#ffe9a8', false);
+  return c;
+}
+function buildDeptLayer(){
+  const c = mkCanvas(1280, 800), g = c.getContext('2d');
+  g.fillStyle = '#7d8894'; g.fillRect(0, 0, 1280, 800);
+  for(let y = 0; y < 20; y++) for(let x = 0; x < 32; x++){ g.fillStyle = (x + y) % 2 ? '#87929d' : '#737f8a'; g.fillRect(x * 40, y * 40, 40, 40); }
+  g.fillStyle = '#3d4a55'; g.fillRect(0, 0, 1280, 46); g.fillRect(0, 754, 1280, 46); g.fillRect(0, 0, 40, 800); g.fillRect(1240, 0, 40, 800);
+  g.fillStyle = '#c9a86a'; g.fillRect(566, 754, 148, 46);
+  labelOn(g, 'ထွက်ပေါက်', 640, 778, 14, '#4a341f', false);
+  const esc = imgOk('venue_escalator'); if(esc) g.drawImage(esc, 872, 16, 380, 380 * esc.height / esc.width);
+  const shelf = imgOk('venue_shelf');
+  [180, 430, 680].forEach((cx, i)=>{
+    if(shelf) g.drawImage(shelf, cx - 85, 140, 170, 170 * shelf.height / shelf.width);
+    labelOn(g, 'ကုန်စင် ' + (i + 1), cx, 336, 13, '#4a341f');
+  });
+  const rack = imgOk('venue_rack'); if(rack) g.drawImage(rack, 90, 440, 230, 230 * rack.height / rack.width);
+  labelOn(g, 'အဝတ် rack', 205, 668, 13, '#4a341f');
+  const chk = imgOk('venue_checkout'); if(chk) g.drawImage(chk, 790, 440, 300, 300 * chk.height / chk.width);
+  labelOn(g, 'ငွေရှင်းကောင်တာ', 940, 622, 13, '#4a341f');
+  g.fillStyle = '#a9743f'; g.fillRect(70, 640, 180, 80);
+  g.strokeStyle = '#6d4c2f'; g.lineWidth = 3; g.strokeRect(70, 640, 180, 80); g.beginPath(); g.moveTo(70, 680); g.lineTo(250, 680); g.moveTo(160, 640); g.lineTo(160, 720); g.stroke();
+  labelOn(g, 'သိုလှောင်ခန်း', 160, 606, 13, '#4a341f');
+  labelOn(g, 'ကုန်တိုက်', 300, 24, 17, '#eaf4ff', false);
+  return c;
+}
+
+/* ============================================================
+   SCENE LAYERS — static art pre-rendered once, blitted per frame
+   ============================================================ */
+const LAYERS = {};
+let homeLayerKey = '';
+function getLayer(scene){
+  if(scene === 'home'){
+    const key = 'home|' + S.furniture.slice().sort().join(',');
+    if(LAYERS.home && homeLayerKey === key) return LAYERS.home;
+    homeLayerKey = key; LAYERS.home = buildHomeLayer(); return LAYERS.home;
+  }
+  if(LAYERS[scene]) return LAYERS[scene];
+  LAYERS[scene] = scene === 'sanchaung' ? buildSanchaungLayer()
+    : scene === 'terminal' ? buildTerminalLayer()
+    : scene === 'pagoda' ? buildPagodaLayer()
+    : scene === 'restaurant' ? buildRestaurantLayer()
+    : scene === 'deptstore' ? buildDeptLayer()
+    : buildVillageLayer();
+  return LAYERS[scene];
+}
+function buildSanchaungLayer(){
+  const c = mkCanvas(WORLD.w, WORLD.h), g = c.getContext('2d');
+  const rnd = RNG(1234);
+  g.fillStyle = '#7fae56'; g.fillRect(0, 0, WORLD.w, WORLD.h);
+  for(let i = 0; i < 46; i++){ g.fillStyle = i % 2 ? '#86b45e' : '#76a350';
+    g.beginPath(); g.ellipse(rnd() * WORLD.w, rnd() * WORLD.h, 90 + rnd() * 150, 50 + rnd() * 80, rnd() * 3, 0, 7); g.fill(); }
+  g.fillStyle = 'rgba(60,90,35,.20)';
+  for(let i = 0; i < 2600; i++) g.fillRect(rnd() * WORLD.w, rnd() * WORLD.h, 3, 3);
+  g.fillStyle = 'rgba(255,240,170,.14)';
+  for(let i = 0; i < 500; i++) g.fillRect(rnd() * WORLD.w, rnd() * WORLD.h, 3, 3);
+  /* flower specks */
+  const fl = ['#e2724f','#e9c33c','#e59bb0','#fff3f6'];
+  for(let i = 0; i < 130; i++){ g.fillStyle = fl[i % 4]; g.fillRect(rnd() * WORLD.w, rnd() * WORLD.h, 3, 3); }
+  /* roads: sidewalk, asphalt, dashes, crosswalks */
+  ROADS.forEach(r=>{
+    g.fillStyle = '#cfc3a5'; g.fillRect(r.x - 8, r.y - 8, r.w + 16, r.h + 16);
+    g.fillStyle = '#555250'; g.fillRect(r.x, r.y, r.w, r.h);
+    g.fillStyle = '#5d5a57'; g.fillRect(r.x + 6, r.y + 6, r.w - 12, r.h - 12);
+    g.fillStyle = 'rgba(0,0,0,.14)';
+    const rn = RNG(r.x + r.y);
+    for(let i = 0; i < (r.w * r.h) / 26000; i++) g.fillRect(r.x + rn() * r.w, r.y + rn() * r.h, 4, 4);
+    g.strokeStyle = 'rgba(255,235,160,.75)'; g.lineWidth = 3; g.setLineDash([26, 22]);
+    g.beginPath();
+    if(r.vert){ g.moveTo(r.x + r.w / 2, r.y); g.lineTo(r.x + r.w / 2, r.y + r.h); }
+    else { g.moveTo(r.x, r.y + r.h / 2); g.lineTo(r.x + r.w, r.y + r.h / 2); }
+    g.stroke(); g.setLineDash([]);
+  });
+  /* crosswalks at the main junctions */
+  [[2500, 1020],[300, 1020],[2500, 1710],[1010, 480]].forEach(p=>{
+    g.fillStyle = 'rgba(255,255,255,.5)';
+    for(let i = 0; i < 5; i++) g.fillRect(p[0] - 52 + i * 22, p[1] - 10, 13, 20);
+  });
+  /* road names are drawn in the top dynamic pass (drawRoadNames) so
+     vehicles and pedestrians can never bury them */
+  /* tea-shop courtyard ground + west fence */
+  g.fillStyle = '#cbb489'; g.fillRect(478, 1512, 374, 106);
+  g.fillStyle = 'rgba(120,90,40,.16)';
+  for(let i = 0; i < 260; i++) g.fillRect(478 + rnd() * 370, 1512 + rnd() * 102, 3, 3);
+  g.strokeStyle = 'rgba(120,90,40,.35)'; g.lineWidth = 1.5; g.strokeRect(478, 1512, 374, 106);
+  g.fillStyle = '#7a5a33';
+  for(let fy = 1336; fy < 1618; fy += 26) g.fillRect(476, fy, 5, 16);
+  g.fillRect(476, 1334, 5, 284);
+  /* filler houses, then main buildings */
+  FILLERS_ACTIVE.forEach((f, i)=>{
+    const fim = (i % 3 !== 2 && f[2] >= 200 && f[3] >= 110) ? imgOk(i % 3 === 0 ? 'bld_house' : 'bld_shophouse') : null;
+    if(fim){
+      const sc = Math.min((f[2] + 24) / fim.width, (f[3] + 100) / fim.height);
+      const w = fim.width * sc, h = fim.height * sc;
+      g.fillStyle = 'rgba(25,18,5,.15)'; g.fillRect(f[0] + 5, f[1] + f[3] - 4, f[2], 8);
+      g.drawImage(fim, f[0] + f[2] / 2 - w / 2, f[1] + f[3] + 4 - h, w, h);
+    } else paintFillerHouse(g, f, i);
+  });
+  const awn = { mohinga:['#c8541e','#f3e9d2'], teashop:['#1e7a4f','#f3e9d2'], furniture:['#46597e','#f3e9d2'], outfit:['#c2185b','#f3e9d2'], store:['#b8860b','#f3e9d2'] };
+  BUILDINGS.forEach(b=> paintBuilding(g, b, { awning: awn[b.act] || null, signBg: b.act === 'home' ? '#5d3a1a' : '#3a2a16' }));
+  /* props: crates + baskets near shop doors */
+  [[986, 962],[1108, 958],[610, 1530],[742, 1534],[600, 428],[1740, 424],[2148, 1436]].forEach((p, i)=>{
+    g.fillStyle = 'rgba(0,0,0,.15)'; g.fillRect(p[0] + 3, p[1] + 16, 26, 6);
+    g.fillStyle = i % 2 ? '#a9743f' : '#8a5a33'; g.fillRect(p[0], p[1], 26, 18);
+    g.strokeStyle = 'rgba(60,40,15,.5)'; g.lineWidth = 1.5; g.strokeRect(p[0], p[1], 26, 18);
+    g.beginPath(); g.moveTo(p[0], p[1] + 9); g.lineTo(p[0] + 26, p[1] + 9); g.stroke();
+  });
+  /* bus stop shelters are drawn in the y-sorted dynamic pass (drawShelter)
+     so pedestrians pass behind/in front of them correctly; only the
+     no-sprite fallback shelter is baked into this layer */
+  const shelterIm = imgOk('bld_shelter');
+  if(shelterIm){
+    /* drawn dynamically — see drawShelter() */
+  } else {
+  g.fillStyle = 'rgba(0,0,0,.15)'; g.fillRect(BUSSTOP.x - 48, BUSSTOP.y + 8, 104, 10);
+  g.fillStyle = '#3c3a38'; g.fillRect(BUSSTOP.x - 42, BUSSTOP.y - 52, 5, 60); g.fillRect(BUSSTOP.x + 44, BUSSTOP.y - 52, 5, 60);
+  g.fillStyle = '#20508c'; rr(g, BUSSTOP.x - 54, BUSSTOP.y - 66, 116, 15, 5); g.fill();
+  g.fillStyle = 'rgba(255,255,255,.25)'; g.fillRect(BUSSTOP.x - 54, BUSSTOP.y - 66, 116, 4);
+  g.fillStyle = '#7a5a33'; g.fillRect(BUSSTOP.x - 36, BUSSTOP.y - 12, 80, 6);
+  g.fillStyle = '#20508c'; g.fillRect(BUSSTOP.x - 3, BUSSTOP.y - 108, 6, 44);
+  g.fillStyle = '#2b6cb0'; rr(g, BUSSTOP.x - 42, BUSSTOP.y - 142, 84, 38, 8); g.fill();
+  g.strokeStyle = '#d9a94f'; g.lineWidth = 2; g.stroke();
+  g.fillStyle = '#fff'; g.font = '800 15px "Noto Sans Myanmar", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillText('YBS', BUSSTOP.x, BUSSTOP.y - 122); g.textBaseline = 'alphabetic';
+  labelOn(g, 'Bus မှတ်တိုင်', BUSSTOP.x, BUSSTOP.y + 34, 13);
+  }
+  /* small neighbourhood stalls — sprite shopfront + Canvas-text sign on the blank board */
+  SMALL_SHOPS.forEach(sh=>{
+    const sim = imgOk(sh.spr);
+    const cx = sh.x + sh.w / 2;
+    if(sim){
+      const w = sh.w + 48, h = w * sim.height / sim.width, top = sh.y + sh.h + 8 - h;
+      g.fillStyle = 'rgba(25,18,5,.16)'; g.beginPath(); g.ellipse(cx, sh.y + sh.h + 5, sh.w * .55, 8, 0, 0, 7); g.fill();
+      g.drawImage(sim, cx - w / 2, top, w, h);
+      g.font = '800 ' + Math.round(h * .082) + 'px "Noto Sans Myanmar", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+      g.fillStyle = '#4a341f'; g.fillText(sh.name, cx, top + h * .118); g.textBaseline = 'alphabetic';
+    } else {
+      g.fillStyle = '#a9743f'; g.fillRect(sh.x, sh.y, sh.w, sh.h);
+      labelOn(g, sh.name, cx, sh.y + 30, 15);
+    }
+  });
+  /* trishaw stand marker */
+  labelOn(g, 'ဆိုက်ကားဂိတ်', TRISHAW_STAND.x, TRISHAW_STAND.y + 58, 13);
+  /* street props: fruit cart, bicycle, bins */
+  const cartIm = imgOk('prop_cart');
+  if(cartIm){ const w = 112, h = w * cartIm.height / cartIm.width; g.drawImage(cartIm, 1470 - w / 2, 950 - h, w, h); }
+  const bikeIm = imgOk('prop_bike');
+  if(bikeIm){ const w = 88, h = w * bikeIm.height / bikeIm.width; g.drawImage(bikeIm, 452 - w / 2, 994 - h, w, h); }
+  const binIm = imgOk('prop_bin');
+  if(binIm) BINS.forEach(bn=>{ const w = 38, h = w * binIm.height / binIm.width; g.drawImage(binIm, bn.x - w / 2, bn.y - h, w, h); });
+  /* street lamps */
+  [2400].forEach(x=>{ [300, 820, 1340, 1860].forEach(y=> paintLamp(g, x, y)); });
+  [760, 1500, 2240].forEach(x=> paintLamp(g, x, 956));
+  /* trees last (canopies over grass/edges) */
+  TREES.forEach(t=> paintTree(g, t.x, t.y, t.r, t.kind));
+  return c;
+}
+function buildTerminalLayer(){
+  const c = mkCanvas(1280, 800), g = c.getContext('2d');
+  const rnd = RNG(77);
+  g.fillStyle = '#b3a58c'; g.fillRect(0, 0, 1280, 800);
+  g.strokeStyle = 'rgba(90,75,50,.25)'; g.lineWidth = 2;
+  for(let x = 0; x < 1280; x += 106){ g.beginPath(); g.moveTo(x, 0); g.lineTo(x, 800); g.stroke(); }
+  for(let y = 0; y < 800; y += 106){ g.beginPath(); g.moveTo(0, y); g.lineTo(1280, y); g.stroke(); }
+  g.fillStyle = 'rgba(0,0,0,.07)'; for(let i = 0; i < 500; i++) g.fillRect(rnd() * 1280, rnd() * 800, 4, 4);
+  g.fillStyle = '#9c8a68'; g.fillRect(0, 560, 1280, 240);
+  g.strokeStyle = 'rgba(255,255,255,.4)'; g.lineWidth = 3; g.setLineDash([24, 20]);
+  g.beginPath(); g.moveTo(0, 545); g.lineTo(1280, 545); g.stroke(); g.setLineDash([]);
+  /* terminal building */
+  g.fillStyle = 'rgba(0,0,0,.18)'; g.fillRect(198, 70, 900, 190);
+  const grad = g.createLinearGradient(0, 60, 0, 250);
+  grad.addColorStop(0, '#8fa2c4'); grad.addColorStop(1, '#7186ab');
+  g.fillStyle = grad; g.fillRect(190, 60, 900, 190);
+  g.strokeStyle = 'rgba(40,50,80,.6)'; g.lineWidth = 2; g.strokeRect(190, 60, 900, 190);
+  g.fillStyle = '#46597e'; g.fillRect(170, 36, 940, 36);
+  g.strokeStyle = '#d9a94f'; g.lineWidth = 2; g.strokeRect(170, 36, 940, 36);
+  g.fillStyle = '#ffe9a8'; g.font = '800 21px "Noto Sans Myanmar", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillText('အောင်မင်္ဂလာ အဝေးပြေး ကားဝင်း', 640, 55); g.textBaseline = 'alphabetic';
+  for(let i = 0; i < 8; i++){
+    g.fillStyle = '#f3e9d2'; g.fillRect(228 + i * 112, 106, 66, 78);
+    g.fillStyle = '#ffe9a8'; g.fillRect(231 + i * 112, 109, 60, 72);
+    g.strokeStyle = 'rgba(70,50,25,.5)'; g.strokeRect(231 + i * 112, 109, 60, 72);
+  }
+  g.fillStyle = '#5d3d20'; g.fillRect(596, 176, 88, 74);
+  g.fillStyle = '#7a4a26'; g.fillRect(601, 181, 78, 69);
+  /* big highway coach (Scania) — taxis are drawn dynamically with their drivers */
+  const scIm = imgOk('veh_scania');
+  if(scIm){
+    const w = 440, h = w * scIm.height / scIm.width;
+    g.fillStyle = 'rgba(0,0,0,.18)'; g.beginPath(); g.ellipse(262, 452, 215, 13, 0, 0, 7); g.fill();
+    g.drawImage(scIm, 42, 458 - h, w, h);
+    labelOn(g, 'ရန်ကုန် ခရီးသည် ကားကြီး', 262, 486, 14);
+  } else {
+    g.fillStyle = 'rgba(0,0,0,.2)'; rr(g, 66, 386, 330, 96, 14); g.fill();
+    g.fillStyle = '#d8542e'; rr(g, 60, 372, 330, 96, 14); g.fill();
+    g.fillStyle = '#8fc3e8'; for(let i = 0; i < 6; i++) g.fillRect(74 + i * 52, 393, 40, 20);
+    g.fillStyle = '#fff'; g.font = '800 16px "Noto Sans Myanmar", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText('ရန်ကုန် ခရီးသည် ကားကြီး', 225, 421); g.textBaseline = 'alphabetic';
+  }
+  const coneIm = imgOk('prop_cone');
+  if(coneIm){ const w = 34, h = w * coneIm.height / coneIm.width; g.drawImage(coneIm, 980, 560 - h, w, h); g.drawImage(coneIm, 240, 600 - h, w, h); }
+  return c;
+}
+function buildPagodaLayer(){
+  const c = mkCanvas(1280, 820), g = c.getContext('2d');
+  const rnd = RNG(99);
+  g.fillStyle = '#6f9a4c'; g.fillRect(0, 0, 1280, 820);
+  g.fillStyle = 'rgba(40,70,25,.18)'; for(let i = 0; i < 900; i++) g.fillRect(rnd() * 1280, rnd() * 820, 3, 3);
+  g.fillStyle = '#d9c9a0'; rr(g, 240, 470, 800, 350, 10); g.fill();
+  g.strokeStyle = 'rgba(130,105,60,.35)'; g.lineWidth = 1.5;
+  for(let x = 286; x < 1040; x += 46){ g.beginPath(); g.moveTo(x, 474); g.lineTo(x, 816); g.stroke(); }
+  for(let y = 516; y < 820; y += 46){ g.beginPath(); g.moveTo(244, y); g.lineTo(1036, y); g.stroke(); }
+  g.fillStyle = '#cbb489'; g.fillRect(300, 356, 680, 124);
+  g.strokeStyle = 'rgba(130,105,60,.5)'; g.strokeRect(300, 356, 680, 124);
+  g.fillStyle = '#d3bf92'; g.fillRect(340, 380, 600, 100);
+  /* main stupa — AI sprite (gold Shwedagon with satellite stupas) */
+  const cxp = 640;
+  const pgIm = imgOk('pagoda');
+  if(pgIm){
+    const w = 348, h = w * pgIm.height / pgIm.width;
+    g.drawImage(pgIm, cxp - w / 2, 482 - h, w, h);
+  } else {
+    const gold = g.createLinearGradient(cxp - 130, 0, cxp + 130, 0);
+    gold.addColorStop(0, '#c1911d'); gold.addColorStop(.45, '#f2c94c'); gold.addColorStop(1, '#d9a92c');
+    g.fillStyle = gold;
+    g.beginPath(); g.moveTo(cxp - 130, 384); g.lineTo(cxp + 130, 384); g.lineTo(cxp + 96, 300); g.lineTo(cxp - 96, 300); g.closePath(); g.fill();
+    g.beginPath(); g.moveTo(cxp - 84, 302); g.quadraticCurveTo(cxp - 60, 190, cxp - 16, 150); g.lineTo(cxp + 16, 150); g.quadraticCurveTo(cxp + 60, 190, cxp + 84, 302); g.closePath(); g.fill();
+  }
+  labelOn(g, 'ရွှေတိဂုံစေတီတော်', cxp, 440, 20, '#7a5a08');
+  /* flower beds */
+  const fl = ['#d94f4f','#e9c33c','#e59bb0'];
+  for(let i = 0; i < 60; i++){ g.fillStyle = fl[i % 3]; g.fillRect(262 + rnd() * 756, 486 + rnd() * 26, 4, 4); }
+  /* return bus — YBS sprite */
+  const ybsIm = imgOk('veh_ybs');
+  if(ybsIm){
+    const w = 196, h = w * ybsIm.height / ybsIm.width;
+    g.fillStyle = 'rgba(0,0,0,.18)'; g.beginPath(); g.ellipse(1143, 748, 96, 10, 0, 0, 7); g.fill();
+    g.drawImage(ybsIm, 1143 - w / 2, 752 - h, w, h);
+  } else {
+    g.fillStyle = '#2b6cb0'; rr(g, 1064, 640, 150, 66, 10); g.fill();
+    g.fillStyle = '#8fc3e8'; for(let i = 0; i < 3; i++) g.fillRect(1080 + i * 42, 656, 32, 12);
+  }
+  labelOn(g, 'Bus', 1139, 772, 13);
+  paintTree(g, 120, 200, 22, 0); paintTree(g, 1160, 180, 20, 1); paintTree(g, 130, 560, 19, 2); paintTree(g, 1150, 420, 21, 0);
+  return c;
+}
+function buildHomeLayer(){
+  const c = mkCanvas(980, 660), g = c.getContext('2d');
+  g.fillStyle = '#5d4a33'; g.fillRect(0, 0, 980, 660);
+  g.fillStyle = '#e8dcc2'; g.fillRect(46, 46, 888, 568);
+  g.strokeStyle = 'rgba(150,120,75,.35)'; g.lineWidth = 1.5;
+  for(let x = 46; x < 934; x += 74){ g.beginPath(); g.moveTo(x, 46); g.lineTo(x, 614); g.stroke(); }
+  for(let y = 46; y < 614; y += 74){ g.beginPath(); g.moveTo(46, y); g.lineTo(934, y); g.stroke(); }
+  g.fillStyle = '#d9c8a4'; g.fillRect(46, 46, 888, 26);
+  /* rug */
+  g.fillStyle = '#a8433a'; rr(g, 330, 250, 320, 210, 8); g.fill();
+  g.strokeStyle = '#e9c33c'; g.lineWidth = 3; g.stroke();
+  g.strokeStyle = 'rgba(255,220,150,.5)'; g.lineWidth = 1.5; rr(g, 344, 264, 292, 182, 6); g.stroke();
+  /* windows + light shafts */
+  [[120],[680]].forEach(wx=>{
+    g.fillStyle = 'rgba(255,246,200,.13)';
+    g.beginPath(); g.moveTo(wx[0], 58); g.lineTo(wx[0] + 130, 58); g.lineTo(wx[0] + 210, 300); g.lineTo(wx[0] + 60, 300); g.closePath(); g.fill();
+    g.fillStyle = '#8fc3e8'; g.fillRect(wx[0], 46, 130, 14);
+    g.strokeStyle = '#7a5a33'; g.lineWidth = 2; g.strokeRect(wx[0], 46, 130, 14);
+  });
+  g.fillStyle = '#8a6a45'; g.fillRect(440, 40, 100, 14);
+  g.fillStyle = '#6b4423'; g.fillRect(452, 566, 76, 48);
+  g.fillStyle = '#855f3a'; g.fillRect(458, 572, 64, 36);
+  labelOn(g, 'ထွက်ပေါက်', 490, 640, 13);
+  const F = id => S.furniture.includes(id);
+  if(F('bed')){
+    const bIm = imgOk('furn_bed');
+    if(bIm){ const h = 172, w = h * bIm.width / bIm.height;
+      g.fillStyle = 'rgba(0,0,0,.14)'; g.beginPath(); g.ellipse(139, 262, 52, 8, 0, 0, 7); g.fill();
+      g.drawImage(bIm, 139 - w / 2, 88, w, h); labelOn(g, 'အိပ်ရာ', 139, 282, 13);
+    } else {
+    g.fillStyle = 'rgba(0,0,0,.14)'; g.fillRect(96, 100, 190, 110);
+    g.fillStyle = '#8a5a33'; g.fillRect(90, 92, 190, 110);
+    g.fillStyle = '#eef0e6'; g.fillRect(98, 100, 174, 66);
+    g.strokeStyle = 'rgba(140,140,130,.4)';
+    for(let yy = 112; yy < 162; yy += 12){ g.beginPath(); g.moveTo(100, yy); g.lineTo(270, yy); g.stroke(); }
+    g.fillStyle = '#c8541e'; g.fillRect(98, 158, 174, 36);
+    g.fillStyle = 'rgba(255,255,255,.3)'; g.fillRect(98, 158, 174, 6);
+    g.fillStyle = '#fff'; rr(g, 106, 104, 52, 30, 6); g.fill(); g.strokeStyle = 'rgba(0,0,0,.15)'; g.stroke();
+    labelOn(g, 'အိပ်ရာ', 185, 224, 13);
+    }
+  }
+  if(F('wardrobe')){
+    const wIm = imgOk('furn_wardrobe');
+    if(wIm){ const w = 98, h = w * wIm.height / wIm.width; g.drawImage(wIm, 815 - w / 2, 84, w, h); labelOn(g, 'ဗီရို', 815, 246, 13); }
+    else {
+    g.fillStyle = '#7c4a26'; g.fillRect(760, 88, 110, 150);
+    g.fillStyle = '#96622f'; g.fillRect(768, 96, 44, 134); g.fillRect(818, 96, 44, 134);
+    g.strokeStyle = 'rgba(0,0,0,.3)'; g.strokeRect(774, 104, 32, 118); g.strokeRect(824, 104, 32, 118);
+    g.fillStyle = '#e9c33c'; g.beginPath(); g.arc(808, 165, 3, 0, 7); g.arc(818, 165, 3, 0, 7); g.fill();
+    labelOn(g, 'ဗီရို', 815, 260, 13);
+    }
+  }
+  if(F('table')){
+    const tIm = imgOk('furn_table');
+    if(tIm){ const w = 180, h = w * tIm.height / tIm.width; g.drawImage(tIm, 485 - w / 2, 366 - h, w, h); labelOn(g, 'စားပွဲ', 485, 388, 13); }
+    else {
+    g.fillStyle = 'rgba(0,0,0,.12)'; g.fillRect(406, 258, 170, 96);
+    g.fillStyle = '#6d4c2f'; g.fillRect(410, 262, 10, 76); g.fillRect(550, 262, 10, 76);
+    g.fillStyle = '#a9743f'; g.fillRect(400, 250, 170, 96);
+    g.fillStyle = '#c08b52'; g.fillRect(408, 258, 154, 80);
+    g.fillStyle = 'rgba(255,255,255,.25)'; g.fillRect(408, 258, 154, 8);
+    g.fillStyle = '#7a4a26'; g.beginPath(); g.arc(470, 292, 9, 0, 7); g.fill();
+    g.fillStyle = '#f3e9d2'; g.beginPath(); g.arc(505, 306, 6, 0, 7); g.arc(448, 312, 6, 0, 7); g.fill();
+    labelOn(g, 'စားပွဲ', 485, 368, 13);
+    }
+  }
+  if(F('chair')){
+    const cIm = imgOk('furn_chair');
+    if(cIm){ const w = 88, h = w * cIm.height / cIm.width; g.drawImage(cIm, 639 - w / 2, 322 - h, w, h); labelOn(g, 'ကုလားထိုင်', 637, 340, 12); }
+    else {
+    g.fillStyle = '#6d4c2f'; g.fillRect(610, 262, 54, 54);
+    g.fillStyle = '#855f3a'; g.fillRect(610, 252, 54, 16);
+    g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(618, 256, 6, 58); g.fillRect(636, 256, 6, 58); g.fillRect(650, 256, 6, 58);
+    labelOn(g, 'ကုလားထိုင်', 637, 340, 12);
+    }
+  }
+  if(F('tv')){
+    const vIm = imgOk('furn_tv');
+    if(vIm){ const w = 180, h = w * vIm.height / vIm.width; g.drawImage(vIm, 490 - w / 2, 192 - h, w, h); labelOn(g, 'တီဗီ', 490, 212, 13); }
+    else {
+    g.fillStyle = '#2c313a'; rr(g, 404, 60, 172, 100, 6); g.fill();
+    const tg = g.createLinearGradient(414, 70, 566, 150);
+    tg.addColorStop(0, '#7fb2d9'); tg.addColorStop(1, '#4a7ba6');
+    g.fillStyle = tg; g.fillRect(414, 70, 152, 80);
+    g.fillStyle = 'rgba(255,255,255,.25)';
+    g.beginPath(); g.moveTo(430, 150); g.lineTo(486, 70); g.lineTo(516, 70); g.lineTo(460, 150); g.closePath(); g.fill();
+    g.fillStyle = '#2c313a'; g.fillRect(478, 160, 24, 10);
+    labelOn(g, 'တီဗီ', 490, 184, 13);
+    }
+  }
+  if(F('plant')){
+    const pIm = imgOk('furn_plant');
+    if(pIm){ const w = 50, h = w * pIm.height / pIm.width; g.drawImage(pIm, 336 - w / 2, 592 - h, w, h); labelOn(g, 'ပန်းအိုး', 336, 618, 12); }
+    else {
+    g.fillStyle = '#3e7d44';
+    [[336, 522, .5],[318, 534, -.5],[354, 534, .9],[336, 512, 0],[326, 518, -.9],[348, 518, .3]].forEach(L=>{
+      g.save(); g.translate(L[0], L[1]); g.rotate(L[2]);
+      g.beginPath(); g.ellipse(0, -12, 6, 15, 0, 0, 7); g.fill(); g.restore();
+    });
+    g.fillStyle = '#b0562f'; g.beginPath(); g.moveTo(316, 556); g.lineTo(356, 556); g.lineTo(348, 592); g.lineTo(324, 592); g.closePath(); g.fill();
+    g.fillStyle = 'rgba(0,0,0,.2)'; g.fillRect(316, 556, 40, 5);
+    labelOn(g, 'ပန်းအိုး', 336, 618, 12);
+    }
+  }
+  if(F('shrine')){
+    const sIm = imgOk('furn_shrine');
+    if(sIm){ const w = 132, h = w * sIm.height / sIm.width; g.drawImage(sIm, 315 - w / 2, 44, w, h); labelOn(g, 'ဘုရားစင်', 315, 168, 12); }
+  }
+  /* permanent deco: bookshelf + water pot */
+  const shIm = imgOk('furn_shelf');
+  if(shIm){ const w = 84, h = w * shIm.height / shIm.width; g.drawImage(shIm, 60, 560 - h, w, h); }
+  const potIm = imgOk('furn_pot');
+  if(potIm){ const w = 46, h = w * potIm.height / potIm.width; g.drawImage(potIm, 878, 590 - h, w, h); }
+  if(!S.furniture.length) labelOn(g, 'အခန်းလွတ် — furniture မရှိသေးပါ', 490, 330, 17, '#8a6d43', false);
+  return c;
+}
+function buildVillageLayer(){
+  const c = mkCanvas(1280, 800), g = c.getContext('2d');
+  const rnd = RNG(55);
+  g.fillStyle = '#84ac5c'; g.fillRect(0, 0, 1280, 800);
+  g.fillStyle = 'rgba(60,90,35,.16)'; for(let i = 0; i < 900; i++) g.fillRect(rnd() * 1280, rnd() * 800, 3, 3);
+  g.fillStyle = '#c9b280'; g.fillRect(0, 640, 1280, 160);
+  g.fillStyle = 'rgba(120,90,40,.2)'; for(let i = 0; i < 500; i++) g.fillRect(rnd() * 1280, 640 + rnd() * 160, 4, 3);
+  g.strokeStyle = 'rgba(120,90,40,.3)'; g.lineWidth = 3; g.beginPath(); g.moveTo(0, 640); g.lineTo(1280, 640); g.stroke();
+  /* village stilt house — AI sprite */
+  const vhIm = imgOk('vil_house');
+  if(vhIm){
+    const w = 440, h = w * vhIm.height / vhIm.width;
+    g.fillStyle = 'rgba(0,0,0,.16)'; g.beginPath(); g.ellipse(640, 536, 215, 13, 0, 0, 7); g.fill();
+    g.drawImage(vhIm, 640 - w / 2, 540 - h, w, h);
+  } else {
+    g.fillStyle = '#caa06a'; g.fillRect(440, 300, 400, 220);
+    g.beginPath(); g.moveTo(410, 306); g.lineTo(640, 190); g.lineTo(870, 306); g.closePath();
+    g.fillStyle = '#8f6b3a'; g.fill();
+    g.fillStyle = '#6b4423'; g.fillRect(600, 420, 80, 100);
+  }
+  labelOn(g, 'ရွာက အိမ်လေး', 640, 112, 18);
+  /* fence — sprite segments with a gate gap */
+  const vfIm = imgOk('vil_fence');
+  if(vfIm){
+    const w = 176, h = w * vfIm.height / vfIm.width;
+    for(let x = 36; x < 1240; x += w){ if(x + w > 556 && x < 716) continue; g.drawImage(vfIm, x, 630 - h, w, h); }
+  } else {
+    g.fillStyle = '#7a5a33';
+    for(let x = 60; x < 1240; x += 46){ if(x < 560 || x > 700) g.fillRect(x, 596, 6, 34); }
+    g.fillRect(40, 604, 1200, 4); g.fillRect(40, 618, 1200, 4);
+  }
+  const hayIm = imgOk('vil_hay');
+  if(hayIm){ const w = 128, h = w * hayIm.height / hayIm.width; g.drawImage(hayIm, 986 - w / 2, 428 - h, w, h); }
+  const chkIm = imgOk('vil_chickens');
+  if(chkIm){ const w = 100, h = w * chkIm.height / chkIm.width; g.drawImage(chkIm, 316 - w / 2, 566 - h, w, h); }
+  const sgnIm = imgOk('vil_sign');
+  if(sgnIm){ const h = 82, w = h * sgnIm.width / sgnIm.height; g.drawImage(sgnIm, 1086 - w / 2, 600 - h, w, h); }
+  paintTree(g, 130, 150, 24, 2); paintTree(g, 1130, 130, 22, 1); paintTree(g, 180, 420, 20, 0); paintTree(g, 1080, 430, 23, 2);
+  return c;
+}
+
+/* ---------------- Scene drawing (dynamic pass) ---------------- */
+function camFor(scene){
+  const sc = SCENES[scene];
+  let cx = clamp(S.px - VW/2, 0, Math.max(0, sc.w - VW));
+  let cy = clamp(S.py - VH/2, 0, Math.max(0, sc.h - VH));
+  if(sc.w < VW) cx = (sc.w - VW) / 2;
+  if(sc.h < VH) cy = (sc.h - VH) / 2;
+  return {x: cx, y: cy};
+}
+let camX = 0, camY = 0, camScene = null, lastDt = 16;
+let pulseT = 0;
+function pulseMarker(x, y, color){
+  const r = 10 + Math.sin(pulseT * 5) * 3;
+  ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(x, y + r + 8); ctx.lineTo(x - r, y); ctx.lineTo(x + r, y); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.arc(x, y - 4, r * .55, 0, 7); ctx.fill();
+}
+/* Vehicle sprite drawing: side-view sprites face east natively.
+   Horizontal travel flips for west; vertical travel rotates (nose up/down).
+   The sedan is a top-down sprite facing south natively. The YBS bus is a
+   front 3/4 view — drawn upright when travelling vertically. */
+function drawVehicleAt(imgName, x, y, dx, dy, w, opts){
+  const im = imgOk(imgName); if(!im) return;
+  opts = opts || {};
+  const h = w * im.height / im.width;
+  ctx.fillStyle = 'rgba(20,15,5,.22)';
+  ctx.beginPath(); ctx.ellipse(x, y + h * .32, w * .46, Math.max(6, h * .14), 0, 0, 7); ctx.fill();
+  ctx.save(); ctx.translate(x, y);
+  if(opts.topdown){ ctx.rotate(Math.atan2(dy, dx) - Math.PI / 2); ctx.drawImage(im, -w / 2, -h / 2, w, h); }
+  else if(opts.upright){ ctx.drawImage(im, -w / 2, -h / 2, w, h); }
+  else if(Math.abs(dx) >= Math.abs(dy)){ if(dx < 0) ctx.scale(-1, 1); ctx.drawImage(im, -w / 2, -h / 2, w, h); }
+  else { ctx.rotate(dy > 0 ? Math.PI / 2 : -Math.PI / 2); ctx.drawImage(im, -w / 2, -h / 2, w, h); }
+  ctx.restore();
+}
+/* The riding player, anchored in VEHICLE space (nose = heading): on the
+   trishaw's rear bench in full, but inside a bus/taxi only head-and-
+   shoulders show at the front windshield — never a figure standing on
+   the roof. The source sprite is cropped for the enclosed vehicles. */
+function drawSeated(x, y, kind, dx, dy){
+  let along = -46, across = 6, hh = 38, cropF = 1;
+  if(kind === 'bus'){ along = 64; across = 0; hh = 42; cropF = .58; }
+  else if(kind === 'taxi'){ along = 36; across = 0; hh = 37; cropF = .62; }
+  const sx = x + dx * along - dy * across, sy = y + dy * along + dx * across;
+  const set = OUTFIT_SPR[S.outfit];
+  const res = set ? dirImg(set, 'down', 0) : null;
+  if(res){
+    const w = hh * res.im.width / res.im.height;
+    ctx.drawImage(res.im, 0, 0, res.im.width, res.im.height * cropF, sx - w / 2, sy - hh + 12, w, hh * cropF);
+  }
+  else { const spr = charSprite(S.gender, currentOutfit(), 'down', 0); ctx.save(); ctx.imageSmoothingEnabled = false; ctx.drawImage(spr, sx - 13, sy - 24, 26, 34); ctx.restore(); ctx.imageSmoothingEnabled = true; }
+}
+/* Bus stop shelter — drawn in the y-sorted pass so a pedestrian whose feet
+   are above the shelter base passes BEHIND it instead of over its roof */
+function drawShelter(st){
+  const im = imgOk('bld_shelter'); if(!im) return;
+  const w = 168, h = w * im.height / im.width;
+  ctx.fillStyle = 'rgba(0,0,0,.15)'; ctx.beginPath(); ctx.ellipse(st.x, st.y + 14, 80, 9, 0, 0, 7); ctx.fill();
+  ctx.drawImage(im, st.x - w / 2, st.y + 20 - h, w, h);
+  ctx.fillStyle = '#20508c'; ctx.fillRect(st.x - 3, st.y - 108, 6, 44);
+  ctx.fillStyle = '#2b6cb0'; rr(ctx, st.x - 42, st.y - 142, 84, 38, 8); ctx.fill();
+  ctx.strokeStyle = '#d9a94f'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = '#fff'; ctx.font = '800 15px "Noto Sans Myanmar", sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('YBS', st.x, st.y - 122); ctx.textBaseline = 'alphabetic';
+  label('Bus မှတ်တိုင်', st.x, st.y + 36, 13);
+}
+function drawTableSet(){
+  /* umbrella over the middle table */
+  ctx.fillStyle = '#8a6a45'; ctx.fillRect(663, 1506, 4, 62);
+  ctx.fillStyle = '#c8541e';
+  ctx.beginPath(); ctx.moveTo(665, 1478); ctx.lineTo(716, 1522); ctx.lineTo(614, 1522); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#e2724f';
+  ctx.beginPath(); ctx.moveTo(665, 1478); ctx.lineTo(690, 1522); ctx.lineTo(640, 1522); ctx.closePath(); ctx.fill();
+  TABLES.forEach((t, i)=>{
+    const cleaned = S.mission > 4 || (S.m4 && S.m4.tables[i]);
+    ctx.fillStyle = 'rgba(0,0,0,.15)'; ctx.beginPath(); ctx.ellipse(t.x, t.y + 10, 26, 8, 0, 0, 7); ctx.fill();
+    ctx.fillStyle = cleaned ? '#f0ead8' : '#c9b184';
+    ctx.beginPath(); ctx.arc(t.x, t.y, 22, 0, 7); ctx.fill();
+    ctx.strokeStyle = '#7a6238'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(t.x - 7, t.y - 3, 5, 0, 7); ctx.fill();
+    ctx.fillStyle = '#c8541e'; ctx.beginPath(); ctx.arc(t.x + 8, t.y + 5, 3.5, 0, 7); ctx.fill();
+    if(S.mission === 4 && S.m4.accepted && !S.m4.tables[i]) pulseMarker(t.x, t.y - 40, '#e9a13b');
+  });
+}
+function drawDynamics(){
+  const actors = [];
+  let ents = null;
+  if(S.scene === 'sanchaung'){
+    drawTableSet();
+    /* ONE y-sorted entity pass for vehicles + people: whatever is lower
+       on screen (larger y) draws in front — a pedestrian can never look
+       like they are standing ON a vehicle, and a vehicle correctly
+       covers someone behind it */
+    ents = [];
+    traffic.forEach(v=>{ if(v.state !== 'gone' && !v.inUse) ents.push({y: v.y, f: ()=> drawVehicleAt(v.img, v.x, v.y, v.dx, v.dy, v.w, {topdown: v.topdown})}); });
+    if(!standBusy && !(ride && ride.vehRef === 'stand'))
+      ents.push({y: TRISHAW_STAND.y, f: ()=> drawVehicleAt('veh_trishaw_a', TRISHAW_STAND.x, TRISHAW_STAND.y, 1, 0, 118)});
+    STOPS.forEach(st=> ents.push({y: st.y + 22, f: ()=> drawShelter(st)}));
+    if(ride) ents.push({y: ride.veh.y, f: ()=> drawRideVeh()});
+    actors.push({x:592, y:1560, o:{set:SETS.tea, gender:'male', outfit:{top:'#54683c', bottom:'#5d4a2a', type:'longyi'}, dir:'down', walkT:0, name:'ဆိုင်ရှင်'}});
+    actors.push({x:1960, y:608, o:{set:SETS.delivery, gender:'male', outfit:{top:'#7a4a8c', bottom:'#33475b', type:'longyi'}, dir:'down', walkT:0, name:'ကိုအောင်မြင့်'}});
+    actors.push({x:1055, y:990, o:{set:SETS.auntie, gender:'female', outfit:OUTFITS.female[0], dir:'down', walkT:0, name:'မုန့်ဟင်းခါးသည် အန်တီ'}});
+    SMALL_SHOPS.forEach(sh=> actors.push({x:sh.vx, y:sh.vy, o:{set:SETS[sh.vset], gender:'female', outfit:OUTFITS.female[0], dir:'down', walkT:0, name:sh.vname}}));
+    crowd.forEach(pd=>{
+      actors.push({x:pd.x, y:pd.y, o:{set:SETS[pd.set], dir:pedDir(pd), walkT:pd.walkT, moving:pd.moving && !pd.paused}, ped:pd});
+    });
+  }
+  if(S.scene === 'terminal'){
+    if(ride) drawRideVeh();
+    else DRIVERS.forEach(d=>{
+      drawVehicleAt('veh_probox', d.x, d.y - 92, 1, 0, 190);
+      drawActor(d.x, d.y, {set:SETS.taxi, gender:'male', outfit:{top:'#8c6d1f', bottom:'#37424e', type:'longyi'}, dir:'down', walkT:0, name:d.name});
+      label(fmt(d.price) + ' cup', d.x, d.y + 48, 14, '#7a4a08');
+    });
+  }
+  if(S.scene === 'pagoda'){
+    drawActor(560, 520, {set:OUTFIT_SPR.f3, outfitId:'f3', gender:'female', outfit:OUTFITS.female[3], dir:'up', walkT:0});
+    drawActor(730, 540, {set:OUTFIT_SPR.m3, outfitId:'m3', gender:'male', outfit:OUTFITS.male[3], dir:'up', walkT:0});
+  }
+  if(S.scene === 'village'){
+    drawActor(560, 580, {set:SETS.dad, gender:'male', outfit:{top:'#7a6248', bottom:'#5d4a2a', type:'longyi'}, dir:'down', walkT:0, name:'အဖေ'});
+    drawActor(716, 580, {set:SETS.mom, gender:'female', outfit:{top:'#a58a4f', bottom:'#6d3b2a', type:'skirt'}, dir:'down', walkT:0, name:'အမေ'});
+  }
+  if(S.scene === 'restaurant'){
+    drawActor(REST_MGR.x, REST_MGR.y, {set:SETS.shopkeep, gender:'female', outfit:OUTFITS.female[0], dir:'down', walkT:0, name:'Manager'});
+    const dinerSets = ['ped_midw','ped_youngm','ped_midm','ped_youngw','ped_office','ped_elder'];
+    REST_TABLES.forEach((t, i)=>{
+      drawActor(t.x - 84, t.y + 16, {set:SETS[dinerSets[i % 6]], dir:'right', walkT:0});
+      drawActor(t.x + 84, t.y + 16, {set:SETS[dinerSets[(i + 3) % 6]], dir:'left', walkT:0});
+    });
+  }
+  if(S.scene === 'deptstore'){
+    drawActor(DEPT_MGR.x, DEPT_MGR.y, {set:SETS.tea, gender:'male', outfit:{top:'#54683c', bottom:'#5d4a2a', type:'longyi'}, dir:'down', walkT:0, name:'Manager'});
+    drawActor(1010, 556, {set:SETS.shopkeep, gender:'female', outfit:OUTFITS.female[0], dir:'down', walkT:0, name:'ငွေရှင်း'});
+    drawActor(268, 306, {set:SETS.ped_youngw, dir:'down', walkT:0});
+    drawActor(520, 306, {set:SETS.ped_midm, dir:'down', walkT:0});
+    drawActor(300, 622, {set:SETS.ped_youngm, dir:'up', walkT:0});
+  }
+  if(S.scene === 'sanchaung' && inGame){
+    if(!ride) actors.push({x:S.px, y:S.py, o:{set:OUTFIT_SPR[S.outfit], outfitId:S.outfit, gender:S.gender, outfit:currentOutfit(), dir:S.dir, walkT:S.walkT, moving:S.moving, name:'Pch'}, player:true});
+    actors.forEach(a=> ents.push({y: a.y, f: ()=> drawActor(a.x, a.y, a.o)}));
+    ents.sort((a, b)=> a.y - b.y);
+    ents.forEach(e=> e.f());
+    /* package carried on the back */
+    if(!ride && S.mission === 6 && S.m6.hasPackage && !S.m6.delivered){
+      ctx.fillStyle = '#a9743f'; ctx.fillRect(S.px + 12, S.py - 12, 15, 13);
+      ctx.strokeStyle = '#6d4c2f'; ctx.strokeRect(S.px + 12, S.py - 12, 15, 13);
+    }
+    /* pedestrian speech bubbles on top */
+    crowd.forEach(pd=>{ if(nowMs < pd.bubbleUntil && pd.bubbleText) drawBubble(pd.x, pd.y, pd.bubbleText); });
+  } else if(inGame && S.scene !== 'village' && !ride){
+    drawActor(S.px, S.py, {set:OUTFIT_SPR[S.outfit], outfitId:S.outfit, gender:S.gender, outfit:currentOutfit(), dir:S.dir, walkT:S.walkT, moving:S.moving, name:'Pch'});
+    /* carried dish / box during a job shift */
+    if(S.job && S.job.carrying){
+      if(S.job.type === 'rest'){ ctx.fillStyle = '#f2ede2'; ctx.beginPath(); ctx.ellipse(S.px + 16, S.py - 8, 9, 5, 0, 0, 7); ctx.fill(); ctx.fillStyle = '#c96f2e'; ctx.beginPath(); ctx.ellipse(S.px + 16, S.py - 9, 5.5, 3, 0, 0, 7); ctx.fill(); }
+      else { ctx.fillStyle = '#a9743f'; ctx.fillRect(S.px + 10, S.py - 14, 16, 13); ctx.strokeStyle = '#6d4c2f'; ctx.strokeRect(S.px + 10, S.py - 14, 16, 13); }
+    }
+  }
+}
+function drawObjectiveArrow(cam){
+  let obj = getObjective(); if(!obj) return;
+  if(obj.scene === 'pagoda' && S.scene === 'sanchaung'){ /* target is the bus stop */ }
+  else if(obj.scene !== S.scene){
+    if(S.scene === 'home'){ obj = {scene:'home', x:490, y:600}; }
+    else return;
+  }
+  const sx = obj.x - cam.x, sy = obj.y - cam.y;
+  if(sx > -30 && sx < VW + 30 && sy > -30 && sy < VH + 30){ pulseMarker(sx, sy - 46, '#e9a13b'); return; }
+  const ang = Math.atan2(sy - VH/2, sx - VW/2);
+  const ax = clamp(sx, 44, VW - 44), ay = clamp(sy, 90, VH - 44);
+  ctx.save(); ctx.translate(ax, ay); ctx.rotate(ang);
+  ctx.fillStyle = '#e9a13b'; ctx.strokeStyle = '#7a4a08'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(20, 0); ctx.lineTo(-10, -12); ctx.lineTo(-4, 0); ctx.lineTo(-10, 12); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.restore();
+}
+function drawScene(){
+  ctx.fillStyle = '#20241c'; ctx.fillRect(0, 0, VW, VH);
+  const target = camFor(S.scene);
+  if(camScene !== S.scene){ camX = target.x; camY = target.y; camScene = S.scene; }
+  else {
+    const k = 1 - Math.exp(-lastDt / 110); /* smooth camera follow */
+    camX += (target.x - camX) * k; camY += (target.y - camY) * k;
+    if(Math.abs(target.x - camX) < .5) camX = target.x;
+    if(Math.abs(target.y - camY) < .5) camY = target.y;
+  }
+  const cam = {x: Math.round(camX), y: Math.round(camY)};
+  ctx.save(); ctx.translate(-cam.x, -cam.y);
+  ctx.drawImage(getLayer(S.scene), 0, 0);
+  drawDynamics();
+  if(S.scene === 'sanchaung') drawRoadNames();
+  ctx.restore();
+  if(inGame && S.scene !== 'village') drawObjectiveArrow(cam);
+}
+
+/* ============================================================
+   TRAFFIC + RIDE SYSTEM
+   Yangon = RIGHT-HAND traffic: every vehicle keeps to the right
+   lane of its direction of travel (lane offset = right normal).
+   Vehicles follow road-centre polylines only — never cut corners.
+   Ride durations are distance-based seconds with hard caps:
+   trishaw <= 10s, taxi <= 20s, bus <= 30s.
+   ============================================================ */
+const GNODES = [[300,480],[1385,480],[2500,480],[300,1020],[1385,1020],[2500,1020],[300,1710],[1385,1710],[2500,1710]];
+const GEDGES = [[0,1],[1,2],[3,4],[4,5],[6,7],[7,8],[0,3],[3,6],[1,4],[4,7],[2,5],[5,8]];
+const GADJ = GNODES.map((_, i)=> GEDGES.filter(e=> e[0] === i || e[1] === i).map(e=> e[0] === i ? e[1] : e[0]));
+function nearestNode(p){
+  let bi = 0, bd = 1e18;
+  GNODES.forEach((n, i)=>{ const d = (n[0]-p.x)**2 + (n[1]-p.y)**2; if(d < bd){ bd = d; bi = i; } });
+  return bi;
+}
+function bfsNodes(a, b){
+  if(a === b) return [a];
+  const prev = {[a]: -1}, q = [a];
+  while(q.length){
+    const n = q.shift();
+    for(const m of GADJ[n]) if(prev[m] === undefined){ prev[m] = n; if(m === b){ q.length = 0; break; } q.push(m); }
+  }
+  const path = []; let c = b;
+  while(c !== -1 && c !== undefined){ path.unshift(c); c = prev[c]; }
+  return path;
+}
+/* Offset a road-centre polyline into the right-hand lane of travel */
+function offsetPath(pts, off){
+  const out = [];
+  for(let i = 0; i < pts.length - 1; i++){
+    const a = pts[i], b = pts[i + 1];
+    const dx = b.x - a.x, dy = b.y - a.y, m = Math.hypot(dx, dy) || 1;
+    const nx = -dy / m, ny = dx / m; /* right-hand normal (screen coords) */
+    out.push({x: a.x + nx * off, y: a.y + ny * off});
+    if(i === pts.length - 2) out.push({x: b.x + nx * off, y: b.y + ny * off});
+  }
+  return out;
+}
+function routePts(from, to, off){
+  const nodes = bfsNodes(nearestNode(from), nearestNode(to));
+  const pts = [from];
+  nodes.forEach(n=>{ const p = {x: GNODES[n][0], y: GNODES[n][1]}; if(Math.hypot(p.x - pts[pts.length-1].x, p.y - pts[pts.length-1].y) > 4) pts.push(p); });
+  if(Math.hypot(to.x - pts[pts.length-1].x, to.y - pts[pts.length-1].y) > 4) pts.push(to);
+  else pts[pts.length-1] = to;
+  return offsetPath(pts, off);
+}
+function pathLen(pts){ let L = 0; for(let i = 1; i < pts.length; i++) L += Math.hypot(pts[i].x - pts[i-1].x, pts[i].y - pts[i-1].y); return L; }
+/* generic path follower state */
+function followInit(o, pts){ o.pts = pts; o.seg = 0; o.x = pts[0].x; o.y = pts[0].y; o.dx = 1; o.dy = 0; }
+function followStep(o, dt, speed){
+  let remain = speed * dt / 1000;
+  while(remain > 0 && o.seg < o.pts.length - 1){
+    const t = o.pts[o.seg + 1];
+    const dx = t.x - o.x, dy = t.y - o.y, d = Math.hypot(dx, dy);
+    if(d < .01){ o.seg++; continue; }
+    o.dx = dx / d; o.dy = dy / d;
+    if(d <= remain){ o.x = t.x; o.y = t.y; o.seg++; remain -= d; }
+    else { o.x += o.dx * remain; o.y += o.dy * remain; remain = 0; }
+  }
+  return o.seg >= o.pts.length - 1;
+}
+/* Half the vehicle's length along its travel direction — following
+   distances are measured bumper-to-bumper, not centre-to-centre, so a
+   long bus or truck can never nose into the vehicle ahead */
+function vehHalfLen(v){
+  const im = IMG[v.img];
+  const h = (im && im.naturalWidth) ? v.w * im.naturalHeight / im.naturalWidth : v.w * .6;
+  return Math.max(v.w, h) / 2;
+}
+/* Is something in MY lane corridor ahead? `look` is the wanted bumper
+   gap. Lateral-aware: opposing-lane traffic (52-60px to the side) never
+   blocks; only agents actually in this vehicle's lane (or crossing it
+   at a junction) do. */
+function vehBlocked(v, look, vehOnly){
+  if(S.scene !== 'sanchaung') return false;
+  const test = (a, isVeh)=>{
+    const rx = a.x - v.x, ry = a.y - v.y;
+    const ahead = rx * v.dx + ry * v.dy;
+    const reach = look + vehHalfLen(v) + (isVeh ? vehHalfLen(a) : 14);
+    if(ahead < -6 || ahead > reach) return false;
+    const lat = Math.abs(rx * -v.dy + ry * v.dx);
+    return lat < (isVeh ? 38 : 32);
+  };
+  for(const u of traffic){ if(u !== v && u.state !== 'gone' && !u.inUse && test(u, true)) return true; }
+  if(ride && ride.veh !== v && test(ride.veh, true)) return true;
+  if(vehOnly) return false;
+  if(!ride && test({x: S.px, y: S.py}, false)) return true;
+  for(const p of crowd){ if(test(p, false)) return true; }
+  return false;
+}
+/* ---------------- ambient traffic ---------------- */
+const traffic = [];
+let busVeh = null;
+function mkVeh(kind, img, w, topdown, node, cruise){
+  const v = { kind, img, w, topdown: !!topdown, cruise, node, prevNode: -1, state: 'drive', timer: 0,
+    x: GNODES[node][0], y: GNODES[node][1], dx: 1, dy: 0, pts: null, seg: 0, inUse: false, binCd: 0, dwellKey: '', movingNow: false, blockT: 0 };
+  traffic.push(v); return v;
+}
+function vehNextRoute(v, fromPt){
+  if(v.kind === 'trishaw') v.img = ['veh_trishaw_a', 'veh_trishaw_b', 'veh_trishaw_c'][Math.floor(Math.random() * 3)]; /* crew A/B/C — never driverless */
+  const opts = GADJ[v.node].filter(n=> n !== v.prevNode);
+  const nn = opts[Math.floor(Math.random() * opts.length)];
+  const start = fromPt || {x: GNODES[v.node][0], y: GNODES[v.node][1]};
+  const pts = routePts(start, {x: GNODES[nn][0], y: GNODES[nn][1]}, v.kind === 'bus' || v.kind === 'ycdc' || v.kind === 'fire' ? 30 : 26);
+  followInit(v, pts);
+  v.prevNode = v.node; v.node = nn;
+}
+function spawnTraffic(){
+  traffic.length = 0;
+  mkVeh('taxi', 'veh_probox', 196, false, 1, 96);
+  mkVeh('taxi', 'veh_probox', 196, false, 7, 96);
+  mkVeh('trishaw', 'veh_trishaw_b', 118, false, 3, 40);
+  mkVeh('trishaw', 'veh_trishaw_c', 118, false, 5, 40);
+  mkVeh('sedan', 'veh_sedan', 118, true, 2, 106);
+  mkVeh('suv', 'veh_suv', 192, false, 6, 100);
+  const pol = mkVeh('police', 'veh_police', 192, false, 4, 112); pol.cycle = 40 + Math.random() * 20;
+  mkVeh('ycdc', 'veh_ycdc', 228, false, 0, 34);
+  const fire = mkVeh('fire', 'veh_fire', 216, false, 2, 132); fire.state = 'gone'; fire.timer = 45000;
+  busVeh = mkVeh('bus', 'veh_ybs', 238, false, 2, 88);
+  busVeh.x = 2500; busVeh.y = 200; busVeh.dirY = 1; busVeh.pts = null;
+  traffic.forEach(v=>{ if(v.kind !== 'bus' && v.state !== 'gone') vehNextRoute(v); });
+}
+function updateBus(dt){
+  const v = busVeh; if(!v || v.inUse) return;
+  if(v.state === 'pause'){ v.movingNow = false; v.timer -= dt; if(v.timer <= 0) v.state = 'drive'; return; }
+  const targetY = v.dirY > 0 ? 1870 : 150;
+  v.x = v.dirY > 0 ? 2470 : 2530; /* right-hand lane: southbound = west side */
+  v.dx = 0; v.dy = v.dirY;
+  /* dwell at stops */
+  for(const st of STOPS){
+    if(Math.abs(v.y - st.y) < 8 && v.dwellKey !== st.id + ':' + v.dirY){
+      v.dwellKey = st.id + ':' + v.dirY; v.state = 'pause'; v.timer = 4000; return;
+    }
+  }
+  if(!vehBlocked(v, 30)){ v.y += v.dirY * v.cruise * dt / 1000; v.movingNow = true; v.blockT = 0; }
+  else { v.blockT = (v.blockT || 0) + dt; if(v.blockT > 3500){ v.y += v.dirY * 16 * dt / 1000; v.movingNow = true; } else v.movingNow = false; }
+  if((v.dirY > 0 && v.y >= targetY) || (v.dirY < 0 && v.y <= targetY)){ v.dirY *= -1; v.dwellKey = ''; }
+}
+function updateTraffic(dt){
+  if(S.scene !== 'sanchaung') return;
+  traffic.forEach(v=>{
+    if(v.inUse) return;
+    if(v.kind === 'bus'){ updateBus(dt); return; }
+    if(v.state === 'gone'){
+      v.timer -= dt;
+      if(v.timer <= 0){
+        if(v.kind === 'fire'){ /* one fast pass along Sanchaung Rd, then gone again */
+          v.state = 'drive';
+          followInit(v, offsetPath([{x:180, y:1020}, {x:2620, y:1020}], 30));
+          v.node = 5;
+        } else { v.state = 'drive'; v.x = GNODES[v.node][0]; v.y = GNODES[v.node][1]; vehNextRoute(v); }
+      }
+      return;
+    }
+    if(v.state === 'pause'){
+      v.movingNow = false;
+      v.timer -= dt;
+      if(v.kind === 'ycdc' && v.binCd > 0) v.binCd -= dt;
+      if(v.timer <= 0){ v.state = 'drive'; if(!v.pts || v.seg >= v.pts.length - 1) vehNextRoute(v); }
+      return;
+    }
+    /* driving */
+    let sp = v.cruise;
+    const look = 30;
+    if(vehBlocked(v, look)){
+      sp = 0; v.blockT += dt;
+      /* deadlock breaker: after 3.5s blocked by anything (people, or a
+         vehicle that is itself stuck at a junction), creep forward
+         slowly so gridlock always clears and queues never freeze */
+      if(v.blockT > 3500) sp = 16;
+    } else v.blockT = 0;
+    v.movingNow = sp > 0;
+    if(sp > 0){
+      const done = followStep(v, dt, sp);
+      if(v.kind === 'ycdc'){ /* pause at rubbish bins */
+        for(const bn of BINS){
+          if(Math.hypot(v.x - bn.x, v.y - bn.y) < 74 && v.binCd <= 0){
+            v.state = 'pause'; v.timer = 5000; v.binCd = 90000; return;
+          }
+        }
+      }
+      if(done){
+        if(v.kind === 'fire'){ v.state = 'gone'; v.timer = 60000 + Math.random() * 40000; return; }
+        if(v.kind === 'police'){ v.cycle -= 1; if(v.cycle <= 0){ v.state = 'gone'; v.timer = 18000; v.cycle = 40 + Math.random() * 20; return; } }
+        const pauseChance = v.kind === 'taxi' ? .3 : v.kind === 'trishaw' ? .35 : .08;
+        if(Math.random() < pauseChance){ v.state = 'pause'; v.timer = (v.kind === 'trishaw' ? 4000 : 3000) + Math.random() * 3000; }
+        else vehNextRoute(v);
+      }
+    }
+  });
+}
+function drawTraffic(){
+  traffic.forEach(v=>{
+    if(v.state === 'gone' || v.inUse) return;
+    drawVehicleAt(v.img, v.x, v.y, v.dx, v.dy, v.w, {topdown: v.topdown});
+  });
+}
+/* ---------------- rides ---------------- */
+let ride = null, standBusy = false;
+const RIDE_CFG = {
+  trishaw: {cap: 10, base: 150, off: 30},
+  taxi: {cap: 20, base: 330, off: 26},
+  bus: {cap: 30, base: 250, off: 30}
+};
+function startRide(cfg){
+  const rc = RIDE_CFG[cfg.kind];
+  const pts = offsetPath(cfg.pts, rc.off);
+  const L = pathLen(pts);
+  const dur = clamp(L / rc.base, 1.4, rc.cap);
+  ride = { kind: cfg.kind, vehRef: cfg.vehRef || null, onDone: cfg.onDone || null,
+    veh: { kind: cfg.kind, img: cfg.img, w: cfg.w, topdown: !!cfg.topdown, x: cfg.from.x, y: cfg.from.y, dx: 1, dy: 0, pts, seg: 0 },
+    speed: L / dur, walk: cfg.walk, t: 0 };
+  followInit(ride.veh, pts);
+  if(cfg.vehRef && cfg.vehRef !== 'stand') cfg.vehRef.inUse = true;
+  if(cfg.vehRef === 'stand') standBusy = true;
+  S.px = cfg.from.x; S.py = cfg.from.y; S.moving = false;
+  beep(520, .08);
+}
+function endRide(){
+  const r = ride; ride = null;
+  S.px = r.walk.x; S.py = r.walk.y; S.dir = 'down'; unstick(); save();
+  if(r.vehRef && r.vehRef !== 'stand'){
+    r.vehRef.inUse = false; r.vehRef.x = r.veh.x; r.vehRef.y = r.veh.y;
+    r.vehRef.node = nearestNode(r.veh); r.vehRef.prevNode = -1; r.vehRef.state = 'drive';
+    vehNextRoute(r.vehRef, {x: r.veh.x, y: r.veh.y});
+  }
+  if(r.vehRef === 'stand') standBusy = false;
+  if(r.onDone) r.onDone();
+}
+function updateRide(dt){
+  if(!ride) return;
+  ride.t += dt;
+  let sp = ride.speed;
+  if(ride.t > 600 && vehBlocked(ride.veh, 26)){
+    ride.blockT = (ride.blockT || 0) + dt;
+    /* deadlock breaker: a ride must never soft-lock behind a stuck
+       junction — after 3.5s blocked, creep forward slowly until clear */
+    sp = ride.blockT > 3500 ? Math.min(ride.speed, 30) : 0;
+  } else ride.blockT = 0;
+  if(sp > 0 && followStep(ride.veh, dt, sp)){ endRide(); return; }
+  S.px = ride.veh.x; S.py = ride.veh.y;
+  S.dir = Math.abs(ride.veh.dx) > Math.abs(ride.veh.dy) ? (ride.veh.dx > 0 ? 'right' : 'left') : (ride.veh.dy > 0 ? 'down' : 'up');
+}
+function drawRideVeh(){
+  if(!ride) return;
+  const v = ride.veh;
+  drawVehicleAt(v.img, v.x, v.y, v.dx, v.dy, v.w, {topdown: v.topdown});
+  drawSeated(v.x, v.y, v.kind, v.dx, v.dy);
+}
+function fareFor(kind, from, to){
+  const d = pathLen(routePts(from, to, 26));
+  if(kind === 'trishaw') return 300 + Math.round(d / 12 / 50) * 50;
+  if(kind === 'taxi') return 1000 + Math.round(d / 8 / 100) * 100;
+  return 300;
+}
+function rideToPlace(kind, vehRef, from, place){
+  const fare = fareFor(kind, from, {x: place.rx, y: place.ry});
+  S.cup -= fare; refreshHUD(); save();
+  /* raw road-centre path (startRide applies the right-hand lane offset) */
+  const nodes = bfsNodes(nearestNode(from), nearestNode({x: place.rx, y: place.ry}));
+  const raw = [from];
+  nodes.forEach(n=>{ const p = {x: GNODES[n][0], y: GNODES[n][1]}; if(Math.hypot(p.x - raw[raw.length-1].x, p.y - raw[raw.length-1].y) > 4) raw.push(p); });
+  const rp = {x: place.rx, y: place.ry};
+  if(Math.hypot(rp.x - raw[raw.length-1].x, rp.y - raw[raw.length-1].y) > 4) raw.push(rp); else raw[raw.length-1] = rp;
+  startRide({ kind, img: kind === 'taxi' ? 'veh_probox' : 'veh_trishaw_a', w: kind === 'taxi' ? 196 : 118,
+    from: vehRef === 'stand' ? {x: TRISHAW_STAND.x, y: TRISHAW_STAND.y} : from, pts: raw,
+    walk: {x: place.wx, y: place.wy}, vehRef });
+  toast(kind === 'taxi' ? 'Taxi စီးနေပါပြီ' : 'ဆိုက်ကား စီးနေပါပြီ', place.name + ' သို့ — ' + fmt(fare) + ' cup');
+}
+function placesMenu(kind, vehRef, from){
+  const mk = p => {
+    const fare = fareFor(kind, from, {x: p.rx, y: p.ry});
+    return { label: p.name + ' — ' + fmt(fare) + ' cup', disabled: S.cup < fare,
+      action: ()=> rideToPlace(kind, vehRef, from, p) };
+  };
+  const mainChoices = PLACES.slice(0, 6).map(mk);
+  mainChoices.push({label:'ဆိုင်များ ▸', action:()=>{
+    const sub = PLACES.slice(6, 10).concat(PLACES.slice(12)).map(mk);
+    sub.push({label:'◂ ပြန်သွား', action:()=> placesMenu(kind, vehRef, from)});
+    showDialogue([{name:'Pch', text:'ဘယ်ဆိုင် သွားမလဲ?', choices: sub}]);
+  }});
+  PLACES.slice(10, 12).forEach(p=> mainChoices.push(mk(p)));
+  mainChoices.push({label:'မစီးတော့ဘူး', action:()=>{}});
+  showDialogue([
+    N(kind === 'taxi' ? 'Taxi ဆရာ' : 'ဆိုက်ကား ဆရာ', kind === 'taxi' ? 'ဘယ်သွားမလဲ ညီလေး? ဈေးက အကွာအဝေး အလိုက် ကျမယ်။' : 'ဆိုက်ကားခ က အကွာအဝေး အလိုက် ပါ။ ဘယ်သွားမလဲ?'),
+    {name:'Pch', text:'(လက်ထဲ ' + fmt(S.cup) + ' cup ရှိတယ်)', choices: mainChoices}
+  ]);
+}
+function busRideToStop(fromStop, toStop){
+  startRide({ kind:'bus', img:'veh_ybs', w:238, from:{x:2500, y:fromStop.y},
+    pts:[{x:2500, y:fromStop.y}, {x:2500, y:toStop.y}], walk:{x:toStop.wx, y:toStop.wy}, vehRef: null });
+  toast('YBS စီးနေပါပြီ', toStop.name + ' သို့');
+}
+function busRideToPagoda(freeRoam){
+  const fromY = S.py > 800 ? 1180 : 478;
+  if(freeRoam) S.pstep = 2;
+  startRide({ kind:'bus', img:'veh_ybs', w:238, from:{x:2500, y:fromY},
+    pts:[{x:2500, y:fromY}, {x:2500, y:150}], walk:{x:2330, y:1214},
+    onDone: ()=> gotoScene('pagoda', 640, 730) });
+  toast('YBS စီးနေပါပြီ', 'ရွှေတိဂုံသို့');
+}
+
 /* ---------------- Dialogue ---------------- */
 let dlgQueue = [], dlgCb = null, dlgActive = false;
+let dlgChoiceBtns = [], dlgChoiceIdx = 0;
 function showDialogue(lines, cb){
   dlgQueue = lines.slice(); dlgCb = cb || null; dlgActive = true;
   $('dlg').classList.add('show'); nextLine();
 }
+function choicesVisible(){ return $('dlgChoices').classList.contains('show'); }
+function applyChoiceSel(){
+  dlgChoiceBtns.forEach((b, i)=> b.classList.toggle('sel', i === dlgChoiceIdx));
+}
+function moveChoiceSel(d){
+  if(!dlgChoiceBtns.length) return;
+  let i = dlgChoiceIdx;
+  for(let n = 0; n < dlgChoiceBtns.length; n++){
+    i = (i + d + dlgChoiceBtns.length) % dlgChoiceBtns.length;
+    if(!dlgChoiceBtns[i].disabled){ dlgChoiceIdx = i; applyChoiceSel(); beep(560, .05); return; }
+  }
+}
 function nextLine(){
   const box = $('dlgChoices'); box.classList.remove('show'); box.innerHTML = '';
+  dlgChoiceBtns = [];
   if(!dlgQueue.length){ endDialogue(); return; }
   const L = dlgQueue.shift();
-  $('dlgName').textContent = L.name || 'Pch';
-  $('dlgName').className = (L.name && L.name !== 'Pch') ? 'npc' : '';
-  $('dlgName').id = 'dlgName';
+  const nameEl = $('dlgName');
+  nameEl.textContent = L.name || 'Pch';
+  nameEl.className = (L.name && L.name !== 'Pch') ? 'npc' : '';
   $('dlgText').textContent = L.text || '';
-  $('dlgNext').style.display = L.choices ? 'none' : 'block';
   if(L.choices){
+    $('dlgNext').innerHTML = '<span class="kbd">1</span> <span class="kbd">2</span> နံပါတ် နှိပ် — သို့မဟုတ် <span class="kbd">↑</span><span class="kbd">↓</span> ရွေးပြီး <span class="kbd">Enter</span>';
     box.classList.add('show');
-    L.choices.forEach(c=>{
-      const b = document.createElement('button'); b.className = 'choice-btn'; b.textContent = c.label;
+    L.choices.forEach((c, i)=>{
+      const b = document.createElement('button'); b.className = 'choice-btn';
+      const num = document.createElement('span'); num.className = 'num'; num.textContent = i + 1;
+      b.appendChild(num); b.appendChild(document.createTextNode(c.label));
       if(c.disabled) b.disabled = true;
       b.onclick = ()=>{ beep(520,.07); box.classList.remove('show');
         const q = dlgQueue;
         if(c.action) c.action();
         if(dlgQueue !== q) return; // action started a fresh dialogue — don't advance it
         if(!c.keepOpen) nextLine(); };
-      box.appendChild(b);
+      b.addEventListener('mouseenter', ()=>{ if(!b.disabled){ dlgChoiceIdx = i; applyChoiceSel(); } });
+      box.appendChild(b); dlgChoiceBtns.push(b);
     });
+    dlgChoiceIdx = Math.max(0, L.choices.findIndex(c=> !c.disabled));
+    applyChoiceSel();
+  } else {
+    $('dlgNext').innerHTML = '<span class="kbd">Enter</span> ဆက်သွား ▸';
+    $('dlgNext').style.display = 'block';
   }
 }
 function endDialogue(){ dlgActive = false; $('dlg').classList.remove('show'); const cb = dlgCb; dlgCb = null; if(cb) cb(); }
 function advanceDialogue(){
   if(!dlgActive) return;
-  if($('dlgChoices').classList.contains('show')) return; // must pick a choice
+  if(choicesVisible()) return; // must pick a choice
   beep(440,.05); nextLine();
 }
 const P = t => ({name:'Pch', text:t});
 const N = (n,t) => ({name:n, text:t});
 
 /* ---------------- Transition ---------------- */
-function transition(title, sub, ms, cb){
+function transition(title, sub, ms, cb, veh){
   $('transTitle').textContent = title; $('transSub').textContent = sub || '';
+  const ti = $('transImg');
+  if(veh && IMG[veh]){ ti.src = IMG[veh].src; ti.style.display = 'block'; } else ti.style.display = 'none';
   $('trans').classList.add('show');
   const bar = $('transBar'); bar.style.transition = 'none'; bar.style.width = '0%';
   requestAnimationFrame(()=>{ requestAnimationFrame(()=>{ bar.style.transition = 'width ' + ms + 'ms linear'; bar.style.width = '100%'; }); });
   setTimeout(()=>{ $('trans').classList.remove('show'); if(cb) cb(); }, ms + 120);
 }
-function gotoScene(scene, x, y){ S.scene = scene; S.px = x; S.py = y; save(); }
+function gotoScene(scene, x, y){
+  const apply = ()=>{ S.scene = scene; S.px = x; S.py = y; unstick(); save(); };
+  if($('trans').classList.contains('show')){ apply(); return; }
+  const f = $('fade'); f.classList.add('on');
+  setTimeout(()=>{ apply(); setTimeout(()=> f.classList.remove('on'), 40); }, 180);
+}
 
 /* ---------------- Interactions ---------------- */
 function currentOutfit(){ const list = OUTFITS[S.gender]; return list.find(o=>o.id === S.outfit) || list[0]; }
@@ -515,9 +2135,20 @@ function getInteractables(){
     BUILDINGS.forEach(b=>{
       list.push({x:b.door.x, y:b.door.y + 16, r:52, label:b.name, act:()=> buildingAction(b)});
     });
-    peds.forEach(pd=> list.push({x:pd.x, y:pd.y, r:44, label:'စကားပြော', act:()=>{
+    crowd.forEach(pd=> list.push({x:pd.x, y:pd.y, r:44, label:'စကားပြော', act:()=>{
       showDialogue([N('ရပ်ကွက်သား', GREETINGS[Math.floor(Math.random()*GREETINGS.length)])]);
     }}));
+    SMALL_SHOPS.forEach(sh=> list.push({x:sh.door.x, y:sh.door.y, r:54, label:sh.name, act:()=> openShop('stall', sh)}));
+    list.push({x:TRISHAW_STAND.x, y:TRISHAW_STAND.y + 26, r:58, label:'ဆိုက်ကားဂိတ်', act:()=>{
+      if(standBusy) return;
+      placesMenu('trishaw', 'stand', {x:472, y:1020});
+    }});
+    traffic.forEach(v=>{
+      if(v.kind === 'taxi' && v.state === 'pause' && !v.inUse)
+        list.push({x:v.x, y:v.y + 30, r:62, label:'Taxi ငှားမယ်', act:()=> placesMenu('taxi', v, {x:GNODES[v.node][0], y:GNODES[v.node][1]})});
+      if(v.kind === 'trishaw' && v.state === 'pause' && !v.inUse)
+        list.push({x:v.x, y:v.y + 24, r:56, label:'ဆိုက်ကား ငှားမယ်', act:()=> placesMenu('trishaw', v, {x:GNODES[v.node][0], y:GNODES[v.node][1]})});
+    });
     // tea shop owner
     list.push({x:592, y:1552, r:54, label:'ဆိုင်ရှင် — စကားပြော', act: teaOwnerTalk});
     // tables (mission 4)
@@ -536,8 +2167,8 @@ function getInteractables(){
         showDialogue([N('ကိုအောင်မြင့်','ပစ္စည်းထုပ် ရောက်လာပြီ ကျေးဇူးပါ ညီလေး။ ပို့ခ ကို ဆိုင်မှာ သွားယူလိုက်ပါ။'), P('ဟုတ်ကဲ့ အစ်ကို။')], ()=>{ refreshHUD(); save(); });
       } else showDialogue([N('ကိုအောင်မြင့်','မင်္ဂလာပါ ညီလေး။ စမ်းချောင်းမှာ နေသာ ကျပါစေ။')]);
     }});
-    // package pickup at store is via building 'store'; bus stop:
-    list.push({x:BUSSTOP.x, y:BUSSTOP.y, r:56, label:'YBS မှတ်တိုင်', act: busStopAction});
+    // bus stops
+    STOPS.forEach(st=> list.push({x:st.x, y:st.y, r:56, label:'YBS မှတ်တိုင်', act:()=> busStopAction(st)}));
   }
   if(S.scene === 'terminal'){
     DRIVERS.forEach(d=> list.push({x:d.x, y:d.y, r:58, label:d.name + ' — ဈေးမေး', act:()=> driverTalk(d)}));
@@ -545,9 +2176,33 @@ function getInteractables(){
   if(S.scene === 'home'){
     list.push({x:490, y:600, r:56, label:'အပြင် ထွက်မယ်', act:()=>{ gotoScene('sanchaung', 640, 985); }});
   }
+  if(S.scene === 'restaurant'){
+    list.push({x:640, y:742, r:56, label:'အပြင် ထွက်မယ်', act:()=> gotoScene('sanchaung', 2190, 440)});
+    list.push({x:REST_MGR.x, y:REST_MGR.y, r:58, label:'Manager — အလုပ်', act: restManagerTalk});
+    list.push({x:REST_PASS.x, y:REST_PASS.y, r:62, label:'ဟင်းပွဲ ယူ', act:()=>{
+      if(S.job && S.job.type === 'rest' && !S.job.carrying && S.job.step < 5) jobPickup();
+      else showDialogue([N('စားဖိုမှူး','အော်ဒါ ရှိမှ ဟင်းပွဲ ထုတ်ပေးပါတယ်။')]);
+    }});
+    REST_TABLES.forEach((t, i)=> list.push({x:t.x, y:t.y + 30, r:120, label:'စားပွဲ ' + t.n, act:()=>{
+      if(S.job && S.job.type === 'rest' && S.job.carrying && S.job.target === i) jobDeliver();
+      else showDialogue([N('စားသုံးသူ','ကျေးဇူးပါ — အစားအသောက် ကောင်းပါတယ်။')]);
+    }}));
+  }
+  if(S.scene === 'deptstore'){
+    list.push({x:640, y:742, r:56, label:'အပြင် ထွက်မယ်', act:()=> gotoScene('sanchaung', 2200, 940)});
+    list.push({x:DEPT_MGR.x, y:DEPT_MGR.y, r:58, label:'Manager — အလုပ်', act: deptManagerTalk});
+    list.push({x:DEPT_STORAGE.x, y:DEPT_STORAGE.y, r:80, label:'သေတ္တာ ယူ', act:()=>{
+      if(S.job && S.job.type === 'dept' && !S.job.carrying && S.job.step < 5) jobPickup();
+      else showDialogue([N('သိုလှောင်ခန်း','သေတ္တာတွေ စီထားပါတယ်။ shift ရှိမှ သယ်ပါ။')]);
+    }});
+    DEPT_SPOTS.forEach((t, i)=> list.push({x:t.x, y:t.y, r:84, label:t.name, act:()=>{
+      if(S.job && S.job.type === 'dept' && S.job.carrying && S.job.target === i) jobDeliver();
+      else showDialogue([N('ဈေးဝယ်သူ','ပစ္စည်းတွေ စုံစုံလင်လင် ရှိတာပဲ။')]);
+    }}));
+  }
   if(S.scene === 'pagoda'){
     list.push({x:640, y:430, r:80, label:'စေတီ ရှိခိုး', act: pagodaWorship});
-    list.push({x:1150, y:700, r:58, label:'Bus — စမ်းချောင်း ပြန်', act: pagodaReturn});
+    list.push({x:1150, y:716, r:132, label:'Bus — စမ်းချောင်း ပြန်', act: pagodaReturn});
   }
   return list;
 }
@@ -564,14 +2219,16 @@ function buildingAction(b){
     case 'furniture': openShop('furniture'); break;
     case 'outfit': openShop('outfit'); break;
     case 'store': storeAction(); break;
+    case 'restaurant': gotoScene('restaurant', 640, 690); break;
+    case 'deptstore': gotoScene('deptstore', 640, 690); break;
   }
 }
 
 /* ---- Mission-specific actions ---- */
 const DRIVERS = [
-  {x:430, y:470, name:'Taxi ဆရာ (၁)', price:15000, shared:false, line:'စမ်းချောင်းအထိ 15,000 ပဲ ညီလေး။ တစ်ယောက်တည်း သီးသန့် စီးရမှာ။'},
-  {x:640, y:470, name:'Taxi ဆရာ (၂)', price:12000, shared:false, line:'12,000 နဲ့ လိုက်မယ်။ ဒီထက် လျှော့လို့ မရတော့ဘူး။'},
-  {x:850, y:470, name:'ပေါင်းစီး Taxi ဆရာ', price:3500, shared:true, line:'ပေါင်းစီးကား ရှိတယ် — လူ ၄ ယောက် ပေါင်းစီးတာ၊ စမ်းချောင်းအထိ တစ်ယောက် 3,500 ပဲ။ ခဏတော့ စောင့်ရမယ်။'}
+  {x:620, y:470, name:'Taxi ဆရာ (၁)', price:15000, shared:false, line:'စမ်းချောင်းအထိ 15,000 ပဲ ညီလေး။ တစ်ယောက်တည်း သီးသန့် စီးရမှာ။'},
+  {x:900, y:470, name:'Taxi ဆရာ (၂)', price:12000, shared:false, line:'12,000 နဲ့ လိုက်မယ်။ ဒီထက် လျှော့လို့ မရတော့ဘူး။'},
+  {x:1180, y:470, name:'ပေါင်းစီး Taxi ဆရာ', price:3500, shared:true, line:'ပေါင်းစီးကား ရှိတယ် — လူ ၄ ယောက် ပေါင်းစီးတာ၊ စမ်းချောင်းအထိ တစ်ယောက် 3,500 ပဲ။ ခဏတော့ စောင့်ရမယ်။'}
 ];
 function driverTalk(d){
   if(S.mission !== 1){ showDialogue([N(d.name,'သွားမယ့်နေရာ ပြောပါ ညီလေး။')]); return; }
@@ -584,11 +2241,13 @@ function driverTalk(d){
             return;
           }
           S.cup -= d.price; refreshHUD(); save();
-          transition('Taxi စီးနေပါပြီ...', d.shared ? 'ပေါင်းစီးကားနဲ့ စမ်းချောင်းသို့ သွားနေပါတယ်' : 'Taxi နဲ့ စမ်းချောင်းသို့ သွားနေပါတယ်', 2400, ()=>{
-            gotoScene('sanchaung', 2348, 1245);
-            completeMission(0, 30, 'စမ်းချောင်း ရောက်ပါပြီ');
-            showDialogue([P('ရောက်ပြီ... စမ်းချောင်း။ ဒီကစပြီး ဘဝသစ် စမယ်။'), P('အရင်ဆုံး ငါ့ အငှားအခန်းဆီ သွားရမယ်။')]);
-          });
+          startRide({ kind:'taxi', img:'veh_probox', w:190, from:{x:d.x, y:d.y - 52},
+            pts:[{x:d.x, y:498}, {x:1268, y:498}], walk:{x:ARRIVE.x, y:ARRIVE.y}, vehRef: null,
+            onDone: ()=>{
+              gotoScene('sanchaung', ARRIVE.x, ARRIVE.y);
+              completeMission(0, 30, 'စမ်းချောင်း ရောက်ပါပြီ');
+              showDialogue([P('ရောက်ပြီ... စမ်းချောင်း။ ဒီကစပြီး ဘဝသစ် စမယ်။'), P('အရင်ဆုံး ငါ့ အငှားအခန်းဆီ သွားရမယ်။')]);
+            }});
         }},
       {label:'မစီးသေးဘူး', action:()=>{}}
     ]}
@@ -648,390 +2307,199 @@ function storeAction(){
     showDialogue([N('ပစ္စည်းဆိုင် ဆိုင်ရှင်','ကြိုဆိုပါတယ်။ လိုတာ ရှိရင် ပြောပါ။')]);
   }
 }
-function busStopAction(){
-  if(S.mission === 7 && pagodaStep === 0){
-    showDialogue([
-      N('YBS မှတ်တိုင်','ရွှေတိဂုံ သွားမယ့် bus — ကားခ 300 cup'),
-      {name:'Pch', text:'ဘုရား သွားဖူးချင်တယ်။', choices:[
-        {label:'Bus စီးမယ် — 300 cup', disabled: S.cup < 300, action:()=>{
-            S.cup -= 300; pagodaStep = 1; refreshHUD(); save();
-            transition('YBS စီးနေပါပြီ...','ပြည်လမ်းအတိုင်း ရွှေတိဂုံဘုရားသို့', 2400, ()=> gotoScene('pagoda', 640, 730));
-          }},
-        {label:'နောက်မှ', action:()=>{}}
-      ]}
-    ]);
-  } else {
-    showDialogue([N('YBS မှတ်တိုင်','Bus မှတ်တိုင် — နောက်ပိုင်း mission တွေမှာ မြို့အနှံ့ သွားဖို့ သုံးလို့ရပါတယ်။')]);
+function busStopAction(stop){
+  const other = STOPS.find(s=> s.id !== stop.id);
+  const choices = [];
+  if(S.mission === 7 && S.pstep === 0 && stop.id === 'sc'){
+    choices.push({label:'ရွှေတိဂုံသို့ — 300 cup', disabled: S.cup < 300, action:()=>{
+      S.cup -= 300; S.pstep = 1; refreshHUD(); save(); busRideToPagoda(false);
+    }});
   }
+  if(S.mission >= 8){
+    choices.push({label:'ရွှေတိဂုံသို့ — 300 cup', disabled: S.cup < 300, action:()=>{
+      S.cup -= 300; refreshHUD(); save(); busRideToPagoda(true);
+    }});
+  }
+  choices.push({label: other.name + ' သို့ — 300 cup', disabled: S.cup < 300, action:()=>{
+    S.cup -= 300; refreshHUD(); save(); busRideToStop(stop, other);
+  }});
+  choices.push({label:'မစီးတော့ဘူး', action:()=>{}});
+  showDialogue([
+    N('YBS မှတ်တိုင်', stop.name + ' — YBS က ပြည်လမ်း ကြော အတိုင်းပဲ သွားပါတယ်။ ကားခ 300 cup။'),
+    {name:'Pch', text:'(လက်ထဲ ' + fmt(S.cup) + ' cup ရှိတယ်)', choices}
+  ]);
 }
 function pagodaWorship(){
-  if(S.mission === 7 && pagodaStep === 1){
-    pagodaStep = 2;
+  if(S.mission === 7 && S.pstep === 1){
+    S.pstep = 2; save();
     showDialogue([P('ရွှေတိဂုံစေတီတော်... အရမ်း ကြည်ညိုစရာ ကောင်းတယ်။'), P('ရန်ကုန်မှာ အောင်မြင်အောင် ကြိုးစားပါမယ်လို့ ဆုတောင်းခဲ့တယ်။')], ()=>{ refreshHUD(); save(); });
   } else showDialogue([P('စေတီတော်ကို ရှိခိုးပြီး စိတ် အေးချမ်းသွားတယ်။')]);
 }
 function pagodaReturn(){
-  if(S.mission === 7 && pagodaStep === 2){
-    transition('Bus နဲ့ ပြန်နေပါပြီ...','စမ်းချောင်းသို့', 2000, ()=>{
-      gotoScene('sanchaung', 2348, 1245); pagodaStep = 0;
-      completeMission(0, 30, 'ဘုရားဖူး ခရီး ပြီးပါပြီ');
-    });
-  } else if(S.mission === 7){
+  if(S.mission === 7 && S.pstep !== 2){
     showDialogue([P('အရင် စေတီ ရှိခိုးပြီးမှ ပြန်မယ်။')]);
-  } else {
-    transition('Bus နဲ့ ပြန်နေပါပြီ...','စမ်းချောင်းသို့', 2000, ()=> gotoScene('sanchaung', 2348, 1245));
+    return;
   }
+  transition('Bus နဲ့ ပြန်နေပါပြီ...', 'စမ်းချောင်းသို့', 700, ()=>{
+    gotoScene('sanchaung', 2500, 170);
+    setTimeout(()=>{
+      startRide({ kind:'bus', img:'veh_ybs', w:238, from:{x:2500, y:170},
+        pts:[{x:2500, y:170}, {x:2500, y:1180}], walk:{x:2330, y:1214}, vehRef: null,
+        onDone: ()=>{
+          if(S.mission === 7 && S.pstep === 2){ S.pstep = 0; completeMission(0, 30, 'ဘုရားဖူး ခရီး ပြီးပါပြီ'); }
+        }});
+    }, 400);
+  }, 'veh_ybs');
 }
 
-/* ---------------- Shops ---------------- */
-let shopKind = null;
-function uiOpen(){ return shopKind !== null || $('menuScrim').classList.contains('show') || $('phaseScrim').classList.contains('show'); }
-function openShop(kind){
-  shopKind = kind;
-  $('shopTitle').textContent = kind === 'furniture' ? 'Furniture ဆိုင်' : 'အဝတ်ဆိုင်';
-  $('shopSub').textContent = kind === 'furniture' ? 'ဝယ်ထားတဲ့ ပစ္စည်းတွေ အိမ်အခန်းထဲမှာ အလိုအလျောက် ပေါ်လာပါမယ်။' : 'ဝတ်စုံ ဝယ်ပြီး ဝတ်ရင် Pch ရဲ့ ပုံစံ ပြောင်းသွားပါမယ်။ (' + (S.gender==='male'?'ယောက်ျားလေး':'မိန်းကလေး') + ' ဝတ်စုံများ)';
+/* ---------------- Shops (keyboard navigable) ---------------- */
+let shopKind = null, shopStall = null, shopFocus = [], shopSel = 0;
+let mapOpen = false;
+function uiOpen(){ return shopKind !== null || mapOpen || $('menuScrim').classList.contains('show') || $('phaseScrim').classList.contains('show'); }
+function openShop(kind, stall){
+  shopKind = kind; shopStall = stall || null; shopSel = 0;
+  if(kind === 'stall'){
+    $('shopTitle').textContent = stall.name;
+    $('shopSub').textContent = 'ရောင်းသူ: ' + stall.vname + ' — စားစရာ/သုံးစရာ သေးသေးတွေ ဝယ်လို့ရပါတယ်။';
+  } else {
+    $('shopTitle').textContent = kind === 'furniture' ? 'Furniture ဆိုင်' : 'အဝတ်ဆိုင်';
+    $('shopSub').textContent = kind === 'furniture' ? 'ဝယ်ထားတဲ့ ပစ္စည်းတွေ အိမ်အခန်းထဲမှာ အလိုအလျောက် ပေါ်လာပါမယ်။' : 'ဝတ်စုံ ဝယ်ပြီး ဝတ်ရင် Pch ရဲ့ ပုံစံ ပြောင်းသွားပါမယ်။ (' + (S.gender==='male'?'ယောက်ျားလေး':'မိန်းကလေး') + ' ဝတ်စုံများ)';
+  }
   renderShop(); $('shopScrim').classList.add('show');
 }
 function closeShop(){ shopKind = null; $('shopScrim').classList.remove('show'); save(); }
+function applyShopSel(){
+  shopFocus.forEach((b, i)=>{
+    const row = b.closest('.shop-item');
+    if(row) row.classList.toggle('sel', i === shopSel);
+    else b.classList.toggle('sel', i === shopSel);
+  });
+}
+function moveShopSel(d){
+  if(!shopFocus.length) return;
+  let i = shopSel;
+  for(let n = 0; n < shopFocus.length; n++){
+    i = (i + d + shopFocus.length) % shopFocus.length;
+    if(!shopFocus[i].disabled){ shopSel = i; applyShopSel(); beep(560, .05); return; }
+  }
+}
 function renderShop(){
   $('shopCup').textContent = fmt(S.cup);
   const wrap = $('shopItems'); wrap.innerHTML = '';
-  if(shopKind === 'furniture'){
+  shopFocus = [];
+  const addRow = (swatchBg, name, desc, btnText, disabled, onBuy, wear)=>{
+    const row = document.createElement('div'); row.className = 'shop-item';
+    row.innerHTML = '<div class="swatch" style="background:' + swatchBg + '"></div><div><div class="nm">' + name + '</div><div class="ds">' + desc + '</div></div>';
+    const b = document.createElement('button'); b.className = 'buy' + (wear ? ' wear' : '');
+    b.textContent = btnText; b.disabled = !!disabled;
+    b.onclick = onBuy;
+    b.addEventListener('mouseenter', ()=>{ const i = shopFocus.indexOf(b); if(i >= 0 && !b.disabled){ shopSel = i; applyShopSel(); } });
+    row.appendChild(b); wrap.appendChild(row); shopFocus.push(b);
+  };
+  if(shopKind === 'stall' && shopStall){
+    shopStall.items.forEach(it=>{
+      addRow(it.color, it.name, 'ရောင်းသူ: ' + shopStall.vname, fmt(it.price) + ' cup', S.cup < it.price, ()=>{
+        S.cup -= it.price; beep(760,.1);
+        toast(it.name + ' ဝယ်ပြီးပါပြီ', 'ကျေးဇူးတင်ပါတယ်');
+        refreshHUD(); renderShop(); save();
+      }, false);
+    });
+  } else if(shopKind === 'furniture'){
     FURNITURE.forEach(f=>{
       const owned = S.furniture.includes(f.id);
-      const row = document.createElement('div'); row.className = 'shop-item';
-      row.innerHTML = '<div class="swatch" style="background:' + f.color + '"></div><div><div class="nm">' + f.name + '</div><div class="ds">' + f.desc + '</div></div>';
-      const b = document.createElement('button'); b.className = 'buy';
-      b.textContent = owned ? 'ဝယ်ထားပြီး' : fmt(f.price) + ' cup';
-      b.disabled = owned || S.cup < f.price;
-      b.onclick = ()=>{
+      addRow(f.color, f.name, f.desc, owned ? 'ဝယ်ထားပြီး' : fmt(f.price) + ' cup', owned || S.cup < f.price, ()=>{
         S.cup -= f.price; S.furniture.push(f.id); beep(760,.1);
         toast(f.name + ' ဝယ်ပြီးပါပြီ','အိမ်အခန်းထဲမှာ ပေါ်နေပါပြီ');
         refreshHUD(); renderShop(); save();
-        if(S.mission === 5 && f.id === 'bed') refreshHUD();
-      };
-      row.appendChild(b); wrap.appendChild(row);
+      }, false);
     });
   } else {
     OUTFITS[S.gender].forEach(o=>{
       const owned = S.outfitsOwned.includes(o.id), wearing = S.outfit === o.id;
-      const row = document.createElement('div'); row.className = 'shop-item';
-      row.innerHTML = '<div class="swatch" style="background:linear-gradient(180deg,' + o.top + ' 55%,' + o.bottom + ' 55%)"></div><div><div class="nm">' + o.name + '</div><div class="ds">' + o.desc + '</div></div>';
-      const b = document.createElement('button'); b.className = 'buy' + (owned ? ' wear' : '');
-      b.textContent = wearing ? 'ဝတ်ထားတယ်' : owned ? 'ဝတ်မယ်' : fmt(o.price) + ' cup';
-      b.disabled = wearing || (!owned && S.cup < o.price);
-      b.onclick = ()=>{
+      addRow('linear-gradient(180deg,' + o.top + ' 55%,' + o.bottom + ' 55%)', o.name, o.desc,
+        wearing ? 'ဝတ်ထားတယ်' : owned ? 'ဝတ်မယ်' : fmt(o.price) + ' cup', wearing || (!owned && S.cup < o.price), ()=>{
         if(!owned){ S.cup -= o.price; S.outfitsOwned.push(o.id); toast(o.name + ' ဝယ်ပြီးပါပြီ'); }
         S.outfit = o.id; beep(760,.1); refreshHUD(); renderShop(); save();
-      };
-      row.appendChild(b); wrap.appendChild(row);
+      }, owned);
     });
   }
+  shopFocus.push($('shopClose'));
+  if(shopSel >= shopFocus.length) shopSel = shopFocus.length - 1;
+  if(shopFocus[shopSel] && shopFocus[shopSel].disabled) shopSel = shopFocus.length - 1;
+  applyShopSel();
 }
 $('shopClose').onclick = closeShop;
 $('phaseClose').onclick = ()=> $('phaseScrim').classList.remove('show');
 
-/* ---------------- Drawing ---------------- */
-function drawChar(x, y, o){
-  // o: {gender, outfit:{top,bottom,type,jacket}, dir, walkT, scale, name}
-  const s = o.scale || 1;
-  ctx.save(); ctx.translate(x, y); ctx.scale(s, s);
-  const bob = o.moving ? Math.sin(o.walkT * 10) * 1.6 : 0;
-  // shadow
-  ctx.fillStyle = 'rgba(0,0,0,.22)'; ctx.beginPath(); ctx.ellipse(0, 16, 13, 5, 0, 0, 7); ctx.fill();
-  ctx.translate(0, bob * .4);
-  // legs / lower garment
-  ctx.fillStyle = o.outfit.bottom;
-  if(o.outfit.type === 'pants'){
-    const sw = o.moving ? Math.sin(o.walkT * 10) * 4 : 0;
-    ctx.fillRect(-9 + sw * .4, 2, 7, 14); ctx.fillRect(2 - sw * .4, 2, 7, 14);
-    ctx.fillStyle = '#3a2c1c'; ctx.fillRect(-10 + sw * .4, 14, 8, 3); ctx.fillRect(1 - sw * .4, 14, 8, 3);
-  } else {
-    ctx.beginPath(); ctx.moveTo(-9, 0); ctx.lineTo(9, 0); ctx.lineTo(11, 15); ctx.lineTo(-11, 15); ctx.closePath(); ctx.fill();
-    ctx.fillStyle = 'rgba(0,0,0,.15)'; ctx.fillRect(-11, 12, 22, 3);
-    ctx.fillStyle = '#caa06a';
-    const sw = o.moving ? Math.sin(o.walkT * 10) * 3 : 0;
-    ctx.fillRect(-7 + sw * .4, 15, 5, 3); ctx.fillRect(2 - sw * .4, 15, 5, 3);
-  }
-  // torso
-  ctx.fillStyle = o.outfit.top; ctx.fillRect(-10, -14, 20, 16);
-  if(o.outfit.jacket){ ctx.fillStyle = o.outfit.jacket; ctx.fillRect(-10, -14, 6, 16); ctx.fillRect(4, -14, 6, 16); }
-  // arms
-  ctx.fillStyle = o.outfit.jacket || o.outfit.top;
-  const asw = o.moving ? Math.sin(o.walkT * 10) * 3 : 0;
-  ctx.fillRect(-14, -13 + asw * .5, 4, 13); ctx.fillRect(10, -13 - asw * .5, 4, 13);
-  ctx.fillStyle = '#e8b88a'; ctx.fillRect(-14, 0 + asw * .5, 4, 4); ctx.fillRect(10, 0 - asw * .5, 4, 4);
-  // head
-  ctx.fillStyle = '#e8b88a'; ctx.beginPath(); ctx.arc(0, -23, 9, 0, 7); ctx.fill();
-  // hair
-  ctx.fillStyle = o.gender === 'female' ? '#241a12' : '#2b2015';
-  ctx.beginPath(); ctx.arc(0, -25, 9, Math.PI, Math.PI * 2); ctx.fill();
-  if(o.gender === 'female'){ ctx.fillRect(-10, -25, 4, 22); ctx.fillRect(6, -25, 4, 22); ctx.fillRect(-3, -33, 6, 4); }
-  else ctx.fillRect(-9, -27, 18, 4);
-  // face (front only)
-  if(o.dir !== 'up'){ ctx.fillStyle = '#33241a'; ctx.fillRect(-4, -23, 2, 2); ctx.fillRect(3, -23, 2, 2); }
-  ctx.restore();
-  if(o.name){
-    ctx.font = '600 12px "Noto Sans Myanmar", sans-serif'; ctx.textAlign = 'center';
-    const wdt = ctx.measureText(o.name).width + 12;
-    ctx.fillStyle = 'rgba(30,20,10,.72)'; roundRect(x - wdt/2, y - 52 * s - 6, wdt, 19, 9); ctx.fill();
-    ctx.fillStyle = '#ffeecb'; ctx.fillText(o.name, x, y - 52 * s + 8);
-  }
-}
-function roundRect(x, y, w, h, r){
-  ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r);
-  ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
-}
-function label(text, x, y, size, color, bg){
-  ctx.font = '800 ' + (size||15) + 'px "Noto Sans Myanmar", sans-serif'; ctx.textAlign = 'center';
-  const wdt = ctx.measureText(text).width + 18;
-  if(bg !== false){ ctx.fillStyle = bg || 'rgba(255,250,235,.92)'; roundRect(x - wdt/2, y - (size||15) - 7, wdt, (size||15) + 13, 8); ctx.fill();
-    ctx.strokeStyle = 'rgba(120,85,40,.35)'; ctx.lineWidth = 1.5; ctx.stroke(); }
-  ctx.fillStyle = color || '#4a341f';
-  ctx.fillText(text, x, y + 4);
-}
-function roadName(text, x, y, vert){
-  ctx.save(); ctx.translate(x, y); if(vert) ctx.rotate(-Math.PI/2);
-  ctx.font = '800 26px "Noto Sans Myanmar", sans-serif'; ctx.textAlign = 'center';
-  ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.fillText(text, 0, 8); ctx.restore();
-}
+/* ---------------- Menu (keyboard navigable) ---------------- */
+let menuSel = 0;
+const menuBtns = ()=> [$('menuResume'), $('menuMap'), $('menuTitle'), $('menuReset')];
+function openMenu(){ $('menuScrim').classList.add('show'); menuSel = 0; applyMenuSel(); }
+function applyMenuSel(){ menuBtns().forEach((b, i)=> b.classList.toggle('sel', i === menuSel)); }
+$('menuBtn').onclick = openMenu;
+$('menuResume').onclick = ()=> $('menuScrim').classList.remove('show');
+$('menuTitle').onclick = ()=>{ $('menuScrim').classList.remove('show'); $('hud').classList.remove('show'); $('title').classList.remove('hide'); inGame = false; refreshContinue(); };
+$('menuReset').onclick = ()=>{ wipeSave(); $('menuScrim').classList.remove('show'); $('hud').classList.remove('show'); $('title').classList.remove('hide'); inGame = false; S = null; refreshContinue(); };
+$('menuMap').onclick = ()=>{ $('menuScrim').classList.remove('show'); openMap(); };
+$('mapBtn').onclick = ()=> openMap();
+$('mapScrim').addEventListener('pointerdown', e=>{ if(e.target === $('mapScrim')) closeMap(); });
 
-function camFor(scene){
-  const sc = SCENES[scene];
-  let cx = clamp(S.px - VW/2, 0, Math.max(0, sc.w - VW));
-  let cy = clamp(S.py - VH/2, 0, Math.max(0, sc.h - VH));
-  if(sc.w < VW) cx = (sc.w - VW) / 2;
-  if(sc.h < VH) cy = (sc.h - VH) / 2;
-  return {x: cx, y: cy};
+/* ---------------- World map overlay (Sanchaung, drawn from the real layout) ---------------- */
+const mapCv = $('mapCv');
+function openMap(){
+  if(!inGame || !S) return;
+  if(S.scene !== 'sanchaung'){ toast('မြေပုံက စမ်းချောင်း ရောက်မှ ရပါတယ်'); return; }
+  mapOpen = true; $('mapScrim').classList.add('show'); drawMap();
 }
-
-function drawSanchaung(){
-  // ground blocks
-  ctx.fillStyle = '#8fae62'; ctx.fillRect(0, 0, WORLD.w, WORLD.h);
-  ctx.fillStyle = '#97b76b';
-  for(let i = 0; i < 40; i++){ const x = (i * 613) % WORLD.w, y = (i * 389) % WORLD.h; ctx.fillRect(x, y, 120, 80); }
-  // roads
+function closeMap(){ mapOpen = false; $('mapScrim').classList.remove('show'); }
+function drawMap(){
+  if(!S) return;
+  const g = mapCv.getContext('2d');
+  g.textBaseline = 'middle';
+  const W = mapCv.width, H = mapCv.height;
+  g.fillStyle = '#f3e9d2'; g.fillRect(0, 0, W, H);
+  const s = Math.min((W - 26) / WORLD.w, (H - 20) / WORLD.h);
+  const ox = (W - WORLD.w * s) / 2, oy = (H - WORLD.h * s) / 2;
+  const X = x => ox + x * s, Y = y => oy + y * s;
+  g.fillStyle = '#a9c686'; g.fillRect(X(0), Y(0), WORLD.w * s, WORLD.h * s);
   ROADS.forEach(r=>{
-    ctx.fillStyle = '#5c5a58'; ctx.fillRect(r.x, r.y, r.w, r.h);
-    ctx.fillStyle = '#6d6b68'; ctx.fillRect(r.x + 6, r.y + 6, r.w - 12, r.h - 12);
-    ctx.strokeStyle = 'rgba(255,235,160,.75)'; ctx.lineWidth = 3; ctx.setLineDash([26, 22]);
-    ctx.beginPath();
-    if(r.vert){ ctx.moveTo(r.x + r.w/2, r.y); ctx.lineTo(r.x + r.w/2, r.y + r.h); }
-    else { ctx.moveTo(r.x, r.y + r.h/2); ctx.lineTo(r.x + r.w, r.y + r.h/2); }
-    ctx.stroke(); ctx.setLineDash([]);
+    g.fillStyle = '#8d8578'; g.fillRect(X(r.x), Y(r.y), Math.max(3, r.w * s), Math.max(3, r.h * s));
+    g.fillStyle = 'rgba(255,240,180,.5)';
+    if(r.vert) g.fillRect(X(r.x + r.w / 2), Y(r.y), 1, r.h * s); else g.fillRect(X(r.x), Y(r.y + r.h / 2), r.w * s, 1);
   });
-  roadName('ပြည်လမ်း', 2500, 300, true); roadName('ပြည်လမ်း', 2500, 1750, true);
-  roadName('ဗားကရာလမ်း', 300, 1250, true);
-  roadName('ကျွန်းတောလမ်း', 1400, 1712, false);
-  roadName('စမ်းချောင်းလမ်း', 800, 1022, false); roadName('စမ်းချောင်းလမ်း', 1900, 1022, false);
-  roadName('ရှင်စောပုလမ်း', 900, 482, false);
-  // filler houses
-  FILLERS.forEach((f, i)=>{
-    const cols = ['#d9c8a9','#cbb694','#e2d3b3','#c4b28c'];
-    ctx.fillStyle = 'rgba(0,0,0,.15)'; ctx.fillRect(f[0] + 5, f[1] + 7, f[2], f[3]);
-    ctx.fillStyle = cols[i % 4]; ctx.fillRect(f[0], f[1], f[2], f[3]);
-    ctx.fillStyle = ['#a4553a','#8a6a45','#96603a','#7c5a3a'][i % 4];
-    ctx.beginPath(); ctx.moveTo(f[0] - 8, f[1] + 6); ctx.lineTo(f[0] + f[2]/2, f[1] - 26); ctx.lineTo(f[0] + f[2] + 8, f[1] + 6); ctx.closePath(); ctx.fill();
-    ctx.fillStyle = 'rgba(90,70,40,.5)';
-    for(let wx = f[0] + 22; wx < f[0] + f[2] - 20; wx += 44) ctx.fillRect(wx, f[1] + 40, 20, 26);
+  g.fillStyle = '#57503f'; g.font = '700 11.5px "Noto Sans Myanmar", sans-serif'; g.textAlign = 'center';
+  g.fillText('ပြည်လမ်း', X(2500), Y(1992));
+  g.save(); g.translate(X(292), Y(1000)); g.rotate(-Math.PI / 2); g.fillText('ဗားကရာလမ်း', 0, 0); g.restore();
+  g.fillText('ရှင်စောပုလမ်း', X(700), Y(472));
+  g.fillText('စမ်းချောင်းလမ်း', X(760), Y(1012));
+  g.fillText('ကျွန်းတောလမ်း', X(760), Y(1702));
+  g.fillStyle = '#b8860b'; g.font = '800 12px "Noto Sans Myanmar", sans-serif';
+  g.fillText('▲ ရွှေတိဂုံသို့ (YBS)', X(2500), Y(52));
+  const pois = [];
+  BUILDINGS.forEach(b=> pois.push({x: b.door.x, y: b.door.y, name: b.name, c: '#8a5a33'}));
+  SMALL_SHOPS.forEach(sh=> pois.push({x: sh.door.x, y: sh.door.y, name: sh.name, c: '#1e7a4f'}));
+  STOPS.forEach(st=> pois.push({x: st.x, y: st.y, name: 'YBS မှတ်တိုင်', c: '#20508c'}));
+  pois.push({x: TRISHAW_STAND.x, y: TRISHAW_STAND.y, name: 'ဆိုက်ကားဂိတ်', c: '#b3352b'});
+  pois.push({x: 1960, y: 600, name: 'ကိုအောင်မြင့် အိမ်', c: '#8a5a33'});
+  pois.forEach(p=>{
+    g.fillStyle = p.c; g.beginPath(); g.arc(X(p.x), Y(p.y), 4.5, 0, 7); g.fill();
+    g.strokeStyle = '#fff'; g.lineWidth = 1.5; g.stroke();
+    g.fillStyle = '#3a2c17'; g.font = '600 11px "Noto Sans Myanmar", sans-serif'; g.textAlign = 'left';
+    g.fillText(p.name, X(p.x) + 7, Y(p.y) + 1);
   });
-  // main buildings
-  BUILDINGS.forEach(b=>{
-    ctx.fillStyle = 'rgba(0,0,0,.18)'; ctx.fillRect(b.x + 6, b.y + 9, b.w, b.h);
-    ctx.fillStyle = b.color; ctx.fillRect(b.x, b.y, b.w, b.h);
-    ctx.fillStyle = b.roof;
-    ctx.beginPath(); ctx.moveTo(b.x - 10, b.y + 8); ctx.lineTo(b.x + b.w/2, b.y - 34); ctx.lineTo(b.x + b.w + 10, b.y + 8); ctx.closePath(); ctx.fill();
-    ctx.fillStyle = '#6b4423'; ctx.fillRect(b.door.x - 17, b.door.y - 46, 34, 46);
-    ctx.fillStyle = '#ffdf8a'; ctx.fillRect(b.door.x - 13, b.door.y - 42, 26, 38);
-    ctx.fillStyle = 'rgba(70,50,25,.55)';
-    for(let wx = b.x + 26; wx < b.x + b.w - 34; wx += 52){ if(Math.abs(wx - b.door.x) > 40) ctx.fillRect(wx, b.y + 56, 26, 32); }
-    label(b.name, b.x + b.w/2, b.y - 48, 16);
-  });
-  // tea shop courtyard + tables
-  ctx.fillStyle = '#cbb489'; ctx.fillRect(478, 1512, 374, 106);
-  TABLES.forEach((t, i)=>{
-    const cleaned = S.mission > 4 || (S.m4 && S.m4.tables[i]);
-    ctx.fillStyle = 'rgba(0,0,0,.15)'; ctx.beginPath(); ctx.ellipse(t.x, t.y + 10, 26, 8, 0, 0, 7); ctx.fill();
-    ctx.fillStyle = cleaned ? '#e8e2d2' : '#b09a72';
-    ctx.beginPath(); ctx.arc(t.x, t.y, 22, 0, 7); ctx.fill();
-    ctx.strokeStyle = '#7a6238'; ctx.lineWidth = 2; ctx.stroke();
-    if(S.mission === 4 && S.m4.accepted && !S.m4.tables[i]) pulseMarker(t.x, t.y - 40, '#e9a13b');
-  });
-  // tea shop owner
-  drawChar(592, 1560, {gender:'male', outfit:{top:'#54683c', bottom:'#5d4a2a', type:'longyi'}, dir:'down', walkT:0, name:'ဆိုင်ရှင်'});
-  // delivery NPC
-  drawChar(1960, 608, {gender:'male', outfit:{top:'#7a4a8c', bottom:'#33475b', type:'longyi'}, dir:'down', walkT:0, name:'ကိုအောင်မြင့်'});
-  // bus stop
-  ctx.fillStyle = '#20508c'; ctx.fillRect(BUSSTOP.x - 4, BUSSTOP.y - 66, 8, 66);
-  ctx.fillStyle = '#2b6cb0'; roundRect(BUSSTOP.x - 42, BUSSTOP.y - 102, 84, 38, 8); ctx.fill();
-  ctx.fillStyle = '#fff'; ctx.font = '800 15px "Noto Sans Myanmar", sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText('YBS', BUSSTOP.x, BUSSTOP.y - 86);
-  label('Bus မှတ်တိုင်', BUSSTOP.x, BUSSTOP.y + 34, 13);
-  // package indicator
-  if(S.mission === 6 && S.m6.hasPackage && !S.m6.delivered){
-    ctx.fillStyle = '#a9743f'; ctx.fillRect(S.px + 12, S.py - 12, 15, 13);
-    ctx.strokeStyle = '#6d4c2f'; ctx.strokeRect(S.px + 12, S.py - 12, 15, 13);
+  const obj = getObjective();
+  if(obj && S.scene === 'sanchaung'){
+    const r = 8 + Math.sin(pulseT * 5) * 2.5;
+    g.fillStyle = '#b3352b'; g.beginPath(); g.arc(X(obj.x), Y(obj.y), r, 0, 7); g.fill();
+    g.strokeStyle = '#fff'; g.lineWidth = 2; g.stroke();
+    g.fillStyle = '#b3352b'; g.font = '800 11px "Noto Sans Myanmar", sans-serif'; g.textAlign = 'left';
+    g.fillText('ပစ်မှတ်', X(obj.x) + 11, Y(obj.y) + 1);
   }
-  // trees
-  TREES.forEach(t=>{
-    ctx.fillStyle = 'rgba(0,0,0,.15)'; ctx.beginPath(); ctx.ellipse(t.x, t.y + 12, t.r, 6, 0, 0, 7); ctx.fill();
-    ctx.fillStyle = '#6d4c2f'; ctx.fillRect(t.x - 3, t.y, 6, 14);
-    ctx.fillStyle = '#4e7d3a'; ctx.beginPath(); ctx.arc(t.x, t.y - 8, t.r, 0, 7); ctx.fill();
-    ctx.fillStyle = '#5d9147'; ctx.beginPath(); ctx.arc(t.x - t.r*.4, t.y - 14, t.r*.6, 0, 7); ctx.fill();
-  });
-  // pedestrians
-  peds.forEach(pd=> drawChar(pd.x, pd.y, {gender: pd.gender, outfit: OUTFITS[pd.gender][pd.outfitIdx], dir: pd.dir >= 0 ? 'right' : 'left', walkT: pd.walkT, moving: true}));
-}
-
-function drawTerminal(){
-  ctx.fillStyle = '#b9a888'; ctx.fillRect(0, 0, 1280, 800);
-  ctx.fillStyle = '#a08c66'; ctx.fillRect(0, 560, 1280, 240);
-  // terminal building
-  ctx.fillStyle = '#7d90b8'; ctx.fillRect(190, 60, 900, 190);
-  ctx.fillStyle = '#46597e'; ctx.fillRect(170, 36, 940, 34);
-  ctx.fillStyle = '#ffe9a8'; for(let i = 0; i < 8; i++) ctx.fillRect(230 + i * 112, 110, 62, 74);
-  label('အောင်မင်္ဂလာ အဝေးပြေး ကားဝင်း', 640, 300, 22);
-  // big bus
-  ctx.fillStyle = 'rgba(0,0,0,.2)'; roundRect(66, 386, 330, 96, 14); ctx.fill();
-  ctx.fillStyle = '#d8542e'; roundRect(60, 372, 330, 96, 14); ctx.fill();
-  ctx.fillStyle = '#ffe9a8'; roundRect(60, 388, 330, 30, 8); ctx.fill();
-  ctx.fillStyle = '#2c313a'; [110, 330].forEach(x=>{ ctx.beginPath(); ctx.arc(x, 472, 17, 0, 7); ctx.fill(); });
-  ctx.fillStyle = '#fff'; ctx.font = '800 16px "Noto Sans Myanmar", sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText('ရန်ကုန် ခရီးသည် ကားကြီး', 225, 448);
-  // taxis + drivers
-  DRIVERS.forEach((d, i)=>{
-    ctx.fillStyle = 'rgba(0,0,0,.2)'; roundRect(d.x - 66, d.y - 118, 132, 56, 10); ctx.fill();
-    ctx.fillStyle = d.shared ? '#3f9e63' : '#e9c33c'; roundRect(d.x - 70, d.y - 124, 132, 56, 10); ctx.fill();
-    ctx.fillStyle = '#2c313a'; [d.x - 40, d.x + 40].forEach(x=>{ ctx.beginPath(); ctx.arc(x, d.y - 66, 11, 0, 7); ctx.fill(); });
-    ctx.fillStyle = '#222'; ctx.font = '700 12px "Noto Sans Myanmar", sans-serif';
-    ctx.fillText(d.shared ? 'ပေါင်းစီး' : 'TAXI', d.x, d.y - 92);
-    drawChar(d.x, d.y, {gender:'male', outfit:{top: d.shared ? '#2e7d4f' : '#8c6d1f', bottom:'#37424e', type:'longyi'}, dir:'down', walkT:0, name: d.name});
-    label(fmt(d.price) + ' cup', d.x, d.y + 48, 14, '#7a4a08');
-  });
-}
-function drawPagoda(){
-  ctx.fillStyle = '#79a856'; ctx.fillRect(0, 0, 1280, 820);
-  ctx.fillStyle = '#d9c9a0'; ctx.fillRect(240, 470, 800, 350);
-  ctx.fillStyle = '#cbb489'; ctx.fillRect(340, 380, 600, 100);
-  // stupa
-  const cxp = 640;
-  ctx.fillStyle = '#d9a92c';
-  ctx.beginPath(); ctx.moveTo(cxp - 130, 384); ctx.lineTo(cxp + 130, 384); ctx.lineTo(cxp + 96, 300); ctx.lineTo(cxp - 96, 300); ctx.closePath(); ctx.fill();
-  ctx.beginPath(); ctx.moveTo(cxp - 84, 302); ctx.quadraticCurveTo(cxp - 60, 190, cxp - 16, 150); ctx.lineTo(cxp + 16, 150); ctx.quadraticCurveTo(cxp + 60, 190, cxp + 84, 302); ctx.closePath(); ctx.fill();
-  ctx.fillRect(cxp - 7, 96, 14, 58);
-  ctx.beginPath(); ctx.moveTo(cxp, 52); ctx.lineTo(cxp + 15, 100); ctx.lineTo(cxp - 15, 100); ctx.closePath(); ctx.fillStyle = '#f2c94c'; ctx.fill();
-  ctx.fillStyle = 'rgba(255,255,255,.35)'; ctx.fillRect(cxp - 52, 190, 16, 120);
-  label('ရွှေတိဂုံစေတီတော်', cxp, 440, 20, '#7a5a08');
-  // small stupas
-  [420, 860].forEach(x=>{ ctx.fillStyle = '#d9a92c'; ctx.beginPath(); ctx.moveTo(x - 42, 384); ctx.lineTo(x + 42, 384); ctx.lineTo(x, 268); ctx.closePath(); ctx.fill(); });
-  // return bus
-  ctx.fillStyle = '#2b6cb0'; roundRect(1064, 640, 150, 66, 10); ctx.fill();
-  ctx.fillStyle = '#ffe9a8'; ctx.fillRect(1076, 652, 126, 20);
-  ctx.fillStyle = '#2c313a'; [1096, 1180].forEach(x=>{ ctx.beginPath(); ctx.arc(x, 708, 11, 0, 7); ctx.fill(); });
-  label('Bus', 1139, 736, 13);
-  // worshippers
-  drawChar(560, 520, {gender:'female', outfit: OUTFITS.female[3], dir:'up', walkT:0});
-  drawChar(730, 540, {gender:'male', outfit: OUTFITS.male[3], dir:'up', walkT:0});
-}
-function drawHome(){
-  ctx.fillStyle = '#5d4a33'; ctx.fillRect(0, 0, 980, 660);
-  ctx.fillStyle = '#e8dcc2'; ctx.fillRect(46, 46, 888, 568);
-  ctx.fillStyle = '#d9c8a4';
-  for(let x = 46; x < 934; x += 74) for(let y = 46; y < 614; y += 74) ctx.strokeRect(x, y, 74, 74);
-  ctx.fillStyle = '#8a6a45'; ctx.fillRect(440, 40, 100, 14);
-  // door (exit)
-  ctx.fillStyle = '#6b4423'; ctx.fillRect(452, 566, 76, 48);
-  label('ထွက်ပေါက်', 490, 640, 13);
-  // window
-  ctx.fillStyle = '#bcd6ea'; ctx.fillRect(120, 46, 130, 12); ctx.fillRect(680, 46, 130, 12);
-  const F = id => S.furniture.includes(id);
-  if(F('bed')){
-    ctx.fillStyle = '#8a5a33'; ctx.fillRect(90, 92, 190, 110);
-    ctx.fillStyle = '#eef0e6'; ctx.fillRect(98, 100, 174, 66);
-    ctx.fillStyle = '#c8541e'; ctx.fillRect(98, 158, 174, 36);
-    ctx.fillStyle = '#fff'; ctx.fillRect(106, 104, 52, 30);
-    label('အိပ်ရာ', 185, 224, 13);
-  }
-  if(F('wardrobe')){
-    ctx.fillStyle = '#7c4a26'; ctx.fillRect(760, 88, 110, 150);
-    ctx.fillStyle = '#96622f'; ctx.fillRect(768, 96, 44, 134); ctx.fillRect(818, 96, 44, 134);
-    label('ဗီရို', 815, 260, 13);
-  }
-  if(F('table')){
-    ctx.fillStyle = '#a9743f'; ctx.fillRect(400, 250, 170, 96);
-    ctx.fillStyle = '#c08b52'; ctx.fillRect(408, 258, 154, 80);
-    label('စားပွဲ', 485, 368, 13);
-  }
-  if(F('chair')){
-    ctx.fillStyle = '#6d4c2f'; ctx.fillRect(610, 262, 54, 54);
-    ctx.fillStyle = '#855f3a'; ctx.fillRect(610, 252, 54, 16);
-    label('ကုလားထိုင်', 637, 340, 12);
-  }
-  if(F('tv')){
-    ctx.fillStyle = '#2c313a'; ctx.fillRect(404, 60, 172, 100);
-    ctx.fillStyle = '#7fb2d9'; ctx.fillRect(414, 70, 152, 80);
-    label('တီဗီ', 490, 184, 13);
-  }
-  if(F('plant')){
-    ctx.fillStyle = '#b0562f'; ctx.beginPath(); ctx.moveTo(316, 560); ctx.lineTo(356, 560); ctx.lineTo(348, 596); ctx.lineTo(324, 596); ctx.closePath(); ctx.fill();
-    ctx.fillStyle = '#3e7d44'; ctx.beginPath(); ctx.arc(336, 540, 26, 0, 7); ctx.fill();
-    label('ပန်းအိုး', 336, 622, 12);
-  }
-  if(!S.furniture.length) label('အခန်းလွတ် — furniture မရှိသေးပါ', 490, 330, 17, '#8a6d43', false);
-}
-function drawVillage(){
-  ctx.fillStyle = '#8fae62'; ctx.fillRect(0, 0, 1280, 800);
-  ctx.fillStyle = '#c9b280'; ctx.fillRect(0, 640, 1280, 160);
-  // village house
-  ctx.fillStyle = '#caa06a'; ctx.fillRect(440, 300, 400, 220);
-  ctx.fillStyle = '#8f4526'; ctx.beginPath(); ctx.moveTo(410, 306); ctx.lineTo(640, 190); ctx.lineTo(870, 306); ctx.closePath(); ctx.fill();
-  ctx.fillStyle = '#6b4423'; ctx.fillRect(600, 420, 80, 100);
-  label('ရွာက အိမ်လေး', 640, 168, 18);
-  TREES.slice(0, 8).forEach((t, i)=>{
-    const x = 90 + i * 155, y = 120 + (i % 3) * 60;
-    ctx.fillStyle = '#4e7d3a'; ctx.beginPath(); ctx.arc(x, y, 30, 0, 7); ctx.fill();
-  });
-  drawChar(560, 580, {gender:'male', outfit:{top:'#7a6248', bottom:'#5d4a2a', type:'longyi'}, dir:'down', walkT:0, name:'အဖေ'});
-  drawChar(716, 580, {gender:'female', outfit:{top:'#a58a4f', bottom:'#6d3b2a', type:'skirt'}, dir:'down', walkT:0, name:'အမေ'});
-}
-let pulseT = 0;
-function pulseMarker(x, y, color){
-  const r = 10 + Math.sin(pulseT * 5) * 3;
-  ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(x, y + r + 8); ctx.lineTo(x - r, y); ctx.lineTo(x + r, y); ctx.closePath(); ctx.fill();
-  ctx.beginPath(); ctx.arc(x, y - 4, r * .55, 0, 7); ctx.fill();
-}
-function drawObjectiveArrow(cam){
-  let obj = getObjective(); if(!obj) return;
-  if(obj.scene === 'pagoda' && S.scene === 'sanchaung'){ /* target is bus stop */ }
-  else if(obj.scene !== S.scene){
-    if(S.scene === 'home'){ obj = {scene:'home', x:490, y:600}; }
-    else return;
-  }
-  const sx = obj.x - cam.x, sy = obj.y - cam.y;
-  if(sx > -30 && sx < VW + 30 && sy > -30 && sy < VH + 30){ pulseMarker(sx, sy - 46, '#e9a13b'); return; }
-  // edge arrow
-  const cxp = VW/2, cyp = VH/2, ang = Math.atan2(sy - cyp, sx - cxp);
-  const ax = clamp(sx, 44, VW - 44), ay = clamp(sy, 90, VH - 44);
-  ctx.save(); ctx.translate(ax, ay); ctx.rotate(ang);
-  ctx.fillStyle = '#e9a13b'; ctx.strokeStyle = '#7a4a08'; ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(20, 0); ctx.lineTo(-10, -12); ctx.lineTo(-4, 0); ctx.lineTo(-10, 12); ctx.closePath(); ctx.fill(); ctx.stroke();
-  ctx.restore();
-}
-function drawScene(){
-  ctx.fillStyle = '#20241c'; ctx.fillRect(0, 0, VW, VH);
-  const cam = camFor(S.scene);
-  ctx.save(); ctx.translate(-cam.x, -cam.y);
-  if(S.scene === 'sanchaung') drawSanchaung();
-  else if(S.scene === 'terminal') drawTerminal();
-  else if(S.scene === 'pagoda') drawPagoda();
-  else if(S.scene === 'home') drawHome();
-  else if(S.scene === 'village') drawVillage();
-  // player (not in village cutscene)
-  if(S.scene !== 'village' && inGame){
-    drawChar(S.px, S.py, {gender: S.gender, outfit: currentOutfit(), dir: S.dir, walkT: S.walkT, moving: S.moving, name:'Pch'});
-  }
-  ctx.restore();
-  if(inGame && S.scene !== 'village') drawObjectiveArrow(cam);
+  const pr = 6 + Math.sin(pulseT * 6) * 1.6;
+  g.fillStyle = '#e9a13b'; g.beginPath(); g.arc(X(S.px), Y(S.py), pr + 3.5, 0, 7); g.fill();
+  g.fillStyle = '#fff'; g.beginPath(); g.arc(X(S.px), Y(S.py), pr, 0, 7); g.fill();
+  g.fillStyle = '#8a5a00'; g.font = '800 11.5px "Noto Sans Myanmar", sans-serif'; g.textAlign = 'left';
+  g.fillText('မင်း ဒီမှာ', X(S.px) + 12, Y(S.py) + 1);
 }
 
 /* ---------------- Movement & collision ---------------- */
@@ -1039,56 +2507,184 @@ function colliders(){
   const list = [];
   if(S.scene === 'sanchaung'){
     BUILDINGS.forEach(b=> list.push({x:b.x, y:b.y, w:b.w, h:b.h}));
-    FILLERS.forEach(f=> list.push({x:f[0], y:f[1], w:f[2], h:f[3]}));
+    FILLERS_ACTIVE.forEach(f=> list.push({x:f[0], y:f[1], w:f[2], h:f[3]}));
     TREES.forEach(t=> list.push({x:t.x - 6, y:t.y, w:12, h:14}));
-    list.push({x:478, y:1330, w:6, h:288}); // tea courtyard fence sides are the building itself; tables:
+    list.push({x:478, y:1330, w:6, h:288}); // tea courtyard west fence
     TABLES.forEach(t=> list.push({x:t.x - 20, y:t.y - 12, w:40, h:26}));
+    SMALL_SHOPS.forEach(sh=> list.push({x:sh.x, y:sh.y, w:sh.w, h:sh.h}));
   } else if(S.scene === 'terminal'){
     list.push({x:150, y:20, w:980, h:240});
     list.push({x:40, y:360, w:360, h:110});
     DRIVERS.forEach(d=> list.push({x:d.x - 74, y:d.y - 128, w:140, h:62}));
   } else if(S.scene === 'pagoda'){
     list.push({x:330, y:60, w:620, h:330});
-    list.push({x:1056, y:632, w:166, h:80});
+    list.push({x:1042, y:640, w:200, h:104});
   } else if(S.scene === 'home'){
     list.push({x:0, y:0, w:980, h:40}); list.push({x:0, y:620, w:440, h:40}); list.push({x:540, y:620, w:440, h:40});
     list.push({x:0, y:0, w:40, h:660}); list.push({x:940, y:0, w:40, h:660});
-    if(S.furniture.includes('bed')) list.push({x:90, y:92, w:190, h:110});
+    if(S.furniture.includes('bed')) list.push({x:92, y:84, w:97, h:176});
+    if(S.furniture.includes('shrine')) list.push({x:246, y:40, w:138, h:100});
     if(S.furniture.includes('wardrobe')) list.push({x:760, y:88, w:110, h:150});
     if(S.furniture.includes('table')) list.push({x:400, y:250, w:170, h:96});
     if(S.furniture.includes('chair')) list.push({x:610, y:252, w:54, h:64});
     if(S.furniture.includes('tv')) list.push({x:404, y:52, w:172, h:112});
+  } else if(S.scene === 'restaurant'){
+    list.push({x:0, y:0, w:1280, h:46}); list.push({x:0, y:754, w:566, h:46}); list.push({x:714, y:754, w:566, h:46});
+    list.push({x:0, y:0, w:40, h:800}); list.push({x:1240, y:0, w:40, h:800});
+    list.push({x:400, y:10, w:480, h:150});
+    list.push({x:26, y:320, w:330, h:130});
+    REST_TABLES.forEach(t=> list.push({x:t.x - 88, y:t.y - 58, w:176, h:105}));
+  } else if(S.scene === 'deptstore'){
+    list.push({x:0, y:0, w:1280, h:46}); list.push({x:0, y:754, w:566, h:46}); list.push({x:714, y:754, w:566, h:46});
+    list.push({x:0, y:0, w:40, h:800}); list.push({x:1240, y:0, w:40, h:800});
+    list.push({x:872, y:16, w:380, h:290});
+    [180, 430, 680].forEach(cx=> list.push({x:cx - 85, y:140, w:170, h:140}));
+    list.push({x:90, y:440, w:230, h:150});
+    list.push({x:790, y:440, w:300, h:110});
+    list.push({x:70, y:640, w:180, h:80});
   }
   return list;
 }
-function tryMove(dx, dy){
+function isBlockedAt(x, y){
   const R = 13, sc = SCENES[S.scene];
-  const cols = colliders();
-  function blocked(nx, ny){
-    if(nx < R || ny < R || nx > sc.w - R || ny > sc.h - R) return true;
-    for(const c of cols){ if(nx + R > c.x && nx - R < c.x + c.w && ny + R > c.y && ny - R < c.y + c.h) return true; }
-    return false;
+  if(x < R || y < R || x > sc.w - R || y > sc.h - R) return true;
+  for(const c of colliders()){ if(x + R > c.x && x - R < c.x + c.w && y + R > c.y && y - R < c.y + c.h) return true; }
+  return false;
+}
+/* Safety net: if the player ever ends up inside a collider (old save, bad
+   spawn), spiral out to the nearest free spot so the game can never soft-lock. */
+function unstick(){
+  if(!S || !SCENES[S.scene]) return;
+  if(!isBlockedAt(S.px, S.py)) return;
+  for(let r = 16; r <= 360; r += 16){
+    for(let a = 0; a < 16; a++){
+      const nx = S.px + Math.cos(a / 16 * Math.PI * 2) * r;
+      const ny = S.py + Math.sin(a / 16 * Math.PI * 2) * r;
+      if(!isBlockedAt(nx, ny)){ S.px = nx; S.py = ny; return; }
+    }
   }
-  if(!blocked(S.px + dx, S.py)) S.px += dx;
-  if(!blocked(S.px, S.py + dy)) S.py += dy;
+}
+function tryMove(dx, dy){
+  if(!isBlockedAt(S.px + dx, S.py)) S.px += dx;
+  if(!isBlockedAt(S.px, S.py + dy)) S.py += dy;
 }
 
-/* ---------------- Input ---------------- */
+/* ---------------- Input: one router — the whole game is keyboard-playable ---------------- */
 const keys = {};
 let joyVec = {x:0, y:0};
-window.addEventListener('keydown', e=>{
-  if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
-  keys[e.key.toLowerCase()] = true;
-  if(e.key === 'Enter'){ if(dlgActive) advanceDialogue(); }
-  if(e.key.toLowerCase() === 'e'){ interactKey(); }
-});
-window.addEventListener('keyup', e=>{ keys[e.key.toLowerCase()] = false; });
 function interactKey(){
   if(dlgActive){ advanceDialogue(); return; }
   if(uiOpen()) return;
   if(nearTarget) nearTarget.act();
 }
+/* --- title screen keyboard --- */
+let pickedGender = 'male', titleZone = 0; // index into titleStops()
+function titleStops(){
+  const s = ['gender'];
+  if($('btnContinue').style.display !== 'none') s.push('continue');
+  s.push('start'); return s;
+}
+function setGender(g){
+  pickedGender = g;
+  $('gMale').classList.toggle('sel', g === 'male');
+  $('gFemale').classList.toggle('sel', g === 'female');
+}
+function applyTitleFocus(){
+  const stops = titleStops(); if(titleZone >= stops.length) titleZone = stops.length - 1;
+  const zone = stops[titleZone];
+  $('gMale').classList.toggle('kfocus', zone === 'gender' && pickedGender === 'male');
+  $('gFemale').classList.toggle('kfocus', zone === 'gender' && pickedGender === 'female');
+  $('btnContinue').classList.toggle('kfocus', zone === 'continue');
+  $('btnStart').classList.toggle('kfocus', zone === 'start');
+}
+function titleKey(e){
+  const k = e.key, stops = titleStops();
+  if(titleZone >= stops.length) titleZone = stops.length - 1;
+  const zone = stops[titleZone];
+  if(k === '1'){ setGender('male'); titleZone = 0; applyTitleFocus(); return; }
+  if(k === '2'){ setGender('female'); titleZone = 0; applyTitleFocus(); return; }
+  if(k === 'ArrowLeft' || k === 'ArrowRight'){
+    setGender(k === 'ArrowLeft' ? 'male' : 'female'); titleZone = 0; applyTitleFocus(); beep(500, .05); return;
+  }
+  if(k === 'ArrowDown' || k === 'ArrowUp'){
+    titleZone = (titleZone + (k === 'ArrowDown' ? 1 : -1) + stops.length) % stops.length;
+    applyTitleFocus(); beep(500, .05); return;
+  }
+  if(k === 'Enter' && !e.repeat){
+    if(zone === 'gender'){ titleZone = stops.length - 1; applyTitleFocus(); }
+    else if(zone === 'continue') $('btnContinue').click();
+    else $('btnStart').click();
+  }
+}
+/* --- dialogue keyboard --- */
+function dlgKey(e){
+  const k = e.key, lk = k.toLowerCase();
+  if(choicesVisible()){
+    if(/^[1-9]$/.test(k)){
+      const b = dlgChoiceBtns[+k - 1];
+      if(b && !b.disabled) b.click(); else beep(160, .08);
+      return;
+    }
+    if(k === 'ArrowDown' || k === 'ArrowUp'){ moveChoiceSel(k === 'ArrowDown' ? 1 : -1); return; }
+    if(k === 'Enter' || lk === 'e'){
+      if(e.repeat) return;
+      const b = dlgChoiceBtns[dlgChoiceIdx];
+      if(b && !b.disabled) b.click(); else beep(160, .08);
+      return;
+    }
+    return;
+  }
+  if(k === 'Enter' || lk === 'e' || k === ' '){ if(!e.repeat) advanceDialogue(); }
+}
+/* --- shop keyboard --- */
+function shopKey(e){
+  const k = e.key;
+  if(k === 'Escape'){ closeShop(); return; }
+  if(k === 'ArrowDown' || k === 'ArrowUp'){ moveShopSel(k === 'ArrowDown' ? 1 : -1); return; }
+  if(k === 'Enter' && !e.repeat){
+    const b = shopFocus[shopSel];
+    if(b){ if(b.disabled) beep(160, .08); else b.click(); }
+  }
+}
+/* --- menu keyboard --- */
+function menuKey(e){
+  const k = e.key, btns = menuBtns();
+  if(k === 'Escape'){ $('menuResume').click(); return; }
+  if(k === 'ArrowDown' || k === 'ArrowUp'){
+    menuSel = (menuSel + (k === 'ArrowDown' ? 1 : -1) + btns.length) % btns.length;
+    applyMenuSel(); beep(500, .05); return;
+  }
+  if(k === 'Enter' && !e.repeat) btns[menuSel].click();
+}
+window.addEventListener('keydown', e=>{
+  const k = e.key, lk = k.toLowerCase();
+  if(k.startsWith('Arrow') || k === ' ') e.preventDefault(); // page never scrolls; arrows always reach the game
+  const ae = document.activeElement;
+  if(ae && ae.tagName === 'BUTTON' && (k === 'Enter' || k === ' ')) ae.blur(); // a focused button must not re-fire
+  keys[lk] = true;
+  if(!$('title').classList.contains('hide')){ titleKey(e); return; }
+  if($('trans').classList.contains('show')) return;
+  if(dlgActive){ dlgKey(e); return; }
+  if(shopKind){ shopKey(e); return; }
+  if($('phaseScrim').classList.contains('show')){
+    if(k === 'Enter' || k === 'Escape' || lk === 'e') $('phaseScrim').classList.remove('show');
+    return;
+  }
+  if($('menuScrim').classList.contains('show')){ menuKey(e); return; }
+  if(mapOpen){ if((lk === 'm' || k === 'Escape' || k === 'Enter') && !e.repeat) closeMap(); return; }
+  if(lk === 'm'){ if(inGame && !e.repeat) openMap(); return; }
+  if(k === 'Escape'){ if(inGame && !e.repeat) openMenu(); return; }
+  if(k === 'Enter' || lk === 'e'){ if(!e.repeat) interactKey(); }
+});
+window.addEventListener('keyup', e=>{ keys[e.key.toLowerCase()] = false; });
+
+window.addEventListener('blur', ()=>{ for(const k in keys) keys[k] = false; });
 cv.addEventListener('pointerdown', ()=>{ if(dlgActive) advanceDialogue(); });
+/* A clicked button must not keep keyboard focus (Enter/Space would re-trigger it) */
+document.addEventListener('click', e=>{
+  const b = e.target && e.target.closest ? e.target.closest('button') : null;
+  if(b) b.blur();
+});
 
 /* touch joystick */
 if('ontouchstart' in window) document.body.classList.add('touch');
@@ -1133,20 +2729,63 @@ function startOnboarding(){
 let lastT = 0;
 function loop(ts){
   requestAnimationFrame(loop);
-  const dt = Math.min(50, ts - lastT); lastT = ts; pulseT = ts / 1000;
+  const dt = Math.min(50, ts - lastT); lastT = ts; lastDt = dt || 16; pulseT = ts / 1000; nowMs = ts;
   if(!S) return;
-  // pedestrians wander (only matters in sanchaung)
-  peds.forEach(pd=>{
-    pd.t += pd.dir * pd.sp * dt; if(pd.t > 1){ pd.t = 1; pd.dir = -1; } if(pd.t < 0){ pd.t = 0; pd.dir = 1; }
-    pd.x = pd.L.x1 + (pd.L.x2 - pd.L.x1) * pd.t; pd.y = pd.L.y1 + (pd.L.y2 - pd.L.y1) * pd.t;
+  // pedestrian crowd: leaders advance, followers share the leader's progress
+  crowd.forEach(pd=>{ const pos = lanePos(pd); pd.x = pos.x; pd.y = pos.y; });
+  if(S.scene === 'sanchaung'){
+    crowd.forEach(pd=>{
+      /* pause only for vehicles that are actually MOVING toward the ped,
+         and never longer than 2.2s — a stopped vehicle must not freeze a
+         pedestrian (and vice versa) into a junction deadlock */
+      let want = false;
+      for(const v of traffic){
+        if(v.state === 'gone' || v.inUse || !v.movingNow) continue;
+        const ddx = v.x - pd.x, ddy = v.y - pd.y;
+        if(Math.hypot(ddx, ddy) < 95){
+          const dir = pedDir(pd);
+          const ahead = (dir === 'right' && ddx > 0) || (dir === 'left' && ddx < 0) || (dir === 'down' && ddy > 0) || (dir === 'up' && ddy < 0);
+          if(ahead && Math.abs((dir === 'right' || dir === 'left') ? ddy : ddx) < 46){ want = true; break; }
+        }
+      }
+      pd.paused = want && (pd.pauseT || 0) < 2200;
+      if(pd.paused) pd.pauseT = (pd.pauseT || 0) + dt;
+      else if(!want) pd.pauseT = 0;
+    });
+  }
+  crowd.forEach(pd=>{
+    if(pd.follow){ pd.walkT = pd.follow.walkT; pd.moving = pd.follow.moving && !pd.paused; return; }
+    if(!pd.paused && S.scene === 'sanchaung') pd.t += pd.dir * pd.sp * dt / 1000;
+    if(pd.t > 1){ pd.t = 1; pd.dir = -1; } if(pd.t < 0){ pd.t = 0; pd.dir = 1; }
+    pd.moving = !pd.paused;
     pd.walkT += dt / 1000;
+    if(S.scene === 'sanchaung' && ts > pd.bubbleAt){
+      pd.bubbleText = GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
+      pd.bubbleUntil = ts + 3000;
+      pd.bubbleAt = ts + 8000 + Math.random() * 9000;
+    }
   });
-  if(inGame && !dlgActive && !uiOpen() && !$('trans').classList.contains('show')){
+  /* separation steering: neighbours keep a minimum distance (visual offsets) */
+  crowd.forEach(pd=>{ pd.sx = (pd.sx || 0) * .82; pd.sy = (pd.sy || 0) * .82; });
+  for(let i = 0; i < crowd.length; i++) for(let j = i + 1; j < crowd.length; j++){
+    const a = crowd[i], b = crowd[j];
+    const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy);
+    if(d > .01 && d < 30){
+      const push = (30 - d) / 2, ux = dx / d, uy = dy / d;
+      a.sx -= ux * push; a.sy -= uy * push; b.sx += ux * push; b.sy += uy * push;
+    }
+  }
+  crowd.forEach(pd=>{ const pos = lanePos(pd); pd.x = pos.x + (pd.sx || 0); pd.y = pos.y + (pd.sy || 0); });
+  updateTraffic(dt);
+  updateRide(dt);
+  if(mapOpen) drawMap();
+  const busy = dlgActive || uiOpen() || !!ride || $('trans').classList.contains('show') || $('fade').classList.contains('on');
+  if(inGame && !busy){
     let dx = 0, dy = 0;
-    if(keys['w'] || keys['arrowup']) dy -= 1;
-    if(keys['s'] || keys['arrowdown']) dy += 1;
-    if(keys['a'] || keys['arrowleft']) dx -= 1;
-    if(keys['d'] || keys['arrowright']) dx += 1;
+    if(keys['arrowup'] || keys['w']) dy -= 1;
+    if(keys['arrowdown'] || keys['s']) dy += 1;
+    if(keys['arrowleft'] || keys['a']) dx -= 1;
+    if(keys['arrowright'] || keys['d']) dx += 1;
     dx += joyVec.x; dy += joyVec.y;
     const m = Math.hypot(dx, dy);
     S.moving = m > .12;
@@ -1172,32 +2811,27 @@ function loop(ts){
 }
 requestAnimationFrame(loop);
 
-/* ---------------- Title & menu wiring ---------------- */
-let pickedGender = 'male';
+/* ---------------- Title wiring ---------------- */
 function initPreviews(){
   [['gMale','male'],['gFemale','female']].forEach(([id, gender])=>{
     const c = $(id).querySelector('canvas'), g = c.getContext('2d');
-    const o = OUTFITS[gender][0];
+    g.imageSmoothingEnabled = false;
     g.clearRect(0, 0, 56, 76);
-    g.save(); g.translate(28, 46); g.scale(1.15, 1.15);
-    g.fillStyle = 'rgba(0,0,0,.18)'; g.beginPath(); g.ellipse(0, 16, 13, 5, 0, 0, 7); g.fill();
-    g.fillStyle = o.bottom; g.beginPath(); g.moveTo(-9, 0); g.lineTo(9, 0); g.lineTo(11, 15); g.lineTo(-11, 15); g.closePath(); g.fill();
-    g.fillStyle = o.top; g.fillRect(-10, -14, 20, 16);
-    g.fillRect(-14, -13, 4, 13); g.fillRect(10, -13, 4, 13);
-    g.fillStyle = '#e8b88a'; g.beginPath(); g.arc(0, -23, 9, 0, 7); g.fill();
-    g.fillStyle = gender === 'female' ? '#241a12' : '#2b2015';
-    g.beginPath(); g.arc(0, -25, 9, Math.PI, Math.PI * 2); g.fill();
-    if(gender === 'female'){ g.fillRect(-10, -25, 4, 22); g.fillRect(6, -25, 4, 22); } else g.fillRect(-9, -27, 18, 4);
-    g.fillStyle = '#33241a'; g.fillRect(-4, -23, 2, 2); g.fillRect(3, -23, 2, 2);
-    g.restore();
+    g.fillStyle = 'rgba(0,0,0,.16)'; g.beginPath(); g.ellipse(28, 68, 14, 4.5, 0, 0, 7); g.fill();
+    const sprName = gender === 'male' ? 'm0_down' : 'f0_down';
+    if(imgOk(sprName)){ const im = IMG[sprName]; g.drawImage(im, 28 - 22 * im.width / im.height, 6, 44 * im.width / im.height, 44); }
+    else g.drawImage(charSprite(gender, OUTFITS[gender][0], 'down', 0), 6, 4, 44, 58);
   });
 }
+loadSprites();
+spawnTraffic();
 initPreviews();
-$('gMale').onclick = ()=>{ pickedGender = 'male'; $('gMale').classList.add('sel'); $('gFemale').classList.remove('sel'); beep(500,.06); };
-$('gFemale').onclick = ()=>{ pickedGender = 'female'; $('gFemale').classList.add('sel'); $('gMale').classList.remove('sel'); beep(500,.06); };
+$('gMale').onclick = ()=>{ setGender('male'); titleZone = 0; applyTitleFocus(); beep(500,.06); };
+$('gFemale').onclick = ()=>{ setGender('female'); titleZone = 0; applyTitleFocus(); beep(500,.06); };
 function refreshContinue(){
   const sv = loadSave();
   $('btnContinue').style.display = (sv && sv.started) ? 'block' : 'none';
+  titleZone = 0; applyTitleFocus();
 }
 refreshContinue();
 $('btnStart').onclick = ()=>{
@@ -1207,14 +2841,11 @@ $('btnStart').onclick = ()=>{
 };
 $('btnContinue').onclick = ()=>{
   const sv = loadSave(); if(!sv) return;
-  S = sv; pagodaStep = 0; inGame = true;
+  S = normalizeSave(sv); inGame = true;
   $('title').classList.add('hide'); $('hud').classList.add('show');
+  unstick(); // rescue saves left in a blocked spot by the old spawn bug
   refreshHUD();
 };
-$('menuBtn').onclick = ()=> $('menuScrim').classList.add('show');
-$('menuResume').onclick = ()=> $('menuScrim').classList.remove('show');
-$('menuTitle').onclick = ()=>{ $('menuScrim').classList.remove('show'); $('hud').classList.remove('show'); $('title').classList.remove('hide'); inGame = false; refreshContinue(); };
-$('menuReset').onclick = ()=>{ wipeSave(); $('menuScrim').classList.remove('show'); $('hud').classList.remove('show'); $('title').classList.remove('hide'); inGame = false; S = null; refreshContinue(); };
 // boot state for background rendering
 S = newState('male'); S.scene = 'sanchaung'; S.px = 1200; S.py = 1030;
 </script>
